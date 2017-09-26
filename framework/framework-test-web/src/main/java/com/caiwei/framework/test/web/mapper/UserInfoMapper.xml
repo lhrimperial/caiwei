@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.framework.test.web.mapper.UserInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.caiwei.framework.test.web.domain.UserInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="pass_word" property="passWord" jdbcType="VARCHAR"/>
+        <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="columns">
+        id as id, user_name as userName, pass_word as passWord, mobile_no as mobileNo, email as email, gender as gender
+    </sql>
+
+    <sql id="columns_list">
+        id, user_name, pass_word, mobile_no, email, gender
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="id != 0">
+                AND t.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null">
+                AND t.user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="passWord != null">
+                AND t.pass_word = #{passWord,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileNo != null">
+                AND t.mobile_no = #{mobileNo,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND t.email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="gender != null">
+                AND t.gender = #{gender,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findUserInfo" resultType="com.caiwei.framework.test.web.domain.UserInfo" parameterType="int">
+        SELECT
+        <include refid="columns"/>
+        FROM t_user_info t
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findUserList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="columns_list"/>
+        FROM t_user_info t
+    </select>
+
+    <select id="findUserByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="columns_list"/>
+        FROM t_user_info t
+    </select>
+
+</mapper>
