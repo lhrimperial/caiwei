@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.business.user.mapper.EmployeeMapper" >
+    <!--The file was generated on 2017-06-14 09:47:25 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.business.user.api.domain.EmployeePO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR" />
+        <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+        <result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="TINYINT" />
+        <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="tel_phone" property="telPhone" jdbcType="VARCHAR" />
+        <result column="version_no" property="versionNo" jdbcType="DECIMAL" />
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, emp_code, emp_name, dept_code, dept_name, gender, mobile_no, email, tel_phone,
+        version_no, is_delete, create_user, create_time, modify_user, modify_time
+    </sql>
+
+    <select id="findEmpByCode" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_base_employee t
+        WHERE t.emp_code = #{empCode,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.caiwei.business.user.api.domain.EmployeePO" >
+        insert into t_base_employee (id, emp_code, emp_name,
+        dept_code, dept_name, gender,
+        mobile_no, email, tel_phone,
+        version_no, is_delete, create_user,
+        create_time, modify_user, modify_time
+        )
+        values (#{id,jdbcType=INTEGER}, #{empCode,jdbcType=VARCHAR}, #{empName,jdbcType=VARCHAR},
+        #{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+        #{mobileNo,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{telPhone,jdbcType=VARCHAR},
+        #{versionNo,jdbcType=DECIMAL}, #{isDelete,jdbcType=TINYINT}, #{createUser,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.caiwei.business.user.api.domain.EmployeePO" >
+        update t_base_employee
+        <set >
+            <if test="empCode != null" >
+                emp_code = #{empCode,jdbcType=VARCHAR},
+            </if>
+            <if test="empName != null" >
+                emp_name = #{empName,jdbcType=VARCHAR},
+            </if>
+            <if test="deptCode != null" >
+                dept_code = #{deptCode,jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null" >
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null" >
+                gender = #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="mobileNo != null" >
+                mobile_no = #{mobileNo,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="telPhone != null" >
+                tel_phone = #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null" >
+                version_no = #{versionNo,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null" >
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

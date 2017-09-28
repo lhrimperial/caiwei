@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.business.comm.mapper.TermsCodeMapper" >
+    <!--The file was generated on 2017-06-14 09:46:06 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.business.comm.service.api.domain.TermsCodePO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="terms_code" property="termsCode" jdbcType="VARCHAR" />
+        <result column="terms_name" property="termsName" jdbcType="VARCHAR" />
+        <result column="notes" property="notes" jdbcType="VARCHAR" />
+        <result column="version_no" property="versionNo" jdbcType="DECIMAL" />
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, terms_code, terms_name, notes, version_no, is_delete, create_user, create_time,
+        modify_user, modify_time
+    </sql>
+
+    <select id="findTermsCodeByCode" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_base_data_termscode t
+        WHERE t.terms_code = #{termsCode,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.caiwei.business.comm.service.api.domain.TermsCodePO" >
+        insert into t_base_data_termscode (id, terms_code, terms_name,
+        notes, version_no, is_delete,
+        create_user, create_time, modify_user,
+        modify_time)
+        values (#{id,jdbcType=INTEGER}, #{termsCode,jdbcType=VARCHAR}, #{termsName,jdbcType=VARCHAR},
+        #{notes,jdbcType=VARCHAR}, #{versionNo,jdbcType=DECIMAL}, #{isDelete,jdbcType=TINYINT},
+        #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="update" parameterType="com.caiwei.business.comm.service.api.domain.TermsCodePO" >
+        update t_base_data_termscode
+        <set >
+            <if test="termsCode != null" >
+                terms_code = #{termsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="termsName != null" >
+                terms_name = #{termsName,jdbcType=VARCHAR},
+            </if>
+            <if test="notes != null" >
+                notes = #{notes,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null" >
+                version_no = #{versionNo,jdbcType=DECIMAL},
+            </if>
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null" >
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

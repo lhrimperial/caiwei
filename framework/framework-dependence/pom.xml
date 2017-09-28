@@ -19,6 +19,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>1.5.6.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.caiwei.framework</groupId>
                 <artifactId>framework-util</artifactId>
                 <version>${framework.version}</version>
@@ -31,6 +38,11 @@
             <dependency>
                 <groupId>com.caiwei.framework</groupId>
                 <artifactId>framework-starter-mybatis</artifactId>
+                <version>${framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.caiwei.framework</groupId>
+                <artifactId>framework-starter-multi-druid</artifactId>
                 <version>${framework.version}</version>
             </dependency>
         </dependencies>
