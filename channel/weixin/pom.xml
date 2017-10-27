@@ -15,4 +15,5 @@
         <module>weixin-wechat</module>
         <module>weixin-applet</module>
     </modules>
+
 </project>
