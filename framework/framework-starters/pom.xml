@@ -12,8 +12,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>framework-starter-druid</module>
-        <module>framework-starter-multi-druid</module>
+        <module>framework-starter-multi-datasource</module>
         <module>framework-starter-mybatis</module>
+        <module>framework-start-readwritesplit</module>
     </modules>
 
     <properties>

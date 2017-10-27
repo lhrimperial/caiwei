@@ -45,6 +45,11 @@
                 <artifactId>framework-starter-multi-druid</artifactId>
                 <version>${framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.caiwei.framework</groupId>
+                <artifactId>framework-start-readwritesplit</artifactId>
+                <version>${framework.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

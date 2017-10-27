@@ -10,7 +10,8 @@
         <module>framework-dependence</module>
         <module>framework-archetype</module>
         <module>framework-starters</module>
-        <module>framework-test-web</module>
+        <module>framework-test</module>
+        <module>framework-common</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -25,12 +26,26 @@
         <mysql.version>5.1.18</mysql.version>
         <mybatis.version>3.4.5</mybatis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
+        <mybatis-spring-boot-starter.version>1.1.1</mybatis-spring-boot-starter.version>
         <!--logger-->
         <log4jdbc-version>0.2.7</log4jdbc-version>
+
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
