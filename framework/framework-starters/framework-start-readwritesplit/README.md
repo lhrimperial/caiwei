@@ -29,7 +29,7 @@
         mybatis.mapperLocations=
         
         
-###MySQL 主从复制配置
+####MySQL 主从复制配置
 1. 创建复制帐号
 在Master的数据库中建立一个备份帐户：每个slave使用标准的MySQL用户名和密码连接master。进行复制操作的用户会授予REPLICATION SLAVE权限。用户名的密码都会存储在文本文件master.info中
 命令如下：
