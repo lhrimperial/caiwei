@@ -1,6 +1,6 @@
-package com.caiwei.framework.common.db.helper;
+package com.caiwei.framework.util.db.helper;
 
-import com.caiwei.framework.common.db.dialect.Dialect;
+import com.caiwei.framework.util.db.dialect.Dialect;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;

@@ -1,8 +1,8 @@
 package com.caiwei.framework.starter.mybatis.autoconfigure;
 
-import com.caiwei.framework.common.db.dialect.MySQLDialect;
-import com.caiwei.framework.common.db.helper.OffsetLimitInterceptor;
 import com.caiwei.framework.starter.druid.autoconfigure.DataSourceConfig;
+import com.caiwei.framework.util.db.dialect.MySQLDialect;
+import com.caiwei.framework.util.db.helper.OffsetLimitInterceptor;
 import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;

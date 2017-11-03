@@ -1,4 +1,4 @@
-package com.caiwei.framework.common.db.dialect;
+package com.caiwei.framework.util.db.dialect;
 
 
 /**

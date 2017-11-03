@@ -1,6 +1,6 @@
 package com.caiwei.framework.starter.multi.datasource;
 
-import com.caiwei.framework.common.spring.SpringContextHolder;
+import com.caiwei.framework.util.SpringContextHolder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.slf4j.Logger;

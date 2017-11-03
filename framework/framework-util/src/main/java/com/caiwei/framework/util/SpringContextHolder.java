@@ -1,4 +1,4 @@
-package com.caiwei.framework.common.spring;
+package com.caiwei.framework.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

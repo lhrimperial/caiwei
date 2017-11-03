@@ -1,4 +1,4 @@
-package com.caiwei.framework.common.db.helper;
+package com.caiwei.framework.util.db.helper;
 
 import java.io.*;
 import java.util.*;
