@@ -9,6 +9,8 @@
     <module>framework</module>
     <module>channel</module>
     <module>business</module>
+      <module>sunny</module>
+    <module>sunny</module>
   </modules>
   <packaging>pom</packaging>
 

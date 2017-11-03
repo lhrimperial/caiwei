@@ -16,7 +16,7 @@
                 +multi-datasource   //多数据源集成
                 +mybatis    //mybatis集成
             -test           //集成测试
-            -util           //工具封装
+            +util           //工具封装
             
             
 #### 二、使用说明
