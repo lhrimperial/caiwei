@@ -21,11 +21,11 @@
             
 ####二、使用说明
 1. druid和mybatis使用
-[配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-start-druid/README.md)
+[配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-starter-druid/README.md)
 2. 读写分离
 [配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-start-readwritesplit/README.md)
 3. 多数据源
-[配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-start-multi-datasource/README.md)
+[配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-starter-multi-datasource/README.md)
 
             
             
