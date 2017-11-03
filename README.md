@@ -1,5 +1,5 @@
 # caiwei
-####一、项目结构
+#### 一、项目结构
 
     -caiwei
         -channel            //渠道
@@ -19,7 +19,7 @@
             -util           //工具封装
             
             
-####二、使用说明
+#### 二、使用说明
 1. druid和mybatis使用
 [配置说明](https://github.com/lhrimperial/caiwei/blob/master/framework/framework-starters/framework-starter-druid/README.md)
 2. 读写分离
