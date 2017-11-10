@@ -1,0 +1,27 @@
+body{
+	padding:0px;
+	margin:0px;
+}
+table td{
+	padding:0px;
+	margin:0px;
+	font-family: helvetica,arial,verdana,sans-serif;
+}
+table td span{
+	font-weight:bold;
+}
+.top_td{
+	text-align:center;
+	vertical-align: middle;
+	border-left:1px solid #e0e5e6;
+}
+.top_td:hover {
+   	background-color: #f15b23;
+}
+.top_back_td{
+	background-image:url('../../images/login/top_bg.png');
+	background-repeat:repeat;
+	vertical-align:top;
+	padding:0px;
+	margin:0px;
+}

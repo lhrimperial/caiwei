@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.sunny.mdm.permis.mapper.TermsCodeMapper" >
+  <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+  <resultMap id="BaseResultMap" type="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+    <id column="ttc_id" property="ttcId" jdbcType="INTEGER" />
+    <result column="terms_code" property="termsCode" jdbcType="VARCHAR" />
+    <result column="terms_name" property="termsName" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ttc_id, terms_code, terms_name, notes, status, create_time
+  </sql>
+  <select id="findByTermsCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_mdm_data_termscode
+    where terms_code = #{termsCode,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mdm_data_termscode
+    where ttc_id = #{ttcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mdm_data_termscode
+    where ttc_id = #{ttcId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+    insert into t_mdm_data_termscode (ttc_id, terms_code, terms_name, 
+      notes, status, create_time
+      )
+    values (#{ttcId,jdbcType=INTEGER}, #{termsCode,jdbcType=VARCHAR}, #{termsName,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+    update t_mdm_data_termscode
+    <set >
+      <if test="termsCode != null" >
+        terms_code = #{termsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="termsName != null" >
+        terms_name = #{termsName,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ttc_id = #{ttcId,jdbcType=INTEGER}
+  </update>
+</mapper>

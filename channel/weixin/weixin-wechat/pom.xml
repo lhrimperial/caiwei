@@ -55,7 +55,7 @@
         </dependency>
         <dependency>
             <groupId>com.caiwei.framework</groupId>
-            <artifactId>framework-common</artifactId>
+            <artifactId>framework-server</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

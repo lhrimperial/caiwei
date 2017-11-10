@@ -1,0 +1,71 @@
+/************Tree item icon*************/
+.ui_main_left_tree_parent_gzt_iconCls{
+	background-image:url('../../images/login/home.png');
+	background-repeat:repeat;
+	vertical-align:top;
+	height:22px;
+	width:22px;
+	padding:0px;
+	margin:0px;
+}
+.ui_main_left_tree_parent_sys_iconCls{
+	background-image:url('../../images/login/set.png');
+	background-repeat:repeat;
+	vertical-align:top;
+	height:22px;
+	width:22px;
+	padding:0px;
+	margin:0px;
+}
+.ui_main_left_tree_left_iconCls{
+	background-image:url('../../images/login/point.png');
+	background-repeat:repeat;
+	vertical-align:top;
+	height:22px;
+	width:22px;
+	padding:0px;
+	margin:0px;
+}
+.ui_main_left_tree_elbow_img{
+	background-image:url('../../images/login/arrow_down.png');
+	cursor:pointer;
+	background-repeat:repeat;
+	vertical-align:top;
+	height:22px;
+	width:22px;
+	padding:0px;
+	margin:0px;
+}
+.ui_main_left_tree_elbow_img_expander{
+	background-image:url('../../images/login/arrow_up.png');
+	cursor:pointer;
+	background-repeat:repeat;
+	vertical-align:top;
+	height:22px;
+	width:22px;
+	padding:0px;
+	margin:0px;
+}
+
+/************Tree item background-color*************/
+#treePanel .x-grid-item{
+	background-color:#21232b;
+}
+#treePanel .x-grid-item-selected{
+	background-color:#F15B23;
+}
+#treePanel .x-grid-item-over{
+	background-color:#F15B23;
+}
+#treePanel .x-grid-item.x-grid-item-over .x-grid-tree-node-leaf.x-grid-row{
+	background-color:#F15B23;
+}
+#treePanel .x-grid-item.x-grid-item-selected .x-grid-tree-node-leaf.x-grid-row{
+	background-color:#F15B23;
+}
+#treePanel .x-grid-item.grid-item-over .x-grid-tree-node-expanded.x-grid-row{
+	background-color:#353643;
+}
+#treePanel .x-grid-item .x-grid-tree-node-leaf.x-grid-row{
+	background-color:#353643;
+}
