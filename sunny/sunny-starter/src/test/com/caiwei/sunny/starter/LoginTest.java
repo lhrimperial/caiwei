@@ -31,7 +31,6 @@ public class LoginTest {
 
     @Test
     public void testFind() {
-        loginService.findByUserCode("");
 //        System.out.println(redisClient.get("user"));
     }
 

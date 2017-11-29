@@ -4,6 +4,7 @@ import com.caiwei.framework.server.cache.exception.security.UserNotLoginExceptio
 import com.caiwei.framework.server.exception.BusinessException;
 import com.caiwei.framework.server.shared.entity.ResponseVO;
 import com.caiwei.framework.server.web.AbstractController;
+import com.caiwei.framework.util.json.FastJsonUtil;
 import com.caiwei.sunny.starter.context.SunnyUserContext;
 import com.caiwei.sunny.starter.domain.PermisUserBO;
 import com.caiwei.sunny.starter.service.ILoginService;
@@ -38,12 +39,14 @@ public class LoginController extends AbstractController{
     @RequestMapping("/login")
     public ResponseVO login(Model model, @RequestBody PermisUserBO permisUserBO) {
         try {
-//                loginService.userLogin(currentUser.getUserName(),currentUser.getPassword());
+            loginService.userLogin(permisUserBO.getUserCode(), permisUserBO.getPassWord());
             // 这时跳转到main.jsp 根据session生成cookie
 //                Cookie.saveCookie();
             return this.returnSuccess();
         } catch (BusinessException e) {
             return this.returnError(e);
+        } catch (Exception ee) {
+            return this.returnError();
         }
     }
 

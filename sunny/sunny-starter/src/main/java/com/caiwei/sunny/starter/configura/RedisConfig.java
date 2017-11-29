@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author longhr
  * @version 2017/11/7 0007
  */
-@Configuration
+//@Configuration
 public class RedisConfig {
 
     @Bean

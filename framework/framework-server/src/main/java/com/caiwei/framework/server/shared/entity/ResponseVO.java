@@ -13,6 +13,18 @@ public class ResponseVO<T> implements Serializable{
     private String resMsg;
     private T result;
 
+    public ResponseVO(){}
+
+    public ResponseVO(boolean success) {
+        this.success = success;
+    }
+
+    public ResponseVO(boolean success, String resCode, String resMsg) {
+        this.success = success;
+        this.resCode = resCode;
+        this.resMsg = resMsg;
+    }
+
     public boolean isSuccess() {
         return success;
     }
@@ -44,4 +56,8 @@ public class ResponseVO<T> implements Serializable{
     public void setResult(T result) {
         this.result = result;
     }
+
+
 }
+
+

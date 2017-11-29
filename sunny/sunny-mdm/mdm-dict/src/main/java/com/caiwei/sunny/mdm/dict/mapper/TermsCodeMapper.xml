@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.caiwei.sunny.mdm.permis.mapper.TermsCodeMapper" >
+<mapper namespace="com.caiwei.sunny.mdm.dict.mapper.TermsCodeMapper" >
   <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-  <resultMap id="BaseResultMap" type="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+  <resultMap id="BaseResultMap" type="com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO" >
     <id column="ttc_id" property="ttcId" jdbcType="INTEGER" />
     <result column="terms_code" property="termsCode" jdbcType="VARCHAR" />
     <result column="terms_name" property="termsName" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     delete from t_mdm_data_termscode
     where ttc_id = #{ttcId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+  <insert id="insert" parameterType="com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO" >
     insert into t_mdm_data_termscode (ttc_id, terms_code, terms_name, 
       notes, status, create_time
       )
@@ -37,7 +37,7 @@
       #{notes,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO" >
+  <update id="updateByPrimaryKey" parameterType="com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO" >
     update t_mdm_data_termscode
     <set >
       <if test="termsCode != null" >

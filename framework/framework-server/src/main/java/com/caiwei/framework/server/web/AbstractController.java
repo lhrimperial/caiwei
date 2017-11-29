@@ -5,6 +5,7 @@ import com.caiwei.framework.server.shared.entity.ErrorCode;
 import com.caiwei.framework.server.shared.entity.ResponseVO;
 import com.caiwei.framework.server.web.message.IMessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
+import sun.font.TrueTypeFont;
 
 /**
  * @author longhr
@@ -16,43 +17,23 @@ public class AbstractController {
     protected IMessageBundle messageBundle;
 
     protected ResponseVO returnSuccess() {
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setSuccess(true);
-        responseVO.setResCode(ErrorCode.SUCCESS.getCode());
-        responseVO.setResMsg(ErrorCode.SUCCESS.getName());
-        return responseVO;
+        return new ResponseVO(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getName());
     }
 
     protected ResponseVO returnSuccess(String message) {
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setSuccess(true);
-        responseVO.setResCode(ErrorCode.SUCCESS.getCode());
-        responseVO.setResMsg(message);
-        return responseVO;
+        return new ResponseVO(true, ErrorCode.SUCCESS.getCode(), message);
     }
 
     protected ResponseVO returnError(BusinessException e) {
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setSuccess(true);
-        responseVO.setResCode(ErrorCode.SUCCESS.getCode());
-        responseVO.setResMsg(e.getMessage());
-        return responseVO;
+        return new ResponseVO(false, e.getErrorCode(), messageBundle.getMessage(e.getErrorCode(), e.getErrorArguments()));
     }
 
     protected ResponseVO returnError(String message) {
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setSuccess(false);
-        responseVO.setResCode(ErrorCode.FAILURE.getCode());
-        responseVO.setResMsg(message);
-        return responseVO;
+        return new ResponseVO(false, ErrorCode.FAILURE.getCode(), message);
     }
 
     protected ResponseVO returnError() {
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setSuccess(false);
-        responseVO.setResCode(ErrorCode.FAILURE.getCode());
-        responseVO.setResMsg(ErrorCode.FAILURE.getName());
-        return responseVO;
+        return new ResponseVO(false, ErrorCode.FAILURE.getCode(), ErrorCode.FAILURE.getName());
     }
 
 }

@@ -39,11 +39,10 @@ public class MessageCacheProvider implements IBatchCacheProvider<String, Propert
         try {
         	//加载指定位置的properties文件
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = resolver.getResources("classpath*:" + prefix
-                    + "**/messages/message*.properties");
+            Resource[] resources = resolver.getResources("classpath*:**/messages/message*.properties");
             for (Resource resource : resources) {
-                String path = resource.getURL().getPath();
-                String classpath = path.substring(path.lastIndexOf(prefix));
+                String classpath = resource.getURL().getPath();
+//                String classpath = path.substring(path.lastIndexOf(prefix));
                 if (logger.isInfoEnabled()) {
                     logger.info("[Framework] add message bundle: " + classpath);
                 }

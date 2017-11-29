@@ -1,7 +1,8 @@
-package com.caiwei.sunny.mdm.permis.api.service;
+package com.caiwei.sunny.mdm.dict.api.service;
 
-import com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO;
-import com.caiwei.sunny.mdm.permis.api.domain.TermsValueDO;
+
+import com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO;
+import com.caiwei.sunny.mdm.dict.api.domain.TermsValueDO;
 
 import java.util.List;
 

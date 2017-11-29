@@ -1,7 +1,7 @@
-package com.caiwei.sunny.mdm.permis.mapper;
+package com.caiwei.sunny.mdm.dict.mapper;
 
-import com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO;
 import org.springframework.stereotype.Repository;
+import com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO;
 
 @Repository
 public interface TermsCodeMapper {

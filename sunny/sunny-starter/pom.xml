@@ -14,18 +14,14 @@
     <dependencies>
         <dependency>
             <groupId>com.caiwei.sunny</groupId>
-            <artifactId>mdm-permis-api</artifactId>
+            <artifactId>mdm-permis</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.caiwei.sunny</groupId>
-            <artifactId>mdm-permis</artifactId>
+            <artifactId>mdm-dict</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -38,7 +34,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,6 +57,10 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -87,6 +87,7 @@
                     <include>**/*.css</include>
                     <include>**/*.js</include>
                     <include>**/images/*</include>
+                    <include>**/messages/*</include>
                 </includes>
             </resource>
             <resource>

@@ -1,10 +1,10 @@
-package com.caiwei.sunny.mdm.permis.service.impl;
+package com.caiwei.sunny.mdm.dict.service.impl;
 
-import com.caiwei.sunny.mdm.permis.api.domain.TermsCodeDO;
-import com.caiwei.sunny.mdm.permis.api.domain.TermsValueDO;
-import com.caiwei.sunny.mdm.permis.api.service.ITermsValueService;
-import com.caiwei.sunny.mdm.permis.mapper.TermsCodeMapper;
-import com.caiwei.sunny.mdm.permis.mapper.TermsValueMapper;
+import com.caiwei.sunny.mdm.dict.api.domain.TermsCodeDO;
+import com.caiwei.sunny.mdm.dict.api.domain.TermsValueDO;
+import com.caiwei.sunny.mdm.dict.api.service.ITermsValueService;
+import com.caiwei.sunny.mdm.dict.mapper.TermsCodeMapper;
+import com.caiwei.sunny.mdm.dict.mapper.TermsValueMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

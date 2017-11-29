@@ -1,4 +1,4 @@
-package com.caiwei.sunny.mdm.permis.api.domain;
+package com.caiwei.sunny.mdm.dict.api.domain;
 
 import java.util.Date;
 
