@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.sunny.mdm.dict.mapper.TermsValueMapper" >
+  <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+  <resultMap id="BaseResultMap" type="com.caiwei.sunny.mdm.dict.api.domain.TermsValueDO" >
+    <id column="ttv_id" property="ttvId" jdbcType="INTEGER" />
+    <result column="value_code" property="valueCode" jdbcType="VARCHAR" />
+    <result column="value_name" property="valueName" jdbcType="VARCHAR" />
+    <result column="terms_code" property="termsCode" jdbcType="VARCHAR" />
+    <result column="value_seq" property="valueSeq" jdbcType="INTEGER" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ttv_id, value_code, value_name, terms_code, value_seq, notes, status, create_time
+  </sql>
+
+  <select id="findByTermsCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_mdm_data_termsvalue
+    where terms_code = #{termsCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findByTermsCodeAndValueCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_mdm_data_termsvalue
+    where terms_code = #{termsCode,jdbcType=VARCHAR} and value_code = #{valueCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mdm_data_termsvalue
+    where ttv_id = #{ttvId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mdm_data_termsvalue
+    where ttv_id = #{ttvId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.caiwei.sunny.mdm.dict.api.domain.TermsValueDO" >
+    insert into t_mdm_data_termsvalue (ttv_id, value_code, value_name, 
+      terms_code, value_seq, notes, 
+      status, create_time)
+    values (#{ttvId,jdbcType=INTEGER}, #{valueCode,jdbcType=VARCHAR}, #{valueName,jdbcType=VARCHAR}, 
+      #{termsCode,jdbcType=VARCHAR}, #{valueSeq,jdbcType=INTEGER}, #{notes,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.caiwei.sunny.mdm.dict.api.domain.TermsValueDO" >
+    update t_mdm_data_termsvalue
+    <set >
+      <if test="valueCode != null" >
+        value_code = #{valueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueName != null" >
+        value_name = #{valueName,jdbcType=VARCHAR},
+      </if>
+      <if test="termsCode != null" >
+        terms_code = #{termsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueSeq != null" >
+        value_seq = #{valueSeq,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ttv_id = #{ttvId,jdbcType=INTEGER}
+  </update>
+</mapper>

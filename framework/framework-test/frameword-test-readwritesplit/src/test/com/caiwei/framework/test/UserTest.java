@@ -42,8 +42,11 @@ public class UserTest {
 
     @Test
     public void findUserTest() {
-        UserTestPO po = userTestService.getUserTestPO(1);
+        UserTestPO po = userTestService.getUserTestPO(10);
         System.out.println(JSON.toJSONString(po));
+
+        List<UserTestPO> userTestPOS = userTestService.getAllUserTestPOs(1);
+        System.out.println(JSON.toJSONString(userTestPOS));
     }
 
     @Test

@@ -42,7 +42,7 @@ public class UserTestService implements IUserTestService {
     }
 
     @Override
-//    @ReadOnlyConnection
+    @ReadOnlyConnection
     public UserTestPO getUserTestPO(int id) {
         return userTestMapper.getUserTestPO(id);
     }

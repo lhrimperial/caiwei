@@ -6,6 +6,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 
 /**
  * @author longhairen
@@ -17,7 +18,7 @@ import org.springframework.core.env.Environment;
 @AutoConfigureAfter(MybatisConfiguration.class)
 public class MyBatisScannerConfiguration implements EnvironmentAware{
 
-    private String basePackage = "com.caiwei.**.mapper";
+    private static String basePackage;
 
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
@@ -29,9 +30,9 @@ public class MyBatisScannerConfiguration implements EnvironmentAware{
 
     @Override
     public void setEnvironment(Environment environment) {
-        String bpackage = environment.getProperty("mybatis.basePackage");
-        if (bpackage != null && !bpackage.isEmpty()) {
-            basePackage = bpackage;
+        basePackage = environment.getProperty("mybatis.basePackage");
+        if (StringUtils.isEmpty(basePackage)) {
+            throw new IllegalArgumentException("mybatis basePackage is null");
         }
     }
 }

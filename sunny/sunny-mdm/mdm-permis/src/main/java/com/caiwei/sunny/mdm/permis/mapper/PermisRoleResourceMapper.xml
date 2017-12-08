@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.sunny.mdm.permis.mapper.PermisRoleResourceMapper" >
+  <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+  <resultMap id="BaseResultMap" type="com.caiwei.sunny.mdm.permis.api.domain.PermisRoleResourceDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trole_id" property="troleId" jdbcType="INTEGER" />
+    <result column="tres_id" property="tresId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, trole_id, tres_id, status, create_time
+  </sql>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from t_mdm_permis_role_resource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.caiwei.sunny.mdm.permis.api.domain.PermisRoleResourceDO" >
+    insert into t_mdm_permis_role_resource (id, trole_id, tres_id,
+    status, create_time)
+    values (#{id,jdbcType=INTEGER}, #{troleId,jdbcType=INTEGER}, #{tresId,jdbcType=INTEGER},
+    #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="update" parameterType="com.caiwei.sunny.mdm.permis.api.domain.PermisRoleResourceDO" >
+    update t_mdm_permis_role_resource
+    <set >
+      <if test="troleId != null" >
+        trole_id = #{troleId,jdbcType=INTEGER},
+      </if>
+      <if test="tresId != null" >
+        tres_id = #{tresId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

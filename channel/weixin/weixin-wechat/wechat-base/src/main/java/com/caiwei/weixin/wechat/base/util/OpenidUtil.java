@@ -1,6 +1,6 @@
 package com.caiwei.weixin.wechat.base.util;
 
-import com.caiwei.framework.common.exception.BusinessException;
+import com.caiwei.framework.server.exception.BusinessException;
 import com.caiwei.framework.util.json.JsonUtils;
 import com.caiwei.framework.util.string.StringUtils;
 import com.caiwei.weixin.wechat.base.define.WechatConst;

@@ -1,0 +1,57 @@
+.x-tab-bar-default-top>.x-tab-bar-body-default{
+	padding:6px 6px 0px 6px;
+}
+.x-tab-bar-body-default{
+	padding-top:0px;
+	padding-bottom:0px;
+}
+.x-tab{
+	height:35px;
+	width:136px;
+	border-color:#c3c3c3;
+}
+.x-tab-bar-default{
+	background-color: #f0f5f6;
+}
+.x-tab-active.x-tab-default{
+	color:#ff0000;
+	border-color: #ffffff;
+  	background-color: #ffffff;
+}
+/*tab 背景颜色*/
+.x-tab-default-top{
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	border-width:1px;
+	border-style:solid;
+	padding:3px 8px 3px 8px;
+	background-color:#f0f5f6;
+}
+.x-tab-inner-default{
+	font:300 13px/16px helvetica,arial,verdana,sans-serif;
+	font-family:"微软雅黑";
+	color:#777777;
+	max-width:100%;
+}
+/*被选中文字色*/
+.x-tab-default.x-tab-active .x-tab-close-btn{
+	background-position:-24px 0;
+}
+/*移上去的边框颜色*/
+.x-tab-over.x-tab-default{
+	border-color:#c3c3c3;
+}
+.x-tab-over.x-tab-default.x-tab-active{
+	border-color:#ffffff;
+}
+/*鼠标移至少上面，字体颜色*/
+.x-tab-over.x-tab-default .x-tab-inner-default{
+	color:#f15b23;
+}
+/*被选中tab字体颜色*/
+.x-tab-active.x-tab-default .x-tab-inner-default{
+	color:#f15b23;
+}

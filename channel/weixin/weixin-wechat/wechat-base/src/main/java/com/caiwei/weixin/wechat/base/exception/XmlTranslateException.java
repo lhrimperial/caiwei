@@ -1,7 +1,7 @@
 package com.caiwei.weixin.wechat.base.exception;
 
 
-import com.caiwei.framework.common.exception.BusinessException;
+import com.caiwei.framework.server.exception.BusinessException;
 
 public class XmlTranslateException extends BusinessException {
 

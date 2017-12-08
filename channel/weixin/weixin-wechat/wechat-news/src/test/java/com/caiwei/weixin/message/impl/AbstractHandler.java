@@ -1,6 +1,6 @@
 package com.caiwei.weixin.message.impl;
 
-import com.caiwei.framework.common.exception.BusinessException;
+import com.caiwei.framework.server.exception.BusinessException;
 import com.caiwei.framework.util.json.JaxbUtil;
 import com.caiwei.framework.util.json.JsonUtils;
 import com.caiwei.weixin.message.IMsgHandler;
