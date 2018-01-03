@@ -6,7 +6,7 @@
   <artifactId>caiwei</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <!--<module>framework</module>-->
+    <module>framework</module>
     <!--<module>channel</module>-->
     <!--<module>sunny</module>-->
 

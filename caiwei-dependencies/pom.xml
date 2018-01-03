@@ -36,7 +36,6 @@
 
         <commons-codec-version>1.10</commons-codec-version>
 
-
         <slf4j-version>1.7.12</slf4j-version>
     </properties>
 

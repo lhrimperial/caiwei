@@ -10,7 +10,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.caiwei</groupId>
-                <artifactId>caiwei-dependences</artifactId>
+                <artifactId>caiwei-dependencies</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
