@@ -20,5 +20,12 @@
         <module>framework-starter-redis</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.caiwei.framework</groupId>
+            <artifactId>framework-starter-core</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
