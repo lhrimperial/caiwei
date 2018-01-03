@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>caiwei-dependences</artifactId>
+    <artifactId>caiwei-dependencies</artifactId>
     <packaging>pom</packaging>
 
     <properties>
