@@ -6,6 +6,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.jdbc.DatabaseDriver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +25,8 @@ import java.util.Set;
  */
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
-public class DataSourceAutoConfiguration {
-    private static final Logger logger = LoggerFactory.getLogger(DataSourceAutoConfiguration.class);
+public class CaiweiDataSourceAutoConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(CaiweiDataSourceAutoConfiguration.class);
 
     // 数据源配置属性
     private DataSourceProperties properties = Contexts.buildProperties(DataSourceProperties.class);

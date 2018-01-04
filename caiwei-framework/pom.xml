@@ -14,6 +14,7 @@
         <module>framework-archetype</module>
         <module>framework-util</module>
         <module>framework-starter</module>
+        <module>framework-test</module>
     </modules>
     <artifactId>caiwei-framework</artifactId>
     <packaging>pom</packaging>

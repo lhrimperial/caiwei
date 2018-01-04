@@ -1,0 +1,3 @@
+org.springframework.boot.SpringApplicationRunListener=\
+  com.caiwei.framework.starter.core.CaiweiApplicationRunListener
+

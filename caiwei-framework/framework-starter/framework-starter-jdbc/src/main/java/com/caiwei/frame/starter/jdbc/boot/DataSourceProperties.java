@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 驴妈妈数据源配置属性
+ * 数据源配置属性
  */
 @ConfigurationProperties("caiwei")
 public class DataSourceProperties {
