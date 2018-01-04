@@ -7,6 +7,15 @@ public class UserPO {
     private Integer id;
     private String userName;
 
+    public UserPO() {
+
+    }
+
+    public UserPO(Integer id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
+
     public Integer getId() {
         return id;
     }

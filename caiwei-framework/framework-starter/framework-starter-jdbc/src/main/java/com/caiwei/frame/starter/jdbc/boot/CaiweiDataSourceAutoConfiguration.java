@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 驴妈妈数据源配置
+ * 数据源配置
  */
 @Configuration
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)

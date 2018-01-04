@@ -19,21 +19,21 @@ public class UserService implements IUserService{
 
     @Override
     public UserPO findByUserName(Integer id){
-        return null;
+        return userDao.findByUserName(id);
     }
 
     @Override
     public List<UserPO> findAllUser() {
-        return null;
+        return userDao.findAllUser();
     }
 
     @Override
     public void save(UserPO userPO) {
-
+        userDao.save(userPO);
     }
 
     @Override
     public void update(UserPO userPO) {
-
+        userDao.update(userPO);
     }
 }
