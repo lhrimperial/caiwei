@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.caiwei.frame.starter.jdbc.boot.DataSourceAspectAutoConfiguration,\
-  com.caiwei.frame.starter.jdbc.boot.CaiweiDataSourceAutoConfiguration
+  com.caiwei.framework.starter.jdbc.boot.DataSourceAspectAutoConfiguration,\
+  com.caiwei.framework.starter.jdbc.boot.CaiweiDataSourceAutoConfiguration

@@ -32,12 +32,12 @@ public class CaiweiApplicationRunListener implements SpringApplicationRunListene
 
     @Override
     public void environmentPrepared(ConfigurableEnvironment environment) {
-        Contexts.setEnvironment(environment);
+        ApplicationContexts.setEnvironment(environment);
     }
 
     @Override
     public void contextPrepared(ConfigurableApplicationContext context) {
-        Contexts.setApplicationContext(context);
+        ApplicationContexts.setApplicationContext(context);
     }
 
     @Override

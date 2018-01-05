@@ -1,4 +1,4 @@
-package com.caiwei.frame.starter.jdbc;
+package com.caiwei.framework.starter.jdbc;
 
 import java.lang.annotation.*;
 

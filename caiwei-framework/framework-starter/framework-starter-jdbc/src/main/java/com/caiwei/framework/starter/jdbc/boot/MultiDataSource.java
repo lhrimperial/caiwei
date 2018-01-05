@@ -1,6 +1,6 @@
-package com.caiwei.frame.starter.jdbc.boot;
+package com.caiwei.framework.starter.jdbc.boot;
 
-import com.caiwei.frame.starter.jdbc.DataSourceHolder;
+import com.caiwei.framework.starter.jdbc.DataSourceHolder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**

@@ -1,7 +1,7 @@
-package com.caiwei.frame.starter.jdbc.boot;
+package com.caiwei.framework.starter.jdbc.boot;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.caiwei.framework.starter.core.Contexts;
+import com.caiwei.framework.starter.core.ApplicationContexts;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class CaiweiDataSourceAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(CaiweiDataSourceAutoConfiguration.class);
 
     // 数据源配置属性
-    private DataSourceProperties properties = Contexts.buildProperties(DataSourceProperties.class);
+    private DataSourceProperties properties = ApplicationContexts.buildProperties(DataSourceProperties.class);
     // 创建的所有数据源
     private Set<DruidDataSource> dataSources = new HashSet<>();
 

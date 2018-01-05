@@ -1,4 +1,4 @@
-package com.caiwei.frame.starter.jdbc.boot;
+package com.caiwei.framework.starter.jdbc.boot;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;

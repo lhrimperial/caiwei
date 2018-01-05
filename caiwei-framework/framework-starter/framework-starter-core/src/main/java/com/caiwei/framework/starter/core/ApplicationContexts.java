@@ -14,7 +14,7 @@ import java.util.List;
  * @description
  * 应用上下文
  **/
-public class Contexts {
+public class ApplicationContexts {
 
     // spring环境
     private static ConfigurableEnvironment environment;
@@ -25,14 +25,14 @@ public class Contexts {
      * 设置spring环境
      */
     public static void setEnvironment(ConfigurableEnvironment environment) {
-        Contexts.environment = environment;
+        ApplicationContexts.environment = environment;
     }
 
     /**
      * 设置spring容器
      */
     public static void setApplicationContext(ConfigurableApplicationContext applicationContext) {
-        Contexts.applicationContext = applicationContext;
+        ApplicationContexts.applicationContext = applicationContext;
     }
 
     /**

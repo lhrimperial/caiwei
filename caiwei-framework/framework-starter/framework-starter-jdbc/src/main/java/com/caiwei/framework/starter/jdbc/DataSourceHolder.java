@@ -1,4 +1,4 @@
-package com.caiwei.frame.starter.jdbc;
+package com.caiwei.framework.starter.jdbc;
 
 /**
  * 数据源持有器

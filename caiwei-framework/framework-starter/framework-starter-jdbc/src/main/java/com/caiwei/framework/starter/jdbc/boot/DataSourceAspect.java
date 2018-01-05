@@ -1,7 +1,7 @@
-package com.caiwei.frame.starter.jdbc.boot;
+package com.caiwei.framework.starter.jdbc.boot;
 
-import com.caiwei.frame.starter.jdbc.DataSource;
-import com.caiwei.frame.starter.jdbc.DataSourceHolder;
+import com.caiwei.framework.starter.jdbc.DataSource;
+import com.caiwei.framework.starter.jdbc.DataSourceHolder;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

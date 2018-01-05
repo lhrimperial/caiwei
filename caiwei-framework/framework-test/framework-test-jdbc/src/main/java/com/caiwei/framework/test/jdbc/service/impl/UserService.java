@@ -1,5 +1,6 @@
 package com.caiwei.framework.test.jdbc.service.impl;
 
+import com.caiwei.framework.starter.jdbc.DataSource;
 import com.caiwei.framework.test.jdbc.dao.UserDao;
 import com.caiwei.framework.test.jdbc.domain.UserPO;
 import com.caiwei.framework.test.jdbc.service.IUserService;
@@ -28,6 +29,7 @@ public class UserService implements IUserService{
     }
 
     @Override
+    @DataSource("slave")
     public void save(UserPO userPO) {
         userDao.save(userPO);
     }
