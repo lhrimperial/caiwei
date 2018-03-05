@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.DepartmentMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.DepartmentPO">
+        <id column="id" property="id"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="parent_code" property="parentCode"/>
+        <result column="parent_name" property="parentName"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    dept.id,dept.dept_code,dept.dept_name,dept.parent_code,dept.parent_name,dept.status,dept.create_time,dept.modify_time
+  </sql>
+
+    <select id="findByEmpCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_department dept, t_mdm_org_employee emp
+        where dept.dept_code = emp.dept_code and dept_code = #{deptCode}
+    </select>
+
+    <select id="findByDeptCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_department dept
+        where dept_code = #{deptCode}
+    </select>
+
+    <select id="findByParentCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_department dept
+        where parent_code = #{parentCode}
+    </select>
+
+
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.DepartmentPO">
+    insert into t_mdm_org_department (dept_code, dept_name, parent_code, parent_name, status, create_time, modify_time)
+    values (#{deptCode}, #{deptName}, #{parentCode}, #{parentName}, #{status},#{createTime},#{modifyTime})
+  </insert>
+
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.DepartmentPO">
+        update t_mdm_org_department
+        <set>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+            <if test="parentCode != null and parentCode != ''">
+                parent_code = #{parentCode},
+            </if>
+            <if test="parentName != null and parentName != ''">
+                parent_name = #{parentName},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="deptCode != null">
+                and dept_code = #{deptCode}
+            </if>
+        </where>
+    </update>
+</mapper>

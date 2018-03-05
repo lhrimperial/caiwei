@@ -1,0 +1,50 @@
+package com.caiwei.console.business.service.impl;
+
+import com.caiwei.console.business.service.IDepartmentService;
+import com.caiwei.console.persistent.domain.DepartmentPO;
+import com.caiwei.console.persistent.mapper.DepartmentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author longhr
+ * @version 2017/11/6 0006
+ */
+@Service
+public class DepartmentService implements IDepartmentService {
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
+    @Override
+    public int insert(DepartmentPO departmentDO) {
+        return departmentMapper.insert(departmentDO);
+    }
+
+    @Override
+    public int update(DepartmentPO departmentDO) {
+        return departmentMapper.update(departmentDO);
+    }
+
+    @Override
+    public int delete(int tdId) {
+        return departmentMapper.delete(tdId);
+    }
+
+    @Override
+    public DepartmentPO findByDeptCode(String deptCode) {
+        return departmentMapper.findByDeptCode(deptCode);
+    }
+
+    @Override
+    public DepartmentPO findByEmpCode(String empCode) {
+        return departmentMapper.findByEmpCode(empCode);
+    }
+
+    @Override
+    public List<DepartmentPO> findByParentCode(String parentCode) {
+        return departmentMapper.findByParentCode(parentCode);
+    }
+}

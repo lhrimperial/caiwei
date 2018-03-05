@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.TermsCodeMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.TermsCodePO">
+        <id column="ttc_id" property="ttcId"/>
+        <result column="terms_code" property="termsCode"/>
+        <result column="terms_name" property="termsName"/>
+        <result column="notes" property="notes"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, terms_code, terms_name, notes, status, create_time
+      </sql>
+
+    <select id="findByTermsCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_data_termscode
+        where terms_code = #{termsCode}
+    </select>
+
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.TermsCodePO">
+        insert into t_mdm_data_termscode (terms_code, terms_name,notes, status, create_time, modify_time)
+        values (#{termsCode}, #{termsName}, #{notes}, #{status}, #{createTime}, #{modifyTime})
+    </insert>
+
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsCodePO">
+        update t_mdm_data_termscode
+        <set>
+            <if test="termsCode != null and termsCode != ''">
+                terms_code = #{termsCode},
+            </if>
+            <if test="termsName != null and termsName != ''">
+                terms_name = #{termsName},
+            </if>
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

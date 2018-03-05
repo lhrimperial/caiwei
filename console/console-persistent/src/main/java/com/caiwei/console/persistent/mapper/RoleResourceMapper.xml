@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.RoleResourceMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.RoleResourcePO">
+        <id column="id" property="id"/>
+        <result column="trole_id" property="troleId"/>
+        <result column="tres_id" property="tresId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, trole_id, tres_id, status, create_time, modify_time
+      </sql>
+
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.RoleResourcePO">
+        insert into t_mdm_permis_role_resource (trole_id, tres_id, status, create_time, modify_time)
+        values (#{troleId}, #{tresId},#{status}, #{createTime}, #{modifyTime})
+    </insert>
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.RoleResourcePO">
+        update t_mdm_permis_role_resource
+        <set>
+            <if test="troleId != null">
+                trole_id = #{troleId},
+            </if>
+            <if test="tresId != null">
+                tres_id = #{tresId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modifyTime = #{modifyTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

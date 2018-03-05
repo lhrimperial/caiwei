@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.ResourceMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.ResourcePO">
+        <id column="id" property="id"/>
+        <result column="res_code" property="resCode"/>
+        <result column="res_name" property="resName"/>
+        <result column="entry_url" property="entryUrl"/>
+        <result column="res_level" property="resLevel"/>
+        <result column="parent_res" property="parentRes"/>
+        <result column="res_type" property="resType"/>
+        <result column="display_order" property="displayOrder"/>
+        <result column="checked" property="checked"/>
+        <result column="leaf_flag" property="leafFlag"/>
+        <result column="node_cls" property="nodeCls"/>
+        <result column="icon_cls" property="iconCls"/>
+        <result column="system_code" property="systemCode"/>
+        <result column="notes" property="notes"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, res_code, res_name, entry_url, res_level, parent_res, res_type, display_order,
+        checked, leaf_flag, node_cls, icon_cls, system_code, notes, status, create_time, modify_time
+      </sql>
+
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.ResourcePO">
+        insert into t_mdm_permis_resource (res_code, res_name, entry_url, res_level, parent_res,
+          res_type, display_order, checked, leaf_flag, node_cls, icon_cls, system_code, notes, status, create_time, modify_time)
+        values (#{resCode}, #{resName}, #{entryUrl}, #{resLevel}, #{parentRes},
+          #{resType}, #{displayOrder}, #{checked}, #{leafFlag}, #{nodeCls}, #{iconCls}, #{systemCode}, #{notes}, #{status}, #{createTime}, #{modifyTime})
+      </insert>
+
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.ResourcePO">
+        update t_mdm_permis_resource
+        <set>
+            <if test="resName != null and resName != ''">
+                res_name = #{resName},
+            </if>
+            <if test="entryUrl != null  and entryUrl != ''">
+                entry_url = #{entryUrl},
+            </if>
+            <if test="resLevel != null">
+                res_level = #{resLevel},
+            </if>
+            <if test="parentRes != null  and parentRes != ''">
+                parent_res = #{parentRes},
+            </if>
+            <if test="resType != null">
+                res_type = #{resType},
+            </if>
+            <if test="displayOrder != null">
+                display_order = #{displayOrder},
+            </if>
+            <if test="checked != null">
+                checked = #{checked},
+            </if>
+            <if test="leafFlag != null">
+                leaf_flag = #{leafFlag},
+            </if>
+            <if test="nodeCls != null  and nodeCls != ''">
+                node_cls = #{nodeCls},
+            </if>
+            <if test="iconCls != null  and iconCls != ''">
+                icon_cls = #{iconCls},
+            </if>
+            <if test="systemCode != null  and systemCode != ''">
+                system_code = #{systemCode},
+            </if>
+            <if test="notes != null  and notes != ''">
+                notes = #{notes},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modifyTime = #{modifyTime},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="resCode != null and resCode != ''">
+                and res_code = #{resCode}
+            </if>
+        </where>
+    </update>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.UserRoleMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.UserRolePO">
+        <id column="id" property="id"/>
+        <result column="tuser_id" property="tuserId"/>
+        <result column="tdept_id" property="tdeptId"/>
+        <result column="trole_id" property="troleId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, tuser_id, tdept_id, trole_id, status, create_time, modify_time
+  </sql>
+
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
+    insert into t_mdm_permis_user_role ( tuser_id, tdept_id, trole_id, status, create_time, modify_time)
+    values (#{tuserId}, #{tdeptId}, #{troleId}, #{status}, #{createTime}, #{modifyTIme})
+  </insert>
+
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
+        update t_mdm_permis_user_role
+        <set>
+            <if test="tuserId != null">
+                tuser_id = #{tuserId},
+            </if>
+            <if test="tdeptId != null">
+                tdept_id = #{tdeptId},
+            </if>
+            <if test="troleId != null">
+                trole_id = #{troleId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

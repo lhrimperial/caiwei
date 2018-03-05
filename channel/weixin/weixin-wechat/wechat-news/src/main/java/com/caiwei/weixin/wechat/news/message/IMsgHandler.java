@@ -2,7 +2,6 @@ package com.caiwei.weixin.wechat.news.message;
 
 
 
-import com.caiwei.framework.server.exception.BusinessException;
 
 import java.util.Map;
 

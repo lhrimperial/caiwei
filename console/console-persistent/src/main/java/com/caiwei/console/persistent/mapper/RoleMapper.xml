@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.caiwei.console.persistent.mapper.RoleMapper">
+    <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
+    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.RolePO">
+        <id column="id" property="id"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="role_name" property="roleName"/>
+        <result column="system_code" property="systemCode"/>
+        <result column="type" property="type"/>
+        <result column="notes" property="notes"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tr_id, role_code, role_name, system_code, `type`, notes, status, create_time, modify_time
+      </sql>
+    
+    <insert id="insert" parameterType="com.caiwei.console.persistent.domain.RolePO">
+        insert into t_mdm_permis_role (role_code, role_name,system_code, `type`, notes, status, create_time, modify_time)
+        values (#{roleCode}, #{roleName}, #{systemCode}, #{type}, #{notes}, #{status}, #{createTime}, #{modifyTime})
+      </insert>
+
+    <update id="update" parameterType="com.caiwei.console.persistent.domain.RolePO">
+        update t_mdm_permis_role
+        <set>
+            <if test="roleName != null  and roleName != ''">
+                role_name = #{roleName},
+            </if>
+            <if test="systemCode != null and systemCode != ''">
+                system_code = #{systemCode},
+            </if>
+            <if test="type != null and type != ''">
+                `type` = #{type},
+            </if>
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="roleCode != null and roleCode != ''">
+                and role_code = #{roleCode}
+            </if>
+        </where>
+    </update>
+</mapper>

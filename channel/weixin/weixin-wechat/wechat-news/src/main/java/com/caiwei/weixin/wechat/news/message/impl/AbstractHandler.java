@@ -1,6 +1,5 @@
 package com.caiwei.weixin.wechat.news.message.impl;
 
-import com.caiwei.framework.server.exception.BusinessException;
 import com.caiwei.framework.util.json.JaxbUtil;
 import com.caiwei.framework.util.json.JsonUtils;
 import com.caiwei.weixin.wechat.base.define.MessageKey;
