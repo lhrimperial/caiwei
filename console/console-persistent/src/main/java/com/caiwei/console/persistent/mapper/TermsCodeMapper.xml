@@ -31,9 +31,6 @@
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsCodePO">
         update t_mdm_data_termscode
         <set>
-            <if test="termsCode != null and termsCode != ''">
-                terms_code = #{termsCode},
-            </if>
             <if test="termsName != null and termsName != ''">
                 terms_name = #{termsName},
             </if>
@@ -50,6 +47,13 @@
                 modify_time = #{modifyTime},
             </if>
         </set>
-        where id = #{id}
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="termsCode != null and termsCode != ''">
+                and terms_code = #{termsCode}
+            </if>
+        </where>
     </update>
 </mapper>

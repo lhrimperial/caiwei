@@ -40,9 +40,6 @@
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
         update t_mdm_data_termsvalue
         <set>
-            <if test="valueCode != null and valueCode != ''">
-                value_code = #{valueCode},
-            </if>
             <if test="valueName != null and valueName != ''">
                 value_name = #{valueName},
             </if>
@@ -65,6 +62,13 @@
                 modify_time = #{modifyTime},
             </if>
         </set>
-        where id = #{id}
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="valueCode != null and valueCode != ''">
+                and value_code = #{valueCode}
+            </if>
+        </where>
     </update>
 </mapper>

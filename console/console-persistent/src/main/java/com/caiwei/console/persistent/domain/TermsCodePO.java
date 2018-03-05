@@ -16,6 +16,14 @@ public class TermsCodePO extends BasePO{
 
     private String notes;
 
+    public TermsCodePO() {
+    }
+
+    public TermsCodePO(String termsCode, byte status) {
+        this.termsCode = termsCode;
+        this.status = status;
+    }
+
     public String getTermsCode() {
         return termsCode;
     }

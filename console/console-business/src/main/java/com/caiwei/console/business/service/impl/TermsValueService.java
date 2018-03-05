@@ -30,12 +30,15 @@ public class TermsValueService implements ITermsValueService {
 
     @Override
     public int updateTermsCode(TermsCodePO termsCodeDO) {
-        return termsCodeMapper.updateByPrimaryKey(termsCodeDO);
+        return termsCodeMapper.update(termsCodeDO);
     }
 
     @Override
-    public int deleteTermsCode(int ttcId) {
-        return termsCodeMapper.deleteByPrimaryKey(ttcId);
+    public int deleteTermsCode(String termsCode) {
+//        TermsCodePO termsCodeDO = new TermsCodePO(termsCode, Constants.N);
+//
+//        return termsCodeMapper.deleteByPrimaryKey(ttcId);
+        return 0;
     }
 
     @Override
@@ -50,12 +53,14 @@ public class TermsValueService implements ITermsValueService {
 
     @Override
     public int updateTermsValue(TermsValuePO termsValueDO) {
-        return termsValueMapper.updateByPrimaryKey(termsValueDO);
+//        return termsValueMapper.updateByPrimaryKey(termsValueDO);
+        return 0;
     }
 
     @Override
-    public int deleteTermsValue(int ttvId) {
-        return termsValueMapper.deleteByPrimaryKey(ttvId);
+    public int deleteTermsValue(String ode) {
+//        return termsValueMapper.deleteByPrimaryKey(ttvId);
+        return 0;
     }
 
     @Override

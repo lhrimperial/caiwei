@@ -17,7 +17,7 @@ public interface ITermsValueService {
 
     int updateTermsCode(TermsCodePO termsCodeDO);
 
-    int deleteTermsCode(int ttcId);
+    int deleteTermsCode(String termsCode);
 
     TermsCodePO findByCode(String termsCode);
 
@@ -25,7 +25,7 @@ public interface ITermsValueService {
 
     int updateTermsValue(TermsValuePO termsValueDO);
 
-    int deleteTermsValue(int ttvId);
+    int deleteTermsValue(String valueCode);
 
     TermsValuePO findByTermsCodeAndValueCode(String termsCode, String valueCode);
 
