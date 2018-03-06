@@ -1,4 +1,4 @@
-Ext.define('Caiwei.model.login.PermisUser', {
+Ext.define('Caiwei.model.login.UserVO', {
 	extend : 'Ext.data.Model',
 	fields : [ {
 		name : 'userCode',
@@ -49,11 +49,11 @@ Ext.define('Caiwei.view.login.LoginForm', {
 function login(){
 	var form = Ext.getCmp("loginFormId").getForm();
 	if (form.isValid()) { // 校验form是否通过校验
-		var userModel = new Caiwei.model.login.PermisUser();
+		var userModel = new Caiwei.model.login.UserVO();
 		form.updateRecord(userModel); // 将FORM中数据设置到MODEL里面
-		var permisUser = userModel.data;
+		var userVO = userModel.data;
 		var successFun = function(json) {
-			window.location.href = "index";
+			window.location.href = "main";
 		};
 		var failureFun = function(json) {
 			if (Ext.isEmpty(json)) {
@@ -67,7 +67,7 @@ function login(){
 				document.getElementById("error").innerText = message+"!";
 			}
 		};
-		Caiwei.requestJsonAjax('login', permisUser, successFun,
+		Caiwei.requestJsonAjax('login', userVO, successFun,
 				failureFun); // 发送AJAX请求
 	}
 }

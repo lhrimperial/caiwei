@@ -7,11 +7,13 @@ Caiwei.operatorCount = {
 }; // 操作返回值 1为成功，-1为失败
 Caiwei.delAgencyType = 'MANY'; // 删除的类型，批量
 Caiwei.delType = 'MANY'; // 删除的类型，批量
+
 Caiwei.viewState = {
 	add : 'ADD',
 	update : 'UPDATE',
 	view : 'VIEW'
 }; // 查看状态viewState："ADD"新增,"UPDATE"修改,"VIEW"查看
+
 Caiwei.booleanType = {
 	yes : 'Y',
 	no : 'N'

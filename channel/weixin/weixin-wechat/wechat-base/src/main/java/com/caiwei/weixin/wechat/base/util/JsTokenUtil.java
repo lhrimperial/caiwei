@@ -1,12 +1,12 @@
 package com.caiwei.weixin.wechat.base.util;
 
 
-import com.caiwei.framework.util.json.JsonUtils;
 import com.caiwei.weixin.wechat.base.define.WechatConst;
 import com.caiwei.weixin.wechat.base.define.WechatUrl;
 import com.caiwei.weixin.wechat.base.entity.token.JSApiTicket;
 import com.caiwei.weixin.wechat.base.entity.token.JsToken;
 import com.caiwei.weixin.wechat.base.util.net.WeixinUtil;
+import com.github.framework.util.json.JsonUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

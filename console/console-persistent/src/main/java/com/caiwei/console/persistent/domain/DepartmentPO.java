@@ -1,6 +1,8 @@
 package com.caiwei.console.persistent.domain;
 
 
+import com.github.framework.server.shared.domain.po.BasePO;
+
 public class DepartmentPO extends BasePO {
 
     private static final long serialVersionUID = 2704083787263616186L;
@@ -23,6 +25,13 @@ public class DepartmentPO extends BasePO {
      * 父级部门名称
      */
     private String parentName;
+
+    public DepartmentPO(){}
+
+    public DepartmentPO(String deptCode, byte status) {
+        this.deptCode = deptCode;
+        this.status = status;
+    }
 
     public String getDeptCode() {
         return deptCode;

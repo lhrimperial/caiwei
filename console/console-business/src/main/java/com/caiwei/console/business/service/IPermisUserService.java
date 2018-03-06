@@ -9,11 +9,11 @@ import com.caiwei.console.persistent.domain.UserPO;
  */
 public interface IPermisUserService {
 
-    int insert(UserPO permisUserDO);
+    int insert(UserPO userPO);
 
-    int update(UserPO permisUserDO);
+    int update(UserPO userPO);
 
-    int delete(int id);
+    int delete(String userCode);
 
-    UserPO findPermisUser(String userCode);
+    UserPO findUser(String userCode);
 }

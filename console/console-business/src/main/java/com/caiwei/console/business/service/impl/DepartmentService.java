@@ -3,6 +3,7 @@ package com.caiwei.console.business.service.impl;
 import com.caiwei.console.business.service.IDepartmentService;
 import com.caiwei.console.persistent.domain.DepartmentPO;
 import com.caiwei.console.persistent.mapper.DepartmentMapper;
+import com.github.framework.server.shared.define.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,9 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public int delete(int tdId) {
-        return departmentMapper.delete(tdId);
+    public int delete(String deptCode) {
+        DepartmentPO departmentPO = new DepartmentPO(deptCode, Constants.PoStatus.INACTIVE.value());
+        return departmentMapper.update(departmentPO);
     }
 
     @Override

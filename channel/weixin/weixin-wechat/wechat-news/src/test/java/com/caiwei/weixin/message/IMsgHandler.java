@@ -2,7 +2,7 @@ package com.caiwei.weixin.message;
 
 
 
-import com.caiwei.framework.server.exception.BusinessException;
+import com.github.framework.server.exception.BusinessException;
 
 import java.util.Map;
 

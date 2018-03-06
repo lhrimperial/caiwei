@@ -1,6 +1,7 @@
 package com.caiwei.console.persistent.domain;
 
-import java.util.Date;
+import com.github.framework.server.shared.domain.po.BasePO;
+
 
 public class TermsValuePO extends BasePO {
     private static final long serialVersionUID = -2520964434296776397L;
@@ -26,6 +27,13 @@ public class TermsValuePO extends BasePO {
     private Byte valueSeq;
 
     private String notes;
+
+    public TermsValuePO(){}
+
+    public TermsValuePO(String valueCode, byte status) {
+        this.valueCode = valueCode;
+        this.status = status;
+    }
 
     public String getValueCode() {
         return valueCode;

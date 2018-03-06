@@ -19,7 +19,7 @@ table td span{
    	background-color: #f15b23;
 }
 .top_back_td{
-	background-image:url('../../images/login/top_bg.png');
+	background-image:url('../images/login/top_bg.png');
 	background-repeat:repeat;
 	vertical-align:top;
 	padding:0px;

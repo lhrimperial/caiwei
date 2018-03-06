@@ -1,7 +1,9 @@
 package com.caiwei.console.persistent.domain;
 
 
-public class RoleResourcePO extends BasePO{
+import com.github.framework.server.shared.domain.po.BasePO;
+
+public class RoleResourcePO extends BasePO {
 
     private static final long serialVersionUID = 7060387400887162747L;
     /**

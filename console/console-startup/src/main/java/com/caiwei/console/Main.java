@@ -1,7 +1,7 @@
-package com.caiwei.console.startup;
+package com.caiwei.console;
 
-import com.caiwei.starter.core.ApplicationContexts;
-import com.caiwei.starter.core.FrameBootApplication;
+import com.github.framework.starter.core.ApplicationContexts;
+import com.github.framework.starter.core.FrameBootApplication;
 import org.springframework.boot.SpringApplication;
 
 /**

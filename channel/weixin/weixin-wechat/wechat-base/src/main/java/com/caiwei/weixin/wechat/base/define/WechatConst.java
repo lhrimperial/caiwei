@@ -2,7 +2,8 @@ package com.caiwei.weixin.wechat.base.define;
 
 
 
-import com.caiwei.framework.util.ConfigFileLoadUtil;
+
+import com.github.framework.util.ConfigFileLoadUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.caiwei.weixin.wechat.news.message.impl;
 
-import com.caiwei.framework.util.json.JsonUtils;
+import com.github.framework.util.json.JsonUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 

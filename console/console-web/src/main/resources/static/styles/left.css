@@ -1,6 +1,6 @@
 /************Tree item icon*************/
 .ui_main_left_tree_parent_gzt_iconCls{
-	background-image:url('../../images/login/home.png');
+	background-image:url('../images/home.png');
 	background-repeat:repeat;
 	vertical-align:top;
 	height:22px;
@@ -9,7 +9,7 @@
 	margin:0px;
 }
 .ui_main_left_tree_parent_sys_iconCls{
-	background-image:url('../../images/login/set.png');
+	background-image:url('../images/set.png');
 	background-repeat:repeat;
 	vertical-align:top;
 	height:22px;
@@ -18,7 +18,7 @@
 	margin:0px;
 }
 .ui_main_left_tree_left_iconCls{
-	background-image:url('../../images/login/point.png');
+	background-image:url('../images/point.png');
 	background-repeat:repeat;
 	vertical-align:top;
 	height:22px;
@@ -27,7 +27,7 @@
 	margin:0px;
 }
 .ui_main_left_tree_elbow_img{
-	background-image:url('../../images/login/arrow_down.png');
+	background-image:url('../images/arrow_down.png');
 	cursor:pointer;
 	background-repeat:repeat;
 	vertical-align:top;
@@ -37,7 +37,7 @@
 	margin:0px;
 }
 .ui_main_left_tree_elbow_img_expander{
-	background-image:url('../../images/login/arrow_up.png');
+	background-image:url('../images/arrow_up.png');
 	cursor:pointer;
 	background-repeat:repeat;
 	vertical-align:top;

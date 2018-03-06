@@ -15,7 +15,7 @@ public interface IEmployeeService {
 
     int update(EmployeePO employeeDO);
 
-    int delete(int teId);
+    int delete(String empCode);
 
     EmployeePO findByEmpCode(String empCode);
 

@@ -1,9 +1,9 @@
 package com.caiwei.console.persistent.domain;
 
 
-import java.util.Date;
+import com.github.framework.server.shared.domain.po.BasePO;
 
-public class ResourcePO extends BasePO{
+public class ResourcePO extends BasePO {
 
     private static final long serialVersionUID = 8523958187302001936L;
     /**

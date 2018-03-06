@@ -1,8 +1,9 @@
 package com.caiwei.console.persistent.domain;
 
-import java.util.Date;
 
-public class RolePO extends BasePO{
+import com.github.framework.server.shared.domain.po.BasePO;
+
+public class RolePO extends BasePO {
 
     private static final long serialVersionUID = -5731153302574261551L;
     /**

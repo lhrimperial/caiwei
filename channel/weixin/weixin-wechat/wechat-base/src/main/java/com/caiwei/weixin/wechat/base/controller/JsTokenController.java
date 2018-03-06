@@ -1,8 +1,8 @@
 package com.caiwei.weixin.wechat.base.controller;
 
-import com.caiwei.framework.util.json.FastJsonUtil;
 import com.caiwei.weixin.wechat.base.entity.token.JsToken;
 import com.caiwei.weixin.wechat.base.util.JsTokenUtil;
+import com.github.framework.util.json.FastJsonUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

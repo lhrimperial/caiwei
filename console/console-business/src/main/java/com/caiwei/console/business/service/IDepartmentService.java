@@ -15,7 +15,7 @@ public interface IDepartmentService {
 
     int update(DepartmentPO departmentDO);
 
-    int delete(int tdId);
+    int delete(String deptCode);
 
     DepartmentPO findByDeptCode(String deptCode);
 

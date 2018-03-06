@@ -3,6 +3,7 @@ package com.caiwei.console.business.service.impl;
 import com.caiwei.console.business.service.IEmployeeService;
 import com.caiwei.console.persistent.domain.EmployeePO;
 import com.caiwei.console.persistent.mapper.EmployeeMapper;
+import com.github.framework.server.shared.define.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,9 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public int delete(int teId) {
-        return employeeMapper.delete(teId);
+    public int delete(String empCode) {
+        EmployeePO employeePO = new EmployeePO(empCode, Constants.PoStatus.INACTIVE.value());
+        return employeeMapper.update(employeePO);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.caiwei.console.persistent.domain;
 
 
-public class TermsCodePO extends BasePO{
+import com.github.framework.server.shared.domain.po.BasePO;
+
+public class TermsCodePO extends BasePO {
 
     private static final long serialVersionUID = -1046503061844307480L;
     /**

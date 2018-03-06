@@ -1,7 +1,9 @@
 package com.caiwei.console.persistent.domain;
 
 
-public class EmployeePO extends BasePO{
+import com.github.framework.server.shared.domain.po.BasePO;
+
+public class EmployeePO extends BasePO {
 
     private static final long serialVersionUID = 5174249122110775065L;
     private String empCode;
@@ -12,6 +14,15 @@ public class EmployeePO extends BasePO{
     private String mobileNo;
     private String email;
     private String telPhone;
+
+    public EmployeePO() {
+
+    }
+
+    public EmployeePO(String empCode, byte status) {
+        this.empCode = empCode;
+        this.status = status;
+    }
 
     public String getEmpCode() {
         return empCode;

@@ -3,6 +3,8 @@ package com.caiwei.weixin.wechat.news.message;
 
 
 
+import com.github.framework.server.exception.BusinessException;
+
 import java.util.Map;
 
 

@@ -1,12 +1,12 @@
 package com.caiwei.weixin.wechat.base.util;
 
-import com.caiwei.framework.server.exception.BusinessException;
-import com.caiwei.framework.util.json.JsonUtils;
-import com.caiwei.framework.util.string.StringUtils;
 import com.caiwei.weixin.wechat.base.define.WechatConst;
 import com.caiwei.weixin.wechat.base.define.WechatUrl;
 import com.caiwei.weixin.wechat.base.entity.auth.OAuthUser;
 import com.caiwei.weixin.wechat.base.util.net.WeixinUtil;
+import com.github.framework.server.exception.BusinessException;
+import com.github.framework.util.json.JsonUtils;
+import com.github.framework.util.string.StringUtils;
 import org.apache.log4j.Logger;
 
 /**

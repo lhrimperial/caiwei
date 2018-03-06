@@ -1,11 +1,11 @@
 package com.caiwei.weixin.service;
 
-import com.caiwei.framework.util.json.FastJsonUtil;
 import com.caiwei.weixin.message.MsgDispatcher;
 import com.caiwei.weixin.wechat.base.define.MessageKey;
 import com.caiwei.weixin.wechat.base.define.MsgKey;
 import com.caiwei.weixin.wechat.base.entity.resp.text.ResTextMsg;
 import com.caiwei.weixin.wechat.base.util.MessageUtil;
+import com.github.framework.util.json.FastJsonUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

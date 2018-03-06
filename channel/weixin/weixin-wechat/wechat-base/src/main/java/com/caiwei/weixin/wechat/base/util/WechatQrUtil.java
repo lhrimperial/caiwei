@@ -1,12 +1,12 @@
 package com.caiwei.weixin.wechat.base.util;
 
-import com.caiwei.framework.util.image.ImageUtils;
-import com.caiwei.framework.util.file.*;
-import com.caiwei.framework.util.json.JsonUtils;
-import com.caiwei.framework.util.string.StringUtils;
 import com.caiwei.weixin.wechat.base.define.WechatUrl;
 import com.caiwei.weixin.wechat.base.entity.token.QrTicket;
 import com.caiwei.weixin.wechat.base.util.net.WeixinUtil;
+import com.github.framework.util.file.FileUtil;
+import com.github.framework.util.image.ImageUtils;
+import com.github.framework.util.json.JsonUtils;
+import com.github.framework.util.string.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;

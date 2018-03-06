@@ -1,12 +1,10 @@
-<%@ page language="java"  pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%--<%@taglib uri="/ext" prefix="ext" %>--%>
 <!doctype html>
 <html>
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<%@include file="common.jsp"%>
-<%--<ext:module groups="main" subModule="main"/>--%>
+<#include "common/common.ftl">
+<#include "common/head.ftl">
 <link href="${styles}/left_tree.css" rel="stylesheet" type="text/css" />
 </head>
 <script type="text/javascript">

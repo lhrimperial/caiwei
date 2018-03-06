@@ -17,11 +17,11 @@ Ext.require([
 	login.queryCurrentInfo = function() {
 		//Ajax请求当前登录用户信息
 		Ext.Ajax.request({
-			url: 'loginAction!currentLoginUserInfo.action',
+			url: 'currentUserInfo',
 			method: 'POST',
 			async: false,
 			success: function(response, opts) {
-				var result = Ext.decode(response.responseText);
+				var result = Ext.decode(response);
 				if(result.success){
 					//设置当前登录用户信息
 					login.currentUser = result.currentUser;
@@ -268,16 +268,16 @@ Ext.define('UserContext', {
 /**
  * 主界面菜单Store
  */
-Ext.define('Wechat.store.login.MenuStore', {
+Ext.define('Caiwei.store.login.MenuStore', {
 	extend: 'Ext.data.TreeStore',
     root: {
 		text:'WeChat系统',
-		id : 'ewechat_1'//,
+		id : 'caiwei_1'//,
 		//expanded: true
 	},
 	proxy:{
 		type:'ajax',
-		url:'menuAction!loadTree.action',
+		url:'loadTree.action',
 		actionMethods:'POST',
 		reader:{
 			type:'json',
@@ -413,7 +413,7 @@ Ext.define('Wechat.store.login.MenuStore', {
 	}
 });
 */
-Ext.define('Wechat.main.topPanel', {
+Ext.define('Caiwei.main.topPanel', {
 	extend: 'Ext.container.Container',
 	id : 'banner',
 	frame: true,
@@ -490,14 +490,14 @@ Ext.define('Wechat.main.topPanel', {
 });
 
 //导航菜单树
-Ext.define('Wechat.main.MainNav',{
+Ext.define('Caiwei.main.MainNav',{
 	extend: 'Ext.tree.Panel',
 	id:'mainNav',//菜单CSS Class以此id为准
 	componentCls:'ye1',
 	cls:'ye1',
 	bodyCls:'ye1-body',
 	region : 'west',
-	store:Ext.create('Wechat.store.login.MenuStore'),
+	store:Ext.create('Caiwei.store.login.MenuStore'),
 	collapsible : false,
 	viewConfig :{
 		loadMask: false
@@ -585,14 +585,14 @@ Ext.define('Wechat.main.MainNav',{
 		    	        };
 		    	        var failureFun = function(json) {
 		    	            if (Ext.isEmpty(json)) {
-		    	                Wechat.showErrorMes('请求超时'); // 请求超时
+                                Caiwei.showErrorMes('请求超时'); // 请求超时
 		    	            } else {
 		    	                var message = json.message;
-		    	                Wechat.showErrorMes(message);
+                                Caiwei.showErrorMes(message);
 		    	            }
 		    	        };
 		    	        //Ajax请求得到所有查询到的节点全路径
-		    	        Wechat.requestJsonAjax('../login/menuAction!queryTreePathForName.action', params, successFun, failureFun);
+                        Caiwei.requestJsonAjax('../login/menuAction!queryTreePathForName.action', params, successFun, failureFun);
 		    		}
 		    	}
 		    });

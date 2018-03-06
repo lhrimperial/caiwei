@@ -1,8 +1,10 @@
 package com.caiwei.console.persistent.domain;
 
+import com.github.framework.server.shared.domain.po.BasePO;
+
 import java.util.Date;
 
-public class UserPO extends BasePO{
+public class UserPO extends BasePO {
     private static final long serialVersionUID = -78438906311456229L;
 
     /**
@@ -39,6 +41,13 @@ public class UserPO extends BasePO{
      * 备注
      */
     private String notes;
+
+    public UserPO(){}
+
+    public UserPO(String userCode, byte status) {
+        this.userCode = userCode;
+        this.status = status;
+    }
 
     public String getUserCode() {
         return userCode;

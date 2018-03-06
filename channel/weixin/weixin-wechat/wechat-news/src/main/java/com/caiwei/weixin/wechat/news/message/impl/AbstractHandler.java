@@ -1,11 +1,12 @@
 package com.caiwei.weixin.wechat.news.message.impl;
 
-import com.caiwei.framework.util.json.JaxbUtil;
-import com.caiwei.framework.util.json.JsonUtils;
 import com.caiwei.weixin.wechat.base.define.MessageKey;
 import com.caiwei.weixin.wechat.base.entity.resp.text.ResTextMsg;
 import com.caiwei.weixin.wechat.base.exception.XmlTranslateException;
 import com.caiwei.weixin.wechat.news.message.IMsgHandler;
+import com.github.framework.server.exception.BusinessException;
+import com.github.framework.util.json.JaxbUtil;
+import com.github.framework.util.json.JsonUtils;
 import org.apache.log4j.Logger;
 
 import javax.xml.bind.JAXBException;

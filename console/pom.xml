@@ -8,10 +8,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.caiwei</groupId>
     <artifactId>console</artifactId>
+
+    <groupId>com.caiwei.console</groupId>
     <packaging>pom</packaging>
 
+    <distributionManagement>
+        <site>
+            <id>website</id>
+            <url>scp://webhost.company.com/www/website</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <modules>
         <module>console-api</module>
         <module>console-business</module>
@@ -22,8 +33,4 @@
         <module>console-test</module>
         <module>console-web</module>
     </modules>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

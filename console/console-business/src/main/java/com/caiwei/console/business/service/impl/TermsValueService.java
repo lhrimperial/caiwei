@@ -5,6 +5,7 @@ import com.caiwei.console.persistent.domain.TermsCodePO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 import com.caiwei.console.persistent.mapper.TermsCodeMapper;
 import com.caiwei.console.persistent.mapper.TermsValueMapper;
+import com.github.framework.server.shared.define.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +36,8 @@ public class TermsValueService implements ITermsValueService {
 
     @Override
     public int deleteTermsCode(String termsCode) {
-//        TermsCodePO termsCodeDO = new TermsCodePO(termsCode, Constants.N);
-//
-//        return termsCodeMapper.deleteByPrimaryKey(ttcId);
-        return 0;
+        TermsCodePO termsCodeDO = new TermsCodePO(termsCode, Constants.PoStatus.INACTIVE.value());
+        return termsCodeMapper.update(termsCodeDO);
     }
 
     @Override
@@ -53,14 +52,13 @@ public class TermsValueService implements ITermsValueService {
 
     @Override
     public int updateTermsValue(TermsValuePO termsValueDO) {
-//        return termsValueMapper.updateByPrimaryKey(termsValueDO);
-        return 0;
+        return termsValueMapper.update(termsValueDO);
     }
 
     @Override
-    public int deleteTermsValue(String ode) {
-//        return termsValueMapper.deleteByPrimaryKey(ttvId);
-        return 0;
+    public int deleteTermsValue(String termsValueCode) {
+        TermsValuePO termsValuePO = new TermsValuePO(termsValueCode, Constants.PoStatus.INACTIVE.value());
+        return termsValueMapper.update(termsValuePO);
     }
 
     @Override
