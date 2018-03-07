@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.ResourceMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.ResourcePO">
-        <id column="id" property="id"/>
+        <id column="id" property="tid"/>
         <result column="res_code" property="resCode"/>
         <result column="res_name" property="resName"/>
         <result column="entry_url" property="entryUrl"/>
@@ -85,7 +85,7 @@
         </set>
         <where>
             <if test="id != null">
-                and id = #{id}
+                and id = #{tid}
             </if>
             <if test="resCode != null and resCode != ''">
                 and res_code = #{resCode}

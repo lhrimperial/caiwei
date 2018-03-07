@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.DepartmentMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.DepartmentPO">
-        <id column="id" property="id"/>
+        <id column="id" property="tid"/>
         <result column="dept_code" property="deptCode"/>
         <result column="dept_name" property="deptName"/>
         <result column="parent_code" property="parentCode"/>
@@ -67,7 +67,7 @@
         </set>
         <where>
             <if test="id != null">
-                and id = #{id}
+                and id = #{tid}
             </if>
             <if test="deptCode != null">
                 and dept_code = #{deptCode}

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.UserMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.UserPO">
-        <id column="id" property="id"/>
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.PermisUserDO">
+        <id column="id" property="tid"/>
         <result column="user_code" property="userCode"/>
         <result column="pass_word" property="passWord"/>
         <result column="emp_code" property="empCode"/>
@@ -16,9 +16,16 @@
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, user_code, pass_word, emp_code, emp_name, dept_code, last_login, notes, status, create_time, modify_time
-  </sql>
-    <select id="findByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        id, user_code, pass_word, emp_code, emp_name, dept_code, last_login, notes, status, create_time, modify_time
+    </sql>
+
+    <select id="findUserByLoginCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select user_code,pass_word,`status`
+        from t_mdm_permis_user
+        where user_code = #{user_code}
+    </select>
+
+    <select id="findUserDetail" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from t_mdm_permis_user
@@ -66,7 +73,7 @@
                 and user_code = #{userCode}
             </if>
             <if test="id != null">
-                and id = #{id}
+                and id = #{tid}
             </if>
         </where>
     </update>

@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.EmployeeMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.EmployeePO">
-        <id column="id" property="id"/>
+        <id column="id" property="tid"/>
         <result column="emp_code" property="empCode"/>
         <result column="emp_name" property="empName"/>
         <result column="dept_code" property="deptCode"/>
@@ -82,7 +82,7 @@
         </set>
         <where>
             <if test="id != null">
-                and id = #{id}
+                and id = #{tid}
             </if>
             <if test="empCode != null">
                 and emp_code = #{empCode}

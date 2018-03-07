@@ -1,7 +1,7 @@
 package com.caiwei.console.business.service;
 
 
-import com.caiwei.console.persistent.domain.UserPO;
+import com.caiwei.console.common.domain.PermisUserDO;
 
 /**
  * @author longhr
@@ -9,11 +9,13 @@ import com.caiwei.console.persistent.domain.UserPO;
  */
 public interface IPermisUserService {
 
-    int insert(UserPO userPO);
+    int save(PermisUserDO permisUserDO);
 
-    int update(UserPO userPO);
+    int update(PermisUserDO permisUserDO);
 
     int delete(String userCode);
 
-    UserPO findUser(String userCode);
+    PermisUserDO findUserByLoginCode(String userCode);
+
+    PermisUserDO findUserDetail(String userCode);
 }

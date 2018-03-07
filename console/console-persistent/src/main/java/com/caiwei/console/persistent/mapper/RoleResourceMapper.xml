@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.RoleResourceMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.RoleResourcePO">
-        <id column="id" property="id"/>
+        <id column="id" property="tid"/>
         <result column="trole_id" property="troleId"/>
         <result column="tres_id" property="tresId"/>
         <result column="status" property="status"/>
@@ -37,6 +37,6 @@
                 modifyTime = #{modifyTime},
             </if>
         </set>
-        where id = #{id}
+        where id = #{tid}
     </update>
 </mapper>

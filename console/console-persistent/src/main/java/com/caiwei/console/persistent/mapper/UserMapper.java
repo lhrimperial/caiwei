@@ -1,5 +1,6 @@
 package com.caiwei.console.persistent.mapper;
 
+import com.caiwei.console.common.domain.PermisUserDO;
 import com.caiwei.console.persistent.domain.UserPO;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,9 @@ public interface UserMapper {
 
     int update(UserPO permisUserDO);
 
-    UserPO findByUserCode(String userCode);
+    PermisUserDO findUserByLoginCode(String userCode);
+
+    PermisUserDO findUserDetail(String userCode);
 
 
 }

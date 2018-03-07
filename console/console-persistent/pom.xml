@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.caiwei.console</groupId>
+            <artifactId>console-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.framework</groupId>
             <artifactId>framework-starter-mybatis</artifactId>
         </dependency>

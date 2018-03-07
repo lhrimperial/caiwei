@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.UserRoleMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.UserRolePO">
-        <id column="id" property="id"/>
+        <id column="id" property="tid"/>
         <result column="tuser_id" property="tuserId"/>
         <result column="tdept_id" property="tdeptId"/>
         <result column="trole_id" property="troleId"/>
@@ -38,6 +38,6 @@
                 create_time = #{createTime},
             </if>
         </set>
-        where id = #{id}
+        where id = #{tid}
     </update>
 </mapper>

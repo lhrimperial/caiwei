@@ -33,5 +33,10 @@
             <artifactId>console-persistent</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.framework</groupId>
+            <artifactId>framework-starter-redis</artifactId>
+        </dependency>
     </dependencies>
 </project>

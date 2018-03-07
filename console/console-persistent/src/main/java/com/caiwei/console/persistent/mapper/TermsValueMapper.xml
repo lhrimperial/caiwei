@@ -3,7 +3,7 @@
 <mapper namespace="com.caiwei.console.persistent.mapper.TermsValueMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.TermsValuePO">
-        <id column="ttv_id" property="ttvId"/>
+        <id column="ttv_id" property="tid"/>
         <result column="value_code" property="valueCode"/>
         <result column="value_name" property="valueName"/>
         <result column="terms_code" property="termsCode"/>
@@ -64,7 +64,7 @@
         </set>
         <where>
             <if test="id != null">
-                and id = #{id}
+                and id = #{tid}
             </if>
             <if test="valueCode != null and valueCode != ''">
                 and value_code = #{valueCode}
