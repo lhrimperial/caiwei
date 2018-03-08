@@ -1,5 +1,6 @@
 package com.caiwei.console.persistent.mapper;
 
+import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.persistent.domain.DepartmentPO;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +14,10 @@ public interface DepartmentMapper {
 
     int insert(DepartmentPO record);
 
-    DepartmentPO findByDeptCode(String deptCode);
+    DepartmentDO findByDeptCode(String deptCode);
 
-    DepartmentPO findByEmpCode(String empCode);
+    DepartmentDO findByEmpCode(String empCode);
 
-    List<DepartmentPO> findByParentCode(String parentCode);
+    List<DepartmentDO> findByParentCode(String parentCode);
 
 }

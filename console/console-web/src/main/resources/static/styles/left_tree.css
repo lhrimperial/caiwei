@@ -228,14 +228,14 @@ div#mainNav-body .x-grid-row-selected.x-grid-row-focused .ye1-node-lvl4 div {
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box; */
 	/* background-image:url(../img/icons.png); */
-	/* background-image:url(../../images/login/arrows.png); */
+	/* background-image:url(../images/arrows.png); */
 	/* background-position:-222px -3px; */
 	/* background-position:0px 5px; */
 	/* background-repeat:no-repeat; */
 	/* width:40px; */
 	/*  background-position:0px 5px;  */
 	/* height:23px; */
-	background-image:url(../../images/login/arrows.png);
+	background-image:url(../images/arrows.png);
 	padding:0; 
 	margin:3px 0px 0px 0; 
 }

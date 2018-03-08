@@ -15,8 +15,45 @@
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
+
+    <resultMap id="DetailResultMap" extends="BaseResultMap" type="com.caiwei.console.common.domain.PermisUserDO">
+        <collection property="roleCodes" column="role_code" ofType="java.lang.String">
+            <result column="role_code" />
+        </collection>
+        <collection property="deptCodes" column="dept_code" ofType="java.lang.String">
+            <result column="dept_code" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="queryOrgResCodeUrisByCodeResultMap" type="com.caiwei.console.common.domain.UserOrgResCodeUrisDO">
+        <result column="resCode" property="resCode"/>
+        <result column="resUri" property="resUri"/>
+    </resultMap>
+
+    <select id="queryOrgResCodeUrisByCode" resultMap="queryOrgResCodeUrisByCodeResultMap" parameterType="java.util.Map">
+        select
+            rs.res_code as resCode, rs.entry_url as resUri
+        from t_mdm_permis_user_role ur,
+            t_mdm_permis_resource rs,
+            t_mdm_permis_role_resource rr
+        where ur.role_code = rr.role_code
+            and rr.res_code = rs.res_code
+            and ur.user_code = #{userCode}
+            and ur.dept_code = #{deptCode}
+    </select>
+
     <sql id="Base_Column_List">
-        id, user_code, pass_word, emp_code, emp_name, dept_code, last_login, notes, status, create_time, modify_time
+        u.id,
+        u.user_code,
+        u.pass_word,
+        u.emp_code,
+        u.emp_name,
+        u.dept_code,
+        u.last_login,
+        u.notes,
+        u.status,
+        u.create_time,
+        u.modify_time
     </sql>
 
     <select id="findUserByLoginCode" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -25,11 +62,13 @@
         where user_code = #{user_code}
     </select>
 
-    <select id="findUserDetail" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="findUserDetail" resultMap="DetailResultMap" parameterType="java.lang.String">
         select
+        ur.role_code,
+        ur.dept_code,
         <include refid="Base_Column_List"/>
-        from t_mdm_permis_user
-        where user_code = #{user_code}
+        from t_mdm_permis_user u, t_mdm_permis_user_role ur
+        where u.user_code = ur.user_code and u.user_code = #{user_code}
     </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserPO">

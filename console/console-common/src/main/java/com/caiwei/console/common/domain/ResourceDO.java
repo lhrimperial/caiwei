@@ -1,65 +1,64 @@
 package com.caiwei.console.common.domain;
 
-import com.github.framework.server.shared.entity.BaseEntity;
-import com.github.framework.server.shared.entity.IFunction;
-import com.github.framework.server.shared.entity.IModule;
-
-import java.util.List;
+import com.caiwei.console.common.define.ConsoleConstants;
+import com.github.framework.server.shared.define.Constants;
+import com.github.framework.server.shared.domain.BaseDO;
 
 /**
- * 权限业务实体
+ *
  */
-public class ResourceDO  extends BaseEntity implements IFunction {
+public class ResourceDO extends BaseDO {
+    private static final long serialVersionUID = -940507189055384976L;
 
     /**
-     * 功能编码
+     * 权限编码
      */
-    private String code;
+    private String resCode;
 
     /**
-     * 功能名称
+     * 权限名称
      */
-    private String name;
+    private String resName;
 
     /**
-     * 功能入口URI
+     * 权限入口URI
      */
-    private String entryUri;
+    private String entryUrl;
 
     /**
-     * 功能层次
+     * 功能层级(1：子系统 2：模块 3：菜单 4：按钮)
      */
-    private String resLevel;
+    private Byte resLevel;
 
     /**
-     * 父功能
+     * 上级权限
      */
-    private ResourceDO parentResDO;
+    private String parentRes;
 
     /**
-     * 是否有效
+     * 权限类型(1：子系统 2：模块 3：菜单 4：按钮)
      */
-    private String active;
+    private Byte resType;
 
     /**
      * 显示顺序
      */
-    private String displayOrder;
+    private Byte displayOrder;
 
     /**
      * 是否权限检查
      */
-    private String checked;
-
-    /**
-     * 功能类型
-     */
-    private String resType;
+    private Byte checked;
 
     /**
      * 是否叶子节点
      */
-    private String leafFlag;
+    private Byte leafFlag;
+
+    /**
+     * 节点的CSS样式
+     */
+    private String nodeCls;
 
     /**
      * 图标的CSS样式
@@ -67,55 +66,136 @@ public class ResourceDO  extends BaseEntity implements IFunction {
     private String iconCls;
 
     /**
-     * 节点的CSS样式
+     * 所属系统类型
      */
-    private String cls;
+    private String systemCode;
 
     /**
-     * 功能描述
+     * 权限描述
      */
     private String notes;
 
-    /**
-     * 所属系统类型
-     */
-    private String belongSystemType;
-    /**
-     * 权限类型集合,.
-     */
-    private List<String> resourceTypes;
-    /**
-     * 权限所属系统类型，
-     */
-    private List<String> systemTypes;
-
-    @Override
-    public IModule getModule() {
-        return null;
+    public String getResCode() {
+        return resCode;
     }
 
-    @Override
-    public String getUri() {
-        return null;
+    public void setResCode(String resCode) {
+        this.resCode = resCode;
     }
 
-    @Override
-    public String getKey() {
-        return null;
+    public String getResName() {
+        return resName;
     }
 
-    @Override
-    public String getFunctionCode() {
-        return null;
+    public void setResName(String resName) {
+        this.resName = resName;
     }
 
-    @Override
-    public Boolean getValidFlag() {
-        return null;
+    public String getEntryUrl() {
+        return entryUrl;
     }
 
-    @Override
-    public String getName() {
-        return null;
+    public void setEntryUrl(String entryUrl) {
+        this.entryUrl = entryUrl;
+    }
+
+    public Byte getResLevel() {
+        return resLevel;
+    }
+
+    public void setResLevel(Byte resLevel) {
+        this.resLevel = resLevel;
+    }
+
+    public String getParentRes() {
+        return parentRes;
+    }
+
+    public void setParentRes(String parentRes) {
+        this.parentRes = parentRes;
+    }
+
+    public Byte getResType() {
+        return resType;
+    }
+
+    public void setResType(Byte resType) {
+        this.resType = resType;
+    }
+
+    public Byte getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Byte displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+    public Byte getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Byte checked) {
+        this.checked = checked;
+    }
+
+    public Byte getLeafFlag() {
+        return leafFlag;
+    }
+
+    public void setLeafFlag(Byte leafFlag) {
+        this.leafFlag = leafFlag;
+    }
+
+    public String getNodeCls() {
+        return nodeCls;
+    }
+
+    public void setNodeCls(String nodeCls) {
+        this.nodeCls = nodeCls;
+    }
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
+
+    public String getSystemCode() {
+        return systemCode;
+    }
+
+    public void setSystemCode(String systemCode) {
+        this.systemCode = systemCode;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public ResourceNode convert(ResourceDO resourceDO) {
+        ResourceNode resourceNode = new ResourceNode();
+        resourceNode.setCode(resourceDO.getResCode());
+        resourceNode.setName(resourceDO.getResName());
+        resourceNode.setEntryUri(resourceDO.getEntryUrl());
+        resourceNode.setResLevel(String.valueOf(resourceDO.getResLevel()));
+        resourceNode.setParentResDO(null);
+        resourceNode.setActive(Constants.PO_ACTIVE == resourceDO.getStatus() ? ConsoleConstants.YES : ConsoleConstants.NO);
+        resourceNode.setDisplayOrder(String.valueOf(resourceDO.displayOrder));
+        resourceNode.setChecked(Constants.YES == resourceDO.getChecked() ? ConsoleConstants.YES : ConsoleConstants.NO);
+        resourceNode.setResType(String.valueOf(resourceDO.getResType()));
+        resourceNode.setLeafFlag(Constants.YES == resourceDO.getLeafFlag() ? ConsoleConstants.YES : ConsoleConstants.NO);
+        resourceNode.setIconCls(resourceDO.iconCls);
+        resourceNode.setCls(resourceDO.getNodeCls());
+        resourceNode.setNotes(resourceDO.getNotes());
+        resourceNode.setBelongSystemType(resourceDO.getSystemCode());
+
+        return resourceNode;
     }
 }

@@ -14,14 +14,15 @@
 			method: 'POST',
 			async: false,
 			success: function(response, opts) {
-				var result = Ext.decode(response);
+				var result = Ext.decode(response.responseText);
 				if(result.success){
+					var resp = result.result;
 					//设置当前登录用户信息
-					login.currentUser = result.currentUser;
+					login.currentUser = resp.currentUser;
 					//设置当前服务器时间
-					login.currentServerTime = new Date(result.currentServerTime+1000);
+					login.currentServerTime = new Date(resp.currentServerTime+1000);
 					//设置当前部门信息
-					login.currentDept = result.currentDept;
+					login.currentDept = resp.currentDept;
 				}else{
 					Caiwei.showErrorMes("请求失败");
 				}
@@ -30,7 +31,7 @@
                 Caiwei.showErrorMes("请求失败");
 			},
 			exception:function(response){
-				var result = Ext.decode(response.responseText);
+				var result = Ext.decode(response.respMsg);
                 Caiwei.showErrorMes("请求失败");
 			}
 		});	
@@ -76,10 +77,10 @@
 		});
 	};
 	login.queryDictionaryInfo();*/
-	setInterval(function() {
-		login.queryCurrentInfo();
-//		login.isDictionaryHasChanged();
-    },10*60*1000 );
+// 	setInterval(function() {
+// 		login.queryCurrentInfo();
+// //		login.isDictionaryHasChanged();
+//     },10*60*1000 );
 })();
 
 /**********************************************************************
@@ -94,21 +95,21 @@ Ext.define('UserContext', {
 	//获得当前用户对应的职员信息
 	getCurrentUserEmp: function(){
 		if(login.currentUser){
-			return login.currentUser.employee;
+			return login.currentUser.employeeDO;
 		}
 		return null; 			
 	},
 	//获得当前用户部门信息
 	getCurrentUserDept: function(){
 		return login.currentDept;
-	}
+	},
 	//获得当前用户所拥有角色的编码集合
-//	getCurrentUserRoleCodes: function(){
-//		if(login.currentUser){
-//			return login.currentUser.roleids;
-//		}
-//		return null;
-//	}
+	getCurrentUserRoleCodes: function(){
+		if(login.currentUser){
+			return login.currentUser.roleIds;
+		}
+		return null;
+	}
 });
 /**********************************************************************/
 /**********************************************************************

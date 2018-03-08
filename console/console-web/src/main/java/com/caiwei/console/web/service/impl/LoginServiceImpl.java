@@ -1,10 +1,14 @@
 package com.caiwei.console.web.service.impl;
 
+import com.caiwei.console.business.service.IDepartmentService;
 import com.caiwei.console.business.service.IPermisUserService;
+import com.caiwei.console.common.context.PermisUserContext;
+import com.caiwei.console.common.define.ConsoleConstants;
+import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.common.domain.PermisUserDO;
 import com.caiwei.console.common.exception.LoginException;
 import com.caiwei.console.common.exception.UserException;
-import com.caiwei.console.persistent.domain.UserPO;
+import com.caiwei.console.web.domain.LoginInfoVO;
 import com.caiwei.console.web.service.ILoginService;
 import com.github.framework.server.context.SessionContext;
 import com.github.framework.server.shared.define.Constants;
@@ -15,25 +19,53 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  *
  */
 @Service
-public class LoginService implements ILoginService {
+public class LoginServiceImpl implements ILoginService {
 
-    private Logger logger = LoggerFactory.getLogger(LoginService.class);
+    private Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
     private IPermisUserService permisUserService;
+
+    @Autowired
+    private IDepartmentService departmentService;
+
+    @Override
+    public void logout() {
+        /**
+         * 失效当前session
+         */
+        SessionContext.invalidateSession();
+    }
 
     @Override
     public PermisUserDO userLogin(String userCode, String password) {
         //验证用户
         PermisUserDO userDO = validate(userCode, password);
         // 把登录用户ID、工号与默认部门编码存入session中
-        // 存入用户ID
         SessionContext.setCurrentUser(userDO.getUserCode());
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_EMPCODE, userDO.getEmpCode());
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTCODE, userDO.getDeptCode());
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTNAME, userDO.getEmployeeDO().getDeptCode());
         return userDO;
+    }
+
+    @Override
+    public LoginInfoVO currentLoginUserInfo() {
+        LoginInfoVO loginInfoVO = new LoginInfoVO();
+        loginInfoVO.setCurrentUser(PermisUserContext.getCurrentUser());
+        loginInfoVO.setCurrentServerTime(new Date());
+        String deptCode = (String) SessionContext.getSession().getObject(ConsoleConstants.KEY_CURRENT_DEPTCODE);
+        if (StringUtils.isNotBlank(deptCode)) {
+            DepartmentDO departmentDO = departmentService.findByDeptCode(deptCode);
+            loginInfoVO.setCurrentDept(departmentDO);
+        }
+        return loginInfoVO;
     }
 
     private PermisUserDO validate(String userName, String password)

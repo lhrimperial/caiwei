@@ -1,5 +1,6 @@
 package com.caiwei.console.persistent.mapper;
 
+import com.caiwei.console.common.domain.EmployeeDO;
 import com.caiwei.console.persistent.domain.EmployeePO;
 import org.springframework.stereotype.Repository;
 
@@ -12,10 +13,8 @@ public interface EmployeeMapper {
 
     int update(EmployeePO record);
 
-    EmployeePO findById(Integer teId);
+    EmployeeDO findByEmpCode(String empCode);
 
-    EmployeePO findByEmpCode(String empCode);
-
-    List<EmployeePO> findByDeptCode(String deptCode);
+    List<EmployeeDO> findByDeptCode(String deptCode);
 
 }

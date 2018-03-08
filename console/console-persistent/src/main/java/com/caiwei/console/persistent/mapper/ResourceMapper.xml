@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.ResourceMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.ResourcePO">
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.ResourceDO">
         <id column="id" property="tid"/>
         <result column="res_code" property="resCode"/>
         <result column="res_name" property="resName"/>
@@ -26,6 +26,18 @@
         id, res_code, res_name, entry_url, res_level, parent_res, res_type, display_order,
         checked, leaf_flag, node_cls, icon_cls, system_code, notes, status, create_time, modify_time
       </sql>
+
+    <select id="findByResCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_permis_resource where res_code = #{resCode}
+    </select>
+
+    <select id="findByParentCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_permis_resource where parent_res = #{resCode}
+    </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.ResourcePO">
         insert into t_mdm_permis_resource (res_code, res_name, entry_url, res_level, parent_res,

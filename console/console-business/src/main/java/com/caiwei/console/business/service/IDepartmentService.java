@@ -1,6 +1,7 @@
 package com.caiwei.console.business.service;
 
 
+import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.persistent.domain.DepartmentPO;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public interface IDepartmentService {
 
     int delete(String deptCode);
 
-    DepartmentPO findByDeptCode(String deptCode);
+    DepartmentDO findByDeptCode(String deptCode);
 
-    DepartmentPO findByEmpCode(String empCode);
+    DepartmentDO findByEmpCode(String empCode);
 
-    List<DepartmentPO> findByParentCode(String parentCode);
+    List<DepartmentDO> findByParentCode(String parentCode);
 }

@@ -1,7 +1,8 @@
 package com.caiwei.console.web.controller;
 
+import com.caiwei.console.common.annotation.CookieNonCheckRequired;
+import com.caiwei.console.common.context.PermisUserContext;
 import com.caiwei.console.common.domain.DepartmentDO;
-import com.caiwei.console.web.context.PermisUserContext;
 import com.caiwei.console.web.domain.LoginInfoVO;
 import com.caiwei.console.web.domain.UserVO;
 import com.caiwei.console.web.service.ILoginService;
@@ -9,6 +10,7 @@ import com.github.framework.server.cache.exception.security.UserNotLoginExceptio
 import com.github.framework.server.exception.BusinessException;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
 import com.github.framework.server.web.AbstractController;
+import com.github.framework.server.web.security.SecurityNonCheckRequired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.lang.annotation.Retention;
 
 /**
  *
@@ -29,12 +33,9 @@ public class LoginController extends AbstractController {
     @Autowired
     private ILoginService loginService;
 
-    @RequestMapping("/main")
-    public String main() {
-        return "main";
-    }
-
     @RequestMapping("/index")
+    @SecurityNonCheckRequired
+    @CookieNonCheckRequired
     public String index() {
         try {
             PermisUserContext.getCurrentUser();
@@ -46,6 +47,8 @@ public class LoginController extends AbstractController {
 
     @ResponseBody
     @RequestMapping("/login")
+    @SecurityNonCheckRequired
+    @CookieNonCheckRequired
     public ResponseVO login(Model model, @RequestBody UserVO userVo) {
         try {
             loginService.userLogin(userVo.getUserCode(), userVo.getPassWord());
@@ -60,10 +63,40 @@ public class LoginController extends AbstractController {
         }
     }
 
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
+
+    @ResponseBody
+    @RequestMapping("/homePage")
+    public String homePage() {
+        return "Hello, Welcome!";
+    }
+
+    @RequestMapping("/logout")
+    public ResponseVO logout() {
+        loginService.logout();
+        //失效Cookie
+//            Cookie.invalidateCookie();
+        return returnSuccess();
+    }
+
+    @ResponseBody
+    @RequestMapping("/currentUserInfo")
+    public ResponseVO<LoginInfoVO> currentLoginUserInfo() {
+        ResponseVO responseVO = returnSuccess();
+        LoginInfoVO loginInfoVO = loginService.currentLoginUserInfo();
+        responseVO.setResult(loginInfoVO);
+        return responseVO;
+    }
+
     /**
      * 查询当前可切换部门
      * @return
      */
+    @ResponseBody
+    @RequestMapping("/currentUserChangeDepts")
     public ResponseVO<DepartmentDO> currentUserChangeDepts() {
         return returnSuccess();
     }
@@ -72,16 +105,13 @@ public class LoginController extends AbstractController {
      * 切换部门
      * @return
      */
+    @ResponseBody
     @RequestMapping("/changeCurrentDept")
-    public ResponseVO<DepartmentDO> changeCurrentDept() {
+    public ResponseVO<DepartmentDO> changeCurrentDept(String currenUserDeptCode) {
 
         return returnSuccess();
     }
 
-    @RequestMapping("/currentUserInfo")
-    public ResponseVO<LoginInfoVO> currentLoginUserInfo() {
 
-        return returnSuccess();
-    }
 
 }

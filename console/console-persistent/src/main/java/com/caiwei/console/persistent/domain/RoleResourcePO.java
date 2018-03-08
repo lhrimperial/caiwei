@@ -9,26 +9,26 @@ public class RoleResourcePO extends BasePO {
     /**
      * 角色ID
      */
-    private Integer troleId;
+    private String roleCode;
 
     /**
      * 权限ID
      */
-    private Integer tresId;
+    private String resCode;
 
-    public Integer getTroleId() {
-        return troleId;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setTroleId(Integer troleId) {
-        this.troleId = troleId;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
-    public Integer getTresId() {
-        return tresId;
+    public String getResCode() {
+        return resCode;
     }
 
-    public void setTresId(Integer tresId) {
-        this.tresId = tresId;
+    public void setResCode(String resCode) {
+        this.resCode = resCode;
     }
 }

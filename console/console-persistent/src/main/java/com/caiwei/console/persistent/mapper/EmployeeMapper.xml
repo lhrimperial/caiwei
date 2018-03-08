@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.EmployeeMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.EmployeePO">
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.EmployeeDO">
         <id column="id" property="tid"/>
         <result column="emp_code" property="empCode"/>
         <result column="emp_name" property="empName"/>
@@ -34,17 +34,10 @@
         where emp_code = #{empCode}
     </select>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from t_mdm_org_employee
-        where id = #{id}
-    </select>
-
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.EmployeePO">
-    insert into t_mdm_org_employee (emp_code, emp_name, dept_code, dept_name, gender, mobile_no, email, tel_phone, status, create_time, modify_time)
-    values (#{empCode}, #{empName}, #{deptCode}, #{deptName}, #{gender}, #{mobileNo}, #{email}, #{telPhone}, #{status}, #{createTime}, #{modifyTime})
-  </insert>
+        insert into t_mdm_org_employee (emp_code, emp_name, dept_code, dept_name, gender, mobile_no, email, tel_phone, status, create_time, modify_time)
+        values (#{empCode}, #{empName}, #{deptCode}, #{deptName}, #{gender}, #{mobileNo}, #{email}, #{telPhone}, #{status}, #{createTime}, #{modifyTime})
+      </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.EmployeePO">
         update t_mdm_org_employee

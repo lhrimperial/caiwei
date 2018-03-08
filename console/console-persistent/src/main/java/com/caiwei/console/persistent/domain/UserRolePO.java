@@ -9,39 +9,39 @@ public class UserRolePO extends BasePO {
     /**
      * 用户编码
      */
-    private Integer tuserId;
+    private String userCode;
 
     /**
      * 组织编码
      */
-    private Integer tdeptId;
+    private String deptCode;
 
     /**
      * 角色编码
      */
-    private Integer troleId;
+    private String roleCode;
 
-    public Integer getTuserId() {
-        return tuserId;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setTuserId(Integer tuserId) {
-        this.tuserId = tuserId;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
-    public Integer getTdeptId() {
-        return tdeptId;
+    public String getDeptCode() {
+        return deptCode;
     }
 
-    public void setTdeptId(Integer tdeptId) {
-        this.tdeptId = tdeptId;
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
     }
 
-    public Integer getTroleId() {
-        return troleId;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setTroleId(Integer troleId) {
-        this.troleId = troleId;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 }

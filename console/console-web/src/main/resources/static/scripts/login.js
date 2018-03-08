@@ -62,7 +62,7 @@ function login(){
 				document.getElementById("error").innerText = "连接超时!";
 			} else {
 				var message = json.resMsg;
-				//Butterfly.showErrorMes(message); // 提示失败原因
+				//Caiwei.showErrorMes(message); // 提示失败原因
 				document.getElementById("msg").style.display = "block";
 				document.getElementById("error").innerText = message+"!";
 			}

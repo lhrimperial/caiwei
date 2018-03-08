@@ -1,6 +1,7 @@
 package com.caiwei.console.business.service;
 
 
+import com.caiwei.console.common.domain.EmployeeDO;
 import com.caiwei.console.persistent.domain.EmployeePO;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface IEmployeeService {
 
     int delete(String empCode);
 
-    EmployeePO findByEmpCode(String empCode);
+    EmployeeDO findByEmpCode(String empCode);
 
-    List<EmployeePO> findByDeptCode(String deptCode);
+    List<EmployeeDO> findByDeptCode(String deptCode);
 }

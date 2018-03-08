@@ -64,7 +64,7 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
             'currenUserDeptCode' : deptCode
         };
         var successFun = function(json) {
-            window.location = 'index';
+            window.location = 'main';
         };
         var failureFun = function(json) {
             if (Ext.isEmpty(json)) {
@@ -148,7 +148,7 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
     }
 });
 
-Ext.define('Butterfly.main.topPanel', {
+Ext.define('Caiwei.main.topPanel', {
     extend: 'Ext.container.Container',
     id : 'banner',
     frame: true,
@@ -175,7 +175,7 @@ Ext.define('Butterfly.main.topPanel', {
     getDeptInfo:function(){
         var me = this;
         if(this.deptInfo==null){
-            var deptText = '<span style="font-size: 18px; font-weight: bold;color:#F15B23;">'+UserContext.getCurrentUserDept().name+'('+UserContext.getCurrentUserDept().logistCode+')'+'</span>';
+            var deptText = '<span style="font-size: 18px; font-weight: bold;color:#F15B23;">'+UserContext.getCurrentUserDept().deptName+'</span>';
             this.deptInfo =Ext.create('Ext.Button',{
                 text: deptText,
                 style:'background-color:transparent;border-color: transparent;',
@@ -189,7 +189,7 @@ Ext.define('Butterfly.main.topPanel', {
     onChangeUserDeptSpace:function(){
         var me = this;
         if(me.currentDeptChangeWindow == null){
-            me.currentDeptChangeWindow = Ext.create('Butterfly.main.CurrentDeptChangeWindow');
+            me.currentDeptChangeWindow = Ext.create('Caiwei.main.CurrentDeptChangeWindow');
         }
         me.currentDeptChangeWindow.show();
     },
@@ -295,7 +295,7 @@ Ext.define('Caiwei.main.MainNav',{
                                 return;
                             }
                             for(var i=0;i<pathList.length;i++){
-                                butterfly.log(pathList[i]);
+                                Caiwei.log(pathList[i]);
                                 me.expandPath(pathList[i],'id','/',function(success, lastNode){
                                     if(success){
                                         var nodeHtmlEl = view.getNode(lastNode),
@@ -312,21 +312,21 @@ Ext.define('Caiwei.main.MainNav',{
                                             position = true;
                                         }
                                     }else{
-                                        butterfly.log('展开失败');
+                                        Caiwei.log('展开失败');
                                     }
                                 });
                             }
                         };
                         var failureFun = function(json) {
                             if (Ext.isEmpty(json)) {
-                                butterfly.showErrorMes('请求超时'); // 请求超时
+                                Caiwei.showErrorMes('请求超时'); // 请求超时
                             } else {
                                 var message = json.message;
-                                butterfly.showErrorMes(message);
+                                Caiwei.showErrorMes(message);
                             }
                         };
                         //Ajax请求得到所有查询到的节点全路径
-                        butterfly.requestJsonAjax('queryTreePathForName', params, successFun, failureFun);
+                        Caiwei.requestJsonAjax('queryTreePathForName', params, successFun, failureFun);
                     }
                 }
             });
@@ -367,7 +367,7 @@ Ext.define('Caiwei.main.MainNav',{
 Ext.onReady(function(){
     /*var treePanel = Ext.create('baseUx.tree.NTreePanel', {
      id: 'treePanel',
-     store:Ext.create('Butterfly.store.login.MenuStore'),
+     store:Ext.create('Caiwei.store.login.MenuStore'),
      renderTo:Ext.getBody(),
      region : 'west',
      collapsible : false,
@@ -429,7 +429,7 @@ Ext.onReady(function(){
                     'title': "首页",
                     closable:false,
                     border:false,
-                    html: '<iframe id="homePage" src="homePage.action" style="height:100%;width:100%;padding:0px;margin:0px;" frameborder="0"></iframe>'
+                    html: '<iframe id="homePage" src="homePage" style="height:100%;width:100%;padding:0px;margin:0px;" frameborder="0"></iframe>'
                     //html:text
                 }]
 

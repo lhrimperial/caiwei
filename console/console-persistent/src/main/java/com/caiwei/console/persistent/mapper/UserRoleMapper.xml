@@ -4,32 +4,32 @@
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
     <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.UserRolePO">
         <id column="id" property="tid"/>
-        <result column="tuser_id" property="tuserId"/>
-        <result column="tdept_id" property="tdeptId"/>
-        <result column="trole_id" property="troleId"/>
+        <result column="user_code" property="userCode"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="role_code" property="roleCode"/>
         <result column="status" property="status"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, tuser_id, tdept_id, trole_id, status, create_time, modify_time
+    id, user_code, dept_code, role_code, status, create_time, modify_time
   </sql>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
-    insert into t_mdm_permis_user_role ( tuser_id, tdept_id, trole_id, status, create_time, modify_time)
-    values (#{tuserId}, #{tdeptId}, #{troleId}, #{status}, #{createTime}, #{modifyTIme})
+    insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
+    values (#{userCode}, #{deptCode}, #{roleCode}, #{status}, #{createTime}, #{modifyTIme})
   </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
         update t_mdm_permis_user_role
         <set>
-            <if test="tuserId != null">
-                tuser_id = #{tuserId},
+            <if test="userCode != null and userCode != ''">
+                user_code = #{userCode},
             </if>
-            <if test="tdeptId != null">
-                tdept_id = #{tdeptId},
+            <if test="deptCode != null and deptCode != ''">
+                dept_code = #{deptCode},
             </if>
-            <if test="troleId != null">
-                trole_id = #{troleId},
+            <if test="roleCode != null and roleCode != ''">
+               role_code  = #{roleCode},
             </if>
             <if test="status != null">
                 status = #{status},

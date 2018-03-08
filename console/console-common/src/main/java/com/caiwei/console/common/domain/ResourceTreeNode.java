@@ -26,7 +26,7 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
     //菜单的显示顺序
     private String displayOrder;
 
-    private ResourceDO resourceDO;
+    private ResourceNode resourceDO;
 
     public String getUri() {
         return uri;
@@ -76,11 +76,11 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
         this.displayOrder = displayOrder;
     }
 
-    public ResourceDO getResourceDO() {
+    public ResourceNode getResourceDO() {
         return resourceDO;
     }
 
-    public void setResourceDO(ResourceDO resourceDO) {
+    public void setResourceDO(ResourceNode resourceDO) {
         this.resourceDO = resourceDO;
     }
 }

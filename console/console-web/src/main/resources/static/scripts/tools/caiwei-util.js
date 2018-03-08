@@ -231,7 +231,7 @@ Caiwei.formFieldSetReadOnly = function(flag, form) {
 Caiwei.showInfoMsg = function(message, fun) {
 	var len = message.length;
 	Ext.Msg.show({
-		title : 'wechat提醒您:',
+		title : 'caiwei提醒您:',
 		width : 110 + len * 15,
 		msg : '<div id="message">' + message + '</div>',
 		buttons : Ext.Msg.OK,
@@ -261,7 +261,7 @@ Caiwei.showInfoMsg = function(message, fun) {
 Caiwei.showWoringMessage = function(message, fun) {
 	var len = message.length;
 	Ext.Msg.show({
-		title : 'wechat提醒您:',
+		title : 'caiwei提醒您:',
 		msg : message,
 		// cls:'mesbox',
 		width : 110 + len * 15,
@@ -293,7 +293,7 @@ Caiwei.showWoringMessage = function(message, fun) {
 Caiwei.showQuestionMes = function(message, fun) {
 	var len = message.length;
 	Ext.Msg.show({
-		title : 'wechat提醒您:',
+		title : 'caiwei提醒您:',
 		width : 110 + len * 15,
 		msg : '<div id="message">' + message + '</div>',
 		buttons : Ext.Msg.YESNO,
@@ -320,7 +320,7 @@ Caiwei.showQuestionMes = function(message, fun) {
 Caiwei.showErrorMes = function(message, fun) {
 	var len = message.length;
 	Ext.Msg.show({
-		title : 'wechat提醒您:',
+		title : 'caiwei提醒您:',
 		width : 110 + len * 15,
 		msg : '<div id="message">' + message + '</div>',
 		buttons : Ext.Msg.OK,
@@ -349,13 +349,13 @@ Caiwei.showErrorMes = function(message, fun) {
  */
 Caiwei.operateWinBtn = function(win, viewState, operateType) {
 	// 查看状态下 只有 取消按钮可用 [添加,取消]按钮分别占 0和1
-	if (wechat.viewState.view === viewState) {
+	if (caiwei.viewState.view === viewState) {
 		var btnArr = win.query('button');
 		for (var i = 0; i < btnArr.length; i++) {
 			btnArr[i].setDisabled(i != 2);
 		}
 	} else if (!Ext.isEmpty(operateType)
-			&& wechat.operateType.save === operateType) {
+			&& caiwei.operateType.save === operateType) {
 		var btnArr = win.query('button');
 		for (var i = 0; i < btnArr.length; i++) {
 			btnArr[i].setDisabled(i > 2);
