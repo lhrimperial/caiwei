@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2018-03-05 19:26:19
+Date: 2018-03-08 19:54:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -74,11 +74,12 @@ CREATE TABLE `t_mdm_org_department` (
   PRIMARY KEY (`id`),
   KEY `idx_dept_code` (`dept_code`) USING BTREE,
   KEY `idx_parent_code` (`parent_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_org_department
 -- ----------------------------
+INSERT INTO `t_mdm_org_department` VALUES ('1', '00001', '集团', null, null, '0', '2018-03-08 10:53:50', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_org_employee
@@ -90,7 +91,7 @@ CREATE TABLE `t_mdm_org_employee` (
   `emp_name` varchar(100) NOT NULL,
   `dept_code` varchar(50) NOT NULL,
   `dept_name` varchar(100) NOT NULL,
-  `gender` tinyint(1) DEFAULT NULL,
+  `gender` tinyint(1) DEFAULT NULL COMMENT '0 女 1 男',
   `mobile_no` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `tel_phone` varchar(50) DEFAULT NULL,
@@ -100,11 +101,12 @@ CREATE TABLE `t_mdm_org_employee` (
   PRIMARY KEY (`id`),
   KEY `idx_emp_code` (`emp_code`) USING BTREE,
   KEY `idx_dept_code` (`dept_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_org_employee
 -- ----------------------------
+INSERT INTO `t_mdm_org_employee` VALUES ('1', '275688', 'longhairen', '00001', '集团', '1', '18621526765', '1234354@qq.com', null, '0', '2018-03-08 10:51:55', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_resource
@@ -130,11 +132,15 @@ CREATE TABLE `t_mdm_permis_resource` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_resource_code` (`res_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_permis_resource
 -- ----------------------------
+INSERT INTO `t_mdm_permis_resource` VALUES ('1', 'console_1', 'CONSOLE系统', '', '1', '', '1', '1', '0', '1', '', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 11:17:12');
+INSERT INTO `t_mdm_permis_resource` VALUES ('2', 'console_110', '综合管理', '', '2', 'console_1', '2', '1', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:26');
+INSERT INTO `t_mdm_permis_resource` VALUES ('3', 'console_120', '基础数据', '', '2', 'console_1', '2', '2', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:27');
+INSERT INTO `t_mdm_permis_resource` VALUES ('4', 'console_130', '系统设置', '', '2', 'console_1', '2', '3', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:30');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role
@@ -152,11 +158,12 @@ CREATE TABLE `t_mdm_permis_role` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_role_code` (`role_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_permis_role
 -- ----------------------------
+INSERT INTO `t_mdm_permis_role` VALUES ('1', 'admin', 'admin', 'web', null, null, '0', '2018-03-08 10:57:14', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role_resource
@@ -164,19 +171,23 @@ CREATE TABLE `t_mdm_permis_role` (
 DROP TABLE IF EXISTS `t_mdm_permis_role_resource`;
 CREATE TABLE `t_mdm_permis_role_resource` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `trole_id` int(11) NOT NULL COMMENT '角色ID',
-  `tres_id` int(11) NOT NULL COMMENT '权限ID',
+  `role_code` varchar(50) NOT NULL COMMENT '角色ID',
+  `res_code` varchar(50) NOT NULL COMMENT '权限ID',
   `status` tinyint(1) unsigned NOT NULL,
   `create_time` datetime NOT NULL,
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `idx_role_code` (`trole_id`),
-  KEY `idx_res_code` (`tres_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_role_code` (`role_code`),
+  KEY `idx_res_code` (`res_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_permis_role_resource
 -- ----------------------------
+INSERT INTO `t_mdm_permis_role_resource` VALUES ('1', 'admin', 'console_1', '0', '2018-03-08 11:21:02', '2018-03-08 18:13:46');
+INSERT INTO `t_mdm_permis_role_resource` VALUES ('2', 'admin', 'console_110', '0', '2018-03-08 11:21:02', '2018-03-08 18:13:50');
+INSERT INTO `t_mdm_permis_role_resource` VALUES ('3', 'admin', 'console_120', '0', '2018-03-08 11:21:02', '2018-03-08 18:13:56');
+INSERT INTO `t_mdm_permis_role_resource` VALUES ('4', 'admin', 'console_130', '0', '2018-03-08 11:21:02', '2018-03-08 18:14:00');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_user
@@ -201,7 +212,7 @@ CREATE TABLE `t_mdm_permis_user` (
 -- ----------------------------
 -- Records of t_mdm_permis_user
 -- ----------------------------
-INSERT INTO `t_mdm_permis_user` VALUES ('7', '275688', '202CB962AC59075B964B07152D234B70', '275688', 'longhairen', 'DP0001', null, null, '1', '2017-11-06 19:49:58', null);
+INSERT INTO `t_mdm_permis_user` VALUES ('7', '275688', '202CB962AC59075B964B07152D234B70', '275688', 'longhairen', 'DP0001', null, null, '0', '2017-11-06 19:49:58', '2018-03-07 17:58:35');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_user_role
@@ -209,17 +220,18 @@ INSERT INTO `t_mdm_permis_user` VALUES ('7', '275688', '202CB962AC59075B964B0715
 DROP TABLE IF EXISTS `t_mdm_permis_user_role`;
 CREATE TABLE `t_mdm_permis_user_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `tuser_id` int(11) NOT NULL COMMENT '用户编码',
-  `tdept_id` int(11) NOT NULL COMMENT '组织编码',
-  `trole_id` int(11) NOT NULL COMMENT '角色编码',
+  `user_code` varchar(50) NOT NULL COMMENT '用户编码',
+  `dept_code` varchar(50) NOT NULL COMMENT '组织编码',
+  `role_code` varchar(50) NOT NULL COMMENT '角色编码',
   `status` tinyint(1) unsigned NOT NULL COMMENT '逻辑删除',
   `create_time` datetime NOT NULL,
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `idx_user_code` (`tuser_id`),
-  KEY `idx_role_code` (`trole_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_user_code` (`user_code`),
+  KEY `idx_role_code` (`role_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_permis_user_role
 -- ----------------------------
+INSERT INTO `t_mdm_permis_user_role` VALUES ('1', '275688', '00001', 'admin', '0', '2018-03-08 11:01:13', '2018-03-08 18:12:52');
