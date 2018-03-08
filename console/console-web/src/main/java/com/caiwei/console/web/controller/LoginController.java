@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.annotation.Retention;
-
 /**
  *
  */
@@ -74,6 +72,7 @@ public class LoginController extends AbstractController {
         return "Hello, Welcome!";
     }
 
+    @ResponseBody
     @RequestMapping("/logout")
     public ResponseVO logout() {
         loginService.logout();

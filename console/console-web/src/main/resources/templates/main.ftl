@@ -14,8 +14,9 @@
 </head>
 <script type="text/javascript">
 function logout(){
+    var param = {}
 	var successFun = function(json) {
-		window.location = 'login';
+		window.location = 'index';
 	};
 	var failureFun = function(json) {
 		if (Ext.isEmpty(json)) {
@@ -29,8 +30,8 @@ function logout(){
 			document.getElementById("error").innerText = message+"!";
 		}
 	};
-    Caiwei.requestJsonAjax('logout', null, successFun,
-			failureFun);
+    Caiwei.requestJsonAjax('logout', param, successFun, failureFun);
+
 }
 </script>
 <body>
