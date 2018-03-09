@@ -70,7 +70,7 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
             if (Ext.isEmpty(json)) {
                 Caiwei.showErrorMes('请求超时'); // 请求超时
             } else {
-                var message = json.message;
+                var message = json.resMsg;
                 Caiwei.showErrorMes(message);
             }
         };
@@ -365,29 +365,6 @@ Ext.define('Caiwei.main.MainNav',{
     }
 });
 Ext.onReady(function(){
-    /*var treePanel = Ext.create('baseUx.tree.NTreePanel', {
-     id: 'treePanel',
-     store:Ext.create('Caiwei.store.login.MenuStore'),
-     renderTo:Ext.getBody(),
-     region : 'west',
-     collapsible : false,
-     width : 214,
-     border:false,
-     minWidth:214,
-     maxWidth:214,
-     bodyStyle : 'background-color:#21232b',
-     autoScroll: true,
-     //树节点是否可见
-     rootVisible: false,
-     //使用vista风格的箭头图标，默认为false
-     useArrows: true,
-     listeners:{
-     'itemclick' : function(node, record,item,index,e,eOpts){
-     //点击菜单加载页面
-     initTabpanel(record.get('id'),record.get('text'),record.get('uri'),record.get('leaf'));
-     }
-     }
-     });*/
     var treePanel = Ext.create('Caiwei.main.MainNav');
     var topPanel = Ext.create('Caiwei.main.topPanel');
     Ext.create('Ext.Viewport', {

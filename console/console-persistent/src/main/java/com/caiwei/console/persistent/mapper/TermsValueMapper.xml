@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.TermsValueMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.TermsValuePO">
-        <id column="ttv_id" property="tid"/>
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.TermsValueDO">
+        <id column="id" property="tid"/>
         <result column="value_code" property="valueCode"/>
         <result column="value_name" property="valueName"/>
         <result column="terms_code" property="termsCode"/>
@@ -15,8 +15,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, value_code, value_name, terms_code, value_seq, notes, status, create_time, modify_time
-  </sql>
+        id, value_code, value_name, terms_code, value_seq, notes, status, create_time, modify_time
+    </sql>
 
     <select id="findByTermsCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select

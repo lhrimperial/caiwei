@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.TermsCodeMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.TermsCodePO">
-        <id column="ttc_id" property="tid"/>
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.TermsCodeDO">
+        <id column="id" property="tid"/>
         <result column="terms_code" property="termsCode"/>
         <result column="terms_name" property="termsName"/>
         <result column="notes" property="notes"/>
@@ -12,9 +12,44 @@
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
 
+    <resultMap id="ContainValueResultMap" type="com.caiwei.console.common.domain.TermsCodeDO" extends="BaseResultMap">
+        <collection column="terms_code" property="termsValueDOS" ofType="com.caiwei.console.common.domain.TermsValueDO">
+            <id column="tv_id" property="tid"/>
+            <result column="tv_value_code" property="valueCode"/>
+            <result column="tv_value_name" property="valueName"/>
+            <result column="tv_terms_code" property="termsCode"/>
+            <result column="tv_value_seq" property="valueSeq"/>
+            <result column="tv_notes" property="notes"/>
+            <result column="tv_status" property="status"/>
+            <result column="tv_create_time" property="createTime"/>
+            <result column="tv_modify_time" property="modifyTime"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, terms_code, terms_name, notes, status, create_time
       </sql>
+
+    <select id="findAllCode"  resultMap="ContainValueResultMap">
+        select
+            tc.id,
+            tc.terms_code,
+            tc.terms_name,
+            tc.notes,
+            tc.status,
+            tc.create_time,
+            tv.id as tv_id,
+            tv.value_code as tv_value_code,
+            tv.value_name as tv_value_name,
+            tv.terms_code as tv_terms_code,
+            tv.value_seq as tv_value_seq,
+            tv.notes as tv_notes,
+            tv.status as tv_status,
+            tv.create_time as tv_create_time,
+            tv.modify_time as tv_modify_time
+        from t_mdm_data_termscode tc, t_mdm_data_termsvalue tv
+        where tc.terms_code = tv.terms_code
+    </select>
 
     <select id="findByTermsCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

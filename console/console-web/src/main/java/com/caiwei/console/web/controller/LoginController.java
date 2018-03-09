@@ -5,6 +5,7 @@ import com.caiwei.console.common.context.PermisUserContext;
 import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.web.domain.LoginInfoVO;
 import com.caiwei.console.web.domain.UserVO;
+import com.caiwei.console.web.domain.cookie.Cookie;
 import com.caiwei.console.web.service.ILoginService;
 import com.github.framework.server.cache.exception.security.UserNotLoginException;
 import com.github.framework.server.exception.BusinessException;
@@ -19,6 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -47,11 +51,11 @@ public class LoginController extends AbstractController {
     @RequestMapping("/login")
     @SecurityNonCheckRequired
     @CookieNonCheckRequired
-    public ResponseVO login(Model model, @RequestBody UserVO userVo) {
+    public ResponseVO login(Model model, @RequestBody UserVO userVo, HttpServletRequest request, HttpServletResponse response) {
         try {
             loginService.userLogin(userVo.getUserCode(), userVo.getPassWord());
             // 这时跳转到main 根据session生成cookie
-//                Cookie.saveCookie();
+            Cookie.saveCookie();
             return this.returnSuccess();
         } catch (BusinessException e) {
             return this.returnError(e);
@@ -62,6 +66,7 @@ public class LoginController extends AbstractController {
     }
 
     @RequestMapping("/main")
+    @CookieNonCheckRequired
     public String main() {
         return "main";
     }
@@ -77,7 +82,7 @@ public class LoginController extends AbstractController {
     public ResponseVO logout() {
         loginService.logout();
         //失效Cookie
-//            Cookie.invalidateCookie();
+        Cookie.invalidateCookie();
         return returnSuccess();
     }
 

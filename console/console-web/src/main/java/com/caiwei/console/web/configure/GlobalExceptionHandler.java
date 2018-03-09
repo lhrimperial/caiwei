@@ -7,6 +7,7 @@ import com.github.framework.server.shared.domain.vo.ResponseVO;
 import com.github.framework.server.shared.entity.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,42 +24,28 @@ import java.util.Set;
  *
  */
 
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     public static final String DEFAULT_ERROR_VIEW = "error";
 
-    @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public ResponseVO<String> defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public String defaultErrorHandler(Model model, HttpServletRequest req, Exception e) throws Exception {
         String url = RequestContext.getCurrentContext().getRemoteRequestURL();
         logger.info("request url defaultErrorHandler : " + url);
+        logger.error(e.getMessage(), e);
 
-        Enumeration names = req.getHeaderNames();
-        while(names.hasMoreElements()){
-            String paraName=(String)names.nextElement();
-            System.out.println(paraName+": "+req.getHeader(paraName));
-        }
+        String returnUrl = "/error";
+        String message = "系统异常!";
 
-
-        Enumeration enu=req.getParameterNames();
-        while(enu.hasMoreElements()){
-            String paraName=(String)enu.nextElement();
-            System.out.println(paraName+": "+req.getParameter(paraName));
-        }
-
-        String errorCode = "";
-        String message = "";
-        if (e instanceof BusinessException) {
-            errorCode = ((BusinessException) e).getErrorCode();
-            message = e.getMessage();
+        if (e instanceof UserNotLoginException) {
+            returnUrl = "redirect:index";
         } else {
-            errorCode = ErrorCode.FAILURE.getCode();
-            message = ErrorCode.FAILURE.getName();
+            model.addAttribute("url", url);
+            model.addAttribute("message", message);
         }
-
-        return new ResponseVO(false, errorCode, message);
+        return returnUrl;
     }
 }

@@ -2,6 +2,8 @@ package com.caiwei.console.business.service;
 
 
 
+import com.caiwei.console.common.domain.TermsCodeDO;
+import com.caiwei.console.common.domain.TermsValueDO;
 import com.caiwei.console.persistent.domain.TermsCodePO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 
@@ -19,7 +21,9 @@ public interface ITermsValueService {
 
     int deleteTermsCode(String termsCode);
 
-    TermsCodePO findByCode(String termsCode);
+    TermsCodeDO findByCode(String termsCode);
+
+    List<TermsCodeDO> findAllCode();
 
     int insertTermsValue(TermsValuePO termsValueDO);
 
@@ -27,7 +31,7 @@ public interface ITermsValueService {
 
     int deleteTermsValue(String valueCode);
 
-    TermsValuePO findByTermsCodeAndValueCode(String termsCode, String valueCode);
+    TermsValueDO findByTermsCodeAndValueCode(String termsCode, String valueCode);
 
-    List<TermsValuePO> findByTermsCode(String termsCode);
+    List<TermsValueDO> findByTermsCode(String termsCode);
 }

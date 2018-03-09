@@ -12,6 +12,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class WebInterceptorConfiguration extends WebMvcConfigurerAdapter {
+    public static final String[] excludePath = {
+       "*.js","*.html","*.css","/**/images/**","/**/messages/**"
+    } ;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册拦截器
@@ -19,8 +23,8 @@ public class WebInterceptorConfiguration extends WebMvcConfigurerAdapter {
         // 配置拦截的路径
         ir.addPathPatterns("/**");
         // 配置不拦截的路径
-        ir.excludePathPatterns("/**.html");
+        ir.excludePathPatterns(excludePath);
 
-        registry.addInterceptor(new ValidatorCookieInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new ValidatorCookieInterceptor()).addPathPatterns("/**").excludePathPatterns(excludePath);
     }
 }

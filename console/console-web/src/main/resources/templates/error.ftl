@@ -7,6 +7,6 @@
 <body>
 <h1>Error Handler</h1>
 <div>${url}</div>
-<div>${exception.message}</div>
+<div>${message}</div>
 </body>
 </html>

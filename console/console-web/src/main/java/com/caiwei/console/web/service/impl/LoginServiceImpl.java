@@ -51,7 +51,7 @@ public class LoginServiceImpl implements ILoginService {
         SessionContext.setCurrentUser(userDO.getUserCode());
         SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_EMPCODE, userDO.getEmpCode());
         SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTCODE, userDO.getDeptCode());
-        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTNAME, userDO.getEmployeeDO().getDeptCode());
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTNAME, userDO.getEmployeeDO().getDeptName());
         return userDO;
     }
 
