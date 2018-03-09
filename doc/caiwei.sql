@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2018-03-08 19:54:52
+Date: 2018-03-09 22:08:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,11 +29,12 @@ CREATE TABLE `t_mdm_data_termscode` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_terms_code` (`terms_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_data_termscode
 -- ----------------------------
+INSERT INTO `t_mdm_data_termscode` VALUES ('1', 'GENDER', '性别', null, '0', '2018-03-09 15:54:19', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_data_termsvalue
@@ -52,11 +53,13 @@ CREATE TABLE `t_mdm_data_termsvalue` (
   PRIMARY KEY (`id`),
   KEY `idx_value_code` (`value_code`),
   KEY `idx_terms_code` (`terms_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_data_termsvalue
 -- ----------------------------
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('1', 'FEMALE', '女', 'GENDER', '1', null, '0', '2018-03-09 15:56:57', null);
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('2', 'MALE', '男', 'GENDER', '2', null, '0', '2018-03-09 15:56:57', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_org_department
@@ -132,15 +135,17 @@ CREATE TABLE `t_mdm_permis_resource` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_resource_code` (`res_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_mdm_permis_resource
 -- ----------------------------
-INSERT INTO `t_mdm_permis_resource` VALUES ('1', 'console_1', 'CONSOLE系统', '', '1', '', '1', '1', '0', '1', '', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 11:17:12');
-INSERT INTO `t_mdm_permis_resource` VALUES ('2', 'console_110', '综合管理', '', '2', 'console_1', '2', '1', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:26');
-INSERT INTO `t_mdm_permis_resource` VALUES ('3', 'console_120', '基础数据', '', '2', 'console_1', '2', '2', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:27');
-INSERT INTO `t_mdm_permis_resource` VALUES ('4', 'console_130', '系统设置', '', '2', 'console_1', '2', '3', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-08 19:28:30');
+INSERT INTO `t_mdm_permis_resource` VALUES ('1', 'console_1', 'CONSOLE系统', '', '1', '', '1', '1', '0', '1', 'ye1-node-lvl', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-09 18:10:05');
+INSERT INTO `t_mdm_permis_resource` VALUES ('2', 'console_110', '综合管理', '', '2', 'console_1', '2', '1', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-09 18:10:08');
+INSERT INTO `t_mdm_permis_resource` VALUES ('3', 'console_120', '基础数据', '', '2', 'console_1', '2', '2', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-09 18:10:11');
+INSERT INTO `t_mdm_permis_resource` VALUES ('4', 'console_130', '系统设置', '', '2', 'console_1', '2', '3', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-09 18:11:56');
+INSERT INTO `t_mdm_permis_resource` VALUES ('5', 'console_130001', '用户管理', '', '3', 'console_130', '3', '1', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'web', '', '0', '2018-03-09 18:13:59', '2018-03-09 18:13:59');
+INSERT INTO `t_mdm_permis_resource` VALUES ('6', 'console_130002', '角色管理', '', '3', 'console_130', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'web', '', '0', '2018-03-09 18:13:59', '2018-03-09 18:13:59');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role
