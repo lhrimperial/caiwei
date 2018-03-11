@@ -2,7 +2,7 @@ package com.caiwei.console.web.controller;
 
 import com.caiwei.console.common.annotation.CookieNonCheckRequired;
 import com.caiwei.console.common.context.PermisUserContext;
-import com.caiwei.console.common.domain.DepartmentDO;
+import com.caiwei.console.web.domain.DepartmentVO;
 import com.caiwei.console.web.domain.LoginInfoVO;
 import com.caiwei.console.web.domain.UserVO;
 import com.caiwei.console.web.domain.cookie.Cookie;
@@ -101,8 +101,8 @@ public class LoginController extends AbstractController {
      */
     @ResponseBody
     @RequestMapping("/currentUserChangeDepts")
-    public ResponseVO<DepartmentDO> currentUserChangeDepts() {
-        return returnSuccess();
+    public DepartmentVO currentUserChangeDepts(String deptName) {
+        return loginService.findCurrUserByParams(deptName);
     }
 
     /**
@@ -111,8 +111,9 @@ public class LoginController extends AbstractController {
      */
     @ResponseBody
     @RequestMapping("/changeCurrentDept")
-    public ResponseVO<DepartmentDO> changeCurrentDept(String currenUserDeptCode) {
-
+    public ResponseVO<String> changeCurrentDept(HttpServletRequest request) {
+        String deptCode = request.getParameter("deptCode");
+        loginService.changeCurrentUserDept(deptCode);
         return returnSuccess();
     }
 

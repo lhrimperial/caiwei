@@ -96,7 +96,7 @@ public class ResourceNode extends BaseEntity implements IFunction {
 
     @Override
     public String getUri() {
-        return null;
+        return entryUri;
     }
 
     @Override

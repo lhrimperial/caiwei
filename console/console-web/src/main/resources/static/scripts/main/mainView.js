@@ -59,40 +59,23 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
         }
         return this.searchDept;
     },
-    doChangeCurrentDept: function(deptCode){
-        var params = {
-            'currenUserDeptCode' : deptCode
-        };
-        var successFun = function(json) {
-            window.location = 'main';
-        };
-        var failureFun = function(json) {
-            if (Ext.isEmpty(json)) {
-                Caiwei.showErrorMes('请求超时'); // 请求超时
-            } else {
-                var message = json.resMsg;
-                Caiwei.showErrorMes(message);
-            }
-        };
-        Caiwei.requestJsonAjax('changeCurrentDept', params, successFun, failureFun);
-    },
     //部门列表
     deptGridPanel : null,
     getDeptGridPanel : function(){
         var me = this;
         if(this.deptGridPanel==null){
-            Ext.create('Ext.data.Store', {
+            var store = Ext.create('Ext.data.Store', {
                 autoLoad: true,
                 storeId:'currentDeptStore',
                 pageSize: 10,
-                fields: ['code', 'name'],
+                fields: ['deptCode', 'deptName'],
                 proxy: {
                     type: 'ajax',
                     actionMethods : 'POST',
                     url: 'currentUserChangeDepts',
                     reader: {
                         type: 'json',
-                        root: 'userManagerDepts',
+                        root: 'departmentDOS',
                         totalProperty: 'totalCount'
                     }
                 },
@@ -115,12 +98,12 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
                     checkOnly: true
                 }),
                 columns: [
-                    { header: '部门编码', dataIndex: 'code' },
-                    { header: '部门名称',  dataIndex: 'name', flex: 1 }
+                    { header: '部门编码', dataIndex: 'deptCode' },
+                    { header: '部门名称',  dataIndex: 'deptName', flex: 1 }
                 ],
                 listeners: {
                     'itemdblclick': function(view, record, item, index, e, eOpts){
-                        me.doChangeCurrentDept(record.get('code'));
+                        me.doChangeCurrentDept(record.get('deptCode'));
                     }
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
@@ -129,6 +112,23 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
             });
         }
         return this.deptGridPanel;
+    },
+    doChangeCurrentDept: function(deptCode){
+        var params = {
+            'deptCode' : deptCode
+        };
+        var successFun = function(json) {
+            window.location = 'main';
+        };
+        var failureFun = function(json) {
+            if (Ext.isEmpty(json)) {
+                Caiwei.showErrorMes('请求超时'); // 请求超时
+            } else {
+                var message = json.resMsg;
+                Caiwei.showErrorMes(message);
+            }
+        };
+        Caiwei.requestAjax('changeCurrentDept', params, successFun, failureFun);
     },
     constructor: function(config){
         var me = this,
@@ -140,7 +140,7 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
                 var selects = me.getDeptGridPanel().getSelectionModel().getSelection();
                 if(selects&&selects.length>0){
                     var record = selects[0];
-                    me.doChangeCurrentDept(record.get('code'));
+                    me.doChangeCurrentDept(record.get('deptCode'));
                 }
             }
         }];
@@ -243,7 +243,7 @@ Ext.define('Caiwei.main.MainNav',{
     maxWidth:200,
     autoScroll: true,
     //树节点是否可见
-    rootVisible: false,
+    rootVisible: true,
     //使用vista风格的箭头图标，默认为false
     useArrows: true,
     expandNodes: [],

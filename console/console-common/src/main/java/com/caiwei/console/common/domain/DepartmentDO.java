@@ -27,6 +27,16 @@ public class DepartmentDO extends BaseDO {
      */
     private String parentName;
 
+    private String currUserCode;
+
+    public String getCurrUserCode() {
+        return currUserCode;
+    }
+
+    public void setCurrUserCode(String currUserCode) {
+        this.currUserCode = currUserCode;
+    }
+
     public String getDeptCode() {
         return deptCode;
     }

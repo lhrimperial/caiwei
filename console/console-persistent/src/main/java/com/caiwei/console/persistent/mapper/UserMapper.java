@@ -3,6 +3,7 @@ package com.caiwei.console.persistent.mapper;
 import com.caiwei.console.common.domain.PermisUserDO;
 import com.caiwei.console.common.domain.UserOrgResCodeUrisDO;
 import com.caiwei.console.persistent.domain.UserPO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface UserMapper {
 
     List<UserOrgResCodeUrisDO> queryOrgResCodeUrisByCode(Map<String, Object> paramMap);
 
+    List<PermisUserDO> findUsers(PermisUserDO userDO);
 
+    void updateStatus(List<String> userCodes, @Param("status") Byte status);
 }

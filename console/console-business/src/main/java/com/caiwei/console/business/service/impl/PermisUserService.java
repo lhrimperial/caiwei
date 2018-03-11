@@ -11,6 +11,8 @@ import com.github.framework.util.serializer.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author longhr
  * @version 2017/11/6 0006
@@ -51,5 +53,15 @@ public class PermisUserService implements IPermisUserService {
         PermisUserDO user = (PermisUserDO) CacheManager.getInstance()
                 .getCache(UserCache.CACHE_NAME).get(userCode);
         return user;
+    }
+
+    @Override
+    public List<PermisUserDO> findUsers(PermisUserDO userDO) {
+        return userMapper.findUsers(userDO);
+    }
+
+    @Override
+    public void updateStatus(List<String> userCodes, Byte status) {
+        userMapper.updateStatus(userCodes, status);
     }
 }

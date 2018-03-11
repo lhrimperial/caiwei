@@ -8,7 +8,9 @@ import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.common.domain.PermisUserDO;
 import com.caiwei.console.common.exception.LoginException;
 import com.caiwei.console.common.exception.UserException;
+import com.caiwei.console.web.domain.DepartmentVO;
 import com.caiwei.console.web.domain.LoginInfoVO;
+import com.caiwei.console.web.domain.cookie.Cookie;
 import com.caiwei.console.web.service.ILoginService;
 import com.github.framework.server.context.SessionContext;
 import com.github.framework.server.shared.define.Constants;
@@ -66,6 +68,41 @@ public class LoginServiceImpl implements ILoginService {
             loginInfoVO.setCurrentDept(departmentDO);
         }
         return loginInfoVO;
+    }
+
+    @Override
+    public DepartmentVO currentUserDepts(String deptName) {
+        DepartmentDO departmentDO = new DepartmentDO();
+        departmentDO.setCurrUserCode(PermisUserContext.getCurrentUser().getUserCode());
+        departmentDO.setDeptName(deptName);
+
+        DepartmentVO departmentVO = new DepartmentVO();
+        departmentVO.setDepartmentDOS(departmentService.findByParams(departmentDO));
+        departmentVO.setTotalCount(departmentService.totalCount(departmentDO));
+        return departmentVO;
+    }
+
+    @Override
+    public void changeCurrentUserDept(String deptCode) {
+        if (StringUtils.isEmpty(deptCode)) {
+            throw new LoginException(LoginException.CURRENT_DEPT_ISNOT_EXIST);
+        }
+        DepartmentDO departmentDO = departmentService.findByDeptCode(deptCode);
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTCODE, departmentDO.getDeptCode());
+        SessionContext.getSession().setObject(ConsoleConstants.KEY_CURRENT_DEPTNAME, departmentDO.getDeptName());
+        Cookie.saveCookie();
+    }
+
+    @Override
+    public DepartmentVO findCurrUserByParams(String deptName) {
+        DepartmentDO departmentDO = new DepartmentDO();
+        departmentDO.setCurrUserCode(PermisUserContext.getCurrentUser().getUserCode());
+        departmentDO.setDeptName(deptName);
+
+        DepartmentVO departmentVO = new DepartmentVO();
+        departmentVO.setDepartmentDOS(departmentService.findCurrUserByParams(departmentDO));
+        departmentVO.setTotalCount(departmentService.currUserTotalCount(departmentDO));
+        return departmentVO;
     }
 
     private PermisUserDO validate(String userName, String password)

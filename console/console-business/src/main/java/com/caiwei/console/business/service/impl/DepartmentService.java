@@ -50,4 +50,24 @@ public class DepartmentService implements IDepartmentService {
     public List<DepartmentDO> findByParentCode(String parentCode) {
         return departmentMapper.findByParentCode(parentCode);
     }
+
+    @Override
+    public List<DepartmentDO> findByParams(DepartmentDO departmentDO) {
+        return departmentMapper.findByParams(departmentDO);
+    }
+
+    @Override
+    public Long totalCount(DepartmentDO departmentDO) {
+        return departmentMapper.totalCount(departmentDO);
+    }
+
+    @Override
+    public List<DepartmentDO> findCurrUserByParams(DepartmentDO departmentDO) {
+        return departmentMapper.findByParams(departmentDO);
+    }
+
+    @Override
+    public Long currUserTotalCount(DepartmentDO departmentDO) {
+        return departmentMapper.currUserTotalCount(departmentDO);
+    }
 }

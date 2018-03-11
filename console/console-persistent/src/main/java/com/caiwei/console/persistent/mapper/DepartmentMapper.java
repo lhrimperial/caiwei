@@ -20,4 +20,11 @@ public interface DepartmentMapper {
 
     List<DepartmentDO> findByParentCode(String parentCode);
 
+    List<DepartmentDO> findByParams(DepartmentDO departmentDO);
+
+    Long totalCount(DepartmentDO departmentDO);
+
+    List<DepartmentDO> findCurrUserByParams(DepartmentDO departmentDO);
+
+    Long currUserTotalCount(DepartmentDO departmentDO);
 }

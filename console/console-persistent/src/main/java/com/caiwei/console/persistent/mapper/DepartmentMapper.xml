@@ -13,8 +13,46 @@
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    dept.id,dept.dept_code,dept.dept_name,dept.parent_code,dept.parent_name,dept.status,dept.create_time,dept.modify_time
-  </sql>
+        dept.id,dept.dept_code,dept.dept_name,dept.parent_code,dept.parent_name,dept.status,dept.create_time,dept.modify_time
+    </sql>
+
+    <sql id="query_sql">
+        <if test="deptName != null and deptName != ''">
+            and dept_name like concat('%',concat(#{deptName},'%'))
+        </if>
+    </sql>
+
+    <select id="currUserTotalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.DepartmentDO">
+        SELECT count(id)
+        from t_mdm_org_department dept
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+    <select id="findCurrUserByParams" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.DepartmentDO" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_department dept
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+
+    <select id="totalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.DepartmentDO">
+        SELECT count(id)
+        from t_mdm_org_department dept
+        <where>
+            <include refid="query_sql"/>
+        </where>
+    </select>
+    <select id="findByParams" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.DepartmentDO" >
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_department dept
+        <where>
+          <include refid="query_sql"/>
+        </where>
+    </select>
 
     <select id="findByEmpCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select

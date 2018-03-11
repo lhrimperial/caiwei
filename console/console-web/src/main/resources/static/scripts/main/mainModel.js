@@ -5,8 +5,8 @@ Ext.define('Caiwei.store.login.MenuStore', {
     extend: 'Ext.data.TreeStore',
     root: {
         text:'CONSOLE系统',
-        id : 'console_1'//,
-        //expanded: true
+        id : 'console_1',
+        expanded: true
     },
     proxy:{
         type:'ajax',

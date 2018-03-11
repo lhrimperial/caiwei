@@ -48,7 +48,7 @@ public class Cookie {
             cookie = new javax.servlet.http.Cookie(CookieConstant.TOKEN_NAME, tokenParam);
         }
         cookie.setPath("/");// 同一个域名所有url cookie共享
-        cookie.setMaxAge(5*60);//不写入磁盘，只写入内存，只有在当前页面有用,浏览器关闭立即失效
+//        cookie.setMaxAge(5*60);//不写入磁盘，只写入内存，只有在当前页面有用,浏览器关闭立即失效
         HttpServletResponse response = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
         response.addCookie(cookie);
     }

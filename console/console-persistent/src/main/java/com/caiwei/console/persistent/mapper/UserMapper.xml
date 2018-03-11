@@ -30,6 +30,11 @@
         <result column="resUri" property="resUri"/>
     </resultMap>
 
+    <select id="findUsers" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.PermisUserDO">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_permis_user u
+    </select>
+
     <select id="queryOrgResCodeUrisByCode" resultMap="queryOrgResCodeUrisByCodeResultMap" parameterType="java.util.Map">
         select
             rs.res_code as resCode, rs.entry_url as resUri
@@ -72,9 +77,18 @@
     </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserPO">
-    insert into t_mdm_permis_user (user_code, pass_word, emp_code, emp_name, dept_code, last_login, notes, status, create_time, modify_time)
-    values (#{userCode}, #{passWord}, #{empCode}, #{empName}, #{deptCode}, #{lastLogin}, #{notes}, #{status}, #{createTime}, #{modifyTime})
-  </insert>
+        insert into t_mdm_permis_user (user_code, pass_word, emp_code, emp_name, dept_code, last_login, notes, status, create_time, modify_time)
+        values (#{userCode}, #{passWord}, #{empCode}, #{empName}, #{deptCode}, #{lastLogin}, #{notes}, #{status}, #{createTime}, #{modifyTime})
+    </insert>
+    
+    <update id="updateStatus" parameterType="java.util.List">
+        update t_mdm_permis_user
+        set `status` = #{status}
+        where user_code in 
+        <foreach collection="userCodes" close=")" open="(" item="item" separator=",">
+            #{item}
+        </foreach>
+    </update>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.UserPO">
         update t_mdm_permis_user
