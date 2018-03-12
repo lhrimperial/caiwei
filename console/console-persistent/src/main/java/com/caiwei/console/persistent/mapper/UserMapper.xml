@@ -81,7 +81,7 @@
         values (#{userCode}, #{passWord}, #{empCode}, #{empName}, #{deptCode}, #{lastLogin}, #{notes}, #{status}, #{createTime}, #{modifyTime})
     </insert>
     
-    <update id="updateStatus" parameterType="java.util.List">
+    <update id="updateStatus">
         update t_mdm_permis_user
         set `status` = #{status}
         where user_code in 

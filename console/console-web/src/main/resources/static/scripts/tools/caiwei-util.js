@@ -68,6 +68,9 @@ Caiwei.requestJsonAjax = function(url, params, successFn, failFn, asyncFlag) {
 		url:url,
 		async: asyncFlag,
 		jsonData:params,
+        headers:{
+            'Content-Type': 'application/json; charset=utf-8'
+        },
 		success:function(response){
 			var result = Ext.decode(response.responseText);
 			if(result.success){

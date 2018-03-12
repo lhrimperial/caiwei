@@ -6,6 +6,7 @@ import com.github.framework.server.shared.domain.vo.ResponseVO;
 import com.github.framework.server.web.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,16 +34,16 @@ public class UserController extends AbstractController{
 
     @ResponseBody
     @RequestMapping("/addUser")
-    public ResponseVO<String> addUser(UserVO userVO) {
+    public ResponseVO<String> addUser(@RequestBody UserVO userVO) {
         ResponseVO responseVO = returnSuccess();
-
+        userService.addUser(userVO);
         return responseVO;
     }
 
 
     @ResponseBody
     @RequestMapping("/deleteUser")
-    public ResponseVO<String> deleteUser(UserVO userVO) {
+    public ResponseVO<String> deleteUser(@RequestBody UserVO userVO) {
         ResponseVO responseVO = returnSuccess();
         userService.deleteUser(userVO);
         return responseVO;

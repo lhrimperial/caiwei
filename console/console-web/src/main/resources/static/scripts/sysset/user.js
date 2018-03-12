@@ -165,9 +165,7 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             function (e) {
                 if (e == 'yes') { // 询问是否删除，是则发送请求
                     var params = {
-                        'userVo': {
-                            'userCodes': userCodes
-                        }
+                        'userCodes': userCodes
                     };
                     var successFun = function (json) {
                         var message = json.repMsg;
@@ -304,33 +302,30 @@ Ext.define('Caiwei.sysset.user.UserForm', {
             name: 'userCode',
             fieldLabel: '用戶名',
             xtype: 'textfield',
-            editable: false,
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
         },{
             name: 'passWord',
             fieldLabel: '密码',
             xtype: 'textfield',
-            hidden: true
+            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
+            allowBlank: false
         },{
             name: 'empName',
             fieldLabel: '员工姓名',
             xtype: 'textfield',
-            editable: false,
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
         },{
             name: 'deptCode',
             fieldLabel: '部门编码',
             xtype: 'textfield',
-            editable: false,
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
         },{
             name: 'notes',
             fieldLabel: '备注',
             xtype: 'textarea',
-            editable: false,
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
         }];
@@ -385,9 +380,7 @@ Ext.define('Caiwei.sysset.user.UserAddWindow', {
             var userModel = new Caiwei.sysset.user.UserDO();
             me.getUserForm().getForm().updateRecord(userModel); // 将FORM中数据设置到MODEL里面
             var params = {
-                'userVo': {
-                    'userDO': userModel.data
-                }
+                'userDO': userModel.data
             }
             var successFun = function (json) {
                 var message = json.resMsg;
