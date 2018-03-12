@@ -289,7 +289,7 @@ Ext.define('Caiwei.sysset.user.UserForm', {
         me.items = [{
             name: 'empCode',
             fieldLabel: '员工工号',
-            xtype: 'dynamicemployeecombselector',
+            // xtype: 'dynamicemployeecombselector',
             xtype: 'textfield',
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false,
@@ -316,6 +316,20 @@ Ext.define('Caiwei.sysset.user.UserForm', {
             name: 'empName',
             fieldLabel: '员工姓名',
             xtype: 'textfield',
+            editable: false,
+            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
+            allowBlank: false
+        },{
+            name: 'deptCode',
+            fieldLabel: '部门编码',
+            xtype: 'textfield',
+            editable: false,
+            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
+            allowBlank: false
+        },{
+            name: 'notes',
+            fieldLabel: '备注',
+            xtype: 'textarea',
             editable: false,
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false

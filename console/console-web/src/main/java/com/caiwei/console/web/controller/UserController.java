@@ -44,8 +44,7 @@ public class UserController extends AbstractController{
     @RequestMapping("/deleteUser")
     public ResponseVO<String> deleteUser(UserVO userVO) {
         ResponseVO responseVO = returnSuccess();
-
-
+        userService.deleteUser(userVO);
         return responseVO;
     }
 }
