@@ -4,6 +4,9 @@
 Ext.define('Caiwei.sysset.user.UserDO', {
     extend: 'Ext.data.Model',
     fields: [{
+        name: 'tid',
+        type: 'int'
+    }, {
         name: 'userCode',
         type: 'string'
     }, {
@@ -45,7 +48,6 @@ Ext.define('Caiwei.sysset.user.UserStore', {
     pageSize: 20,
     proxy: {
         type: 'ajax',
-        actionMethods: 'post',
         url: 'queryUserList',
         reader: {
             type: 'json',
@@ -58,9 +60,10 @@ Ext.define('Caiwei.sysset.user.UserStore', {
             var queryForm = Ext.getCmp('queryForm');
             if (queryForm != null) {
                 var params = {
-                    'userVo.userDO.userCode': queryForm.getForm().findField('userCode').getValue(),
-                    'userVo.userDO.empCode': queryForm.getForm().findField('empCode').getValue(),
-                    'userVo.userDO.empName': queryForm.getForm().findField('empName').getValue(),
+                    'userDO.userCode': queryForm.getForm().findField('userCode').getValue(),
+                    'userDO.empCode': queryForm.getForm().findField('empCode').getValue(),
+                    'userDO.empName': queryForm.getForm().findField('empName').getValue(),
+                    'userDO.active': queryForm.getForm().findField('active').getValue()
                 };
                 Ext.apply(store.proxy.extraParams, params);
             }
@@ -80,12 +83,15 @@ Ext.define('Caiwei.sysset.user.QueryForm', {
     collapsible: true,
     layout: 'column',
     region: 'north',
-    bodyStyle:'padding:6px;',
+    bodyStyle: {
+        padding: '6px',
+
+    },
+    labelStyle : "text-align:right;width:40;",
     default: {
-        padding: 10,
-        margin: '20 10 5 10',
-        labelWidth: 50,
-        columnWidth: 0.23,
+        margin: '5 10 5 0',
+        labelWidth: 40,
+        columnWidth: 0.25,
         labelAlign: 'right'
     },
     defaultType: 'textfield',
@@ -104,6 +110,11 @@ Ext.define('Caiwei.sysset.user.QueryForm', {
             name: 'empName',
             fieldLabel: '员工姓名',
             xtype: 'textfield'
+        }, {
+            name: 'active',
+            fieldLabel: '是否可用',
+            xtype: 'yesnocombselector',
+            isShowAll : true// 是否显示全部
         }],
         me.buttons = [{
             text: '查询',
@@ -150,37 +161,52 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
         }
         return this.userAddWindow;
     },
+    addRole: function () {
+        var me = this;
+        var selections = me.getSelectionModel().getSelection(); //获取选中的数据
+        if (selections.length == 0) {
+            Ext.MessageBox.alert('提示', '请选择需要配置的用户');
+            return;
+        } else if (selections.length > 1) {
+            Ext.MessageBox.alert('提示', '只能选择一个用户进行配置');
+            return;
+        }
+        var win = me.getRoleAddWindow();
+        win.userName = selections[0].get('userName');
+        win.getDeptGrid().getStore().load();
+        win.show(); //显示部门角色窗口
+    },
     deleteUser: function () {
         var me = this;
         var selections = me.getSelectionModel().getSelection(); // 获取选中的数据
         if (selections.length < 1) { // 判断是否至少选中了一条
-            Caiwei.showWoringMessage('请选择一条进行删除操作'); // 请选择一条进行作废操作！
+            console.showWoringMessage('请选择一条进行删除操作'); // 请选择一条进行作废操作！
             return; // 没有则提示并返回
         }
         var userCodes = new Array();
         for (var i = 0; i < selections.length; i++) {
             userCodes.push(selections[i].get('userCode'));
         }
-        Caiwei.showQuestionMes('是否要删除',
+        console.showQuestionMes('是否要删除',
             function (e) {
                 if (e == 'yes') { // 询问是否删除，是则发送请求
                     var params = {
                         'userCodes': userCodes
                     };
                     var successFun = function (json) {
-                        var message = json.repMsg;
-                        Caiwei.showInfoMsg(message);
+                        var message = json.resMsg;
+                        console.showInfoMsg(message);
                         me.getStore().load();
                     };
                     var failureFun = function (json) {
                         if (Ext.isEmpty(json)) {
-                            Caiwei.showErrorMes('请求超时'); // 请求超时
+                            console.showErrorMes('请求超时'); // 请求超时
                         } else {
-                            var message = json.repMsg;
-                            Caiwei.showErrorMes(message);
+                            var message = json.resMsg;
+                            console.showErrorMes(message);
                         }
                     };
-                    Caiwei.requestJsonAjax('deleteUser', params, successFun, failureFun);
+                    console.requestJsonAjax('deleteUser', params, successFun, failureFun);
                 }
             });
     },
@@ -204,6 +230,9 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             xtype: 'rownumberer',
             align: 'center'
         }, {
+            dataIndex: 'tid',
+            hidden: true
+        },{
             text: '用户名',
             dataIndex: 'userCode',
             align: 'center',
@@ -251,7 +280,13 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             handler: function () {
                 me.getUserAddWindow().show();
             }
-        }, {
+        },{
+            text: '角色配置',
+            xtype: 'addbutton',
+            handler: function () {
+                me.addRole();
+            }
+        },{
             id: 'caiwei_sysset_user_deletebtn_id',
             xtype: 'deletebutton',
             text: '删除',
@@ -285,31 +320,35 @@ Ext.define('Caiwei.sysset.user.UserForm', {
             cfg = Ext.apply({},
                 config);
         me.items = [{
-            name: 'empCode',
-            fieldLabel: '员工工号',
-            // xtype: 'dynamicemployeecombselector',
+            name: 'userCode',
+            fieldLabel: '用戶名',
             xtype: 'textfield',
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false,
             listeners: {
                 select: function (combo, records, eOpts) {
-                    // combo.up().getForm().findField('empName').setValue(records.data.employeeName);
-                    // combo.up().getForm().findField('userName').setValue(records.data.account);
-                    // combo.up().getForm().findField('title').setValue(records.data.jobName);
+                    combo.up().getForm().findField('userCode').setValue(records.data.userCode);
                 }
             }
-        },{
-            name: 'userCode',
-            fieldLabel: '用戶名',
-            xtype: 'textfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
         },{
             name: 'passWord',
             fieldLabel: '密码',
             xtype: 'textfield',
             beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
+        },{
+            name: 'empCode',
+            fieldLabel: '员工工号',
+            // xtype: 'textfield',
+            xtype: 'dynamicemployeecombselector',
+            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
+            allowBlank: false,
+            listeners: {
+                select: function (combo, records, eOpts) {
+                    combo.up().getForm().findField('empCode').setValue(records.data.empCode);
+                    combo.up().getForm().findField('empName').setValue(records.data.empName);
+                }
+            }
         },{
             name: 'empName',
             fieldLabel: '员工姓名',
@@ -326,8 +365,8 @@ Ext.define('Caiwei.sysset.user.UserForm', {
             name: 'notes',
             fieldLabel: '备注',
             xtype: 'textarea',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
+            // beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
+            allowBlank: true
         }];
         me.callParent([cfg]);
     }
@@ -384,19 +423,19 @@ Ext.define('Caiwei.sysset.user.UserAddWindow', {
             }
             var successFun = function (json) {
                 var message = json.resMsg;
-                Caiwei.showInfoMsg(message); // 提示新增成功
+                console.showInfoMsg(message); // 提示新增成功
                 me.close();
                 me.parent.getStore().load(); // 成功之后重新查询刷新结果集
             };
             var failureFun = function (json) {
                 if (Ext.isEmpty(json)) {
-                    Caiwei.showErrorMes('连接超时'); // 请求超时
+                    console.showErrorMes('连接超时'); // 请求超时
                 } else {
                     var message = json.resMsg;
-                    Caiwei.showErrorMes(message); // 提示失败原因
+                    console.showErrorMes(message); // 提示失败原因
                 }
             };
-            Caiwei.requestJsonAjax('addUser', params, successFun, failureFun); //  发送AJAX请求
+            console.requestJsonAjax('addUser', params, successFun, failureFun); //  发送AJAX请求
         }
     },
     constructor: function (config) {

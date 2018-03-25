@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.caiwei.console.persistent.mapper.RoleMapper">
     <!--The file was generated on 2017-11-06 14:52:56 by Administrator-->
-    <resultMap id="BaseResultMap" type="com.caiwei.console.persistent.domain.RolePO">
+    <resultMap id="BaseResultMap" type="com.caiwei.console.common.domain.RoleDO">
         <id column="id" property="tid"/>
         <result column="role_code" property="roleCode"/>
         <result column="role_name" property="roleName"/>
@@ -15,13 +15,61 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        tr_id, role_code, role_name, system_code, `type`, notes, status, create_time, modify_time
-      </sql>
+        id, role_code, role_name, system_code, `type`, notes, status, create_time, modify_time
+    </sql>
+
+    <sql id="param_sql">
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            and role_code = #{roleCode}
+        </if>
+        <if test="roleName != null  and roleName != ''">
+            and role_name like concat('%',concat(#{roleName},'%'))
+        </if>
+        <if test="systemCode != null and systemCode != ''">
+            and system_code = #{systemCode}
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_permis_role where id = #{tid}
+    </select>
+
+    <select id="findByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.RoleDO">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_permis_role
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
+    <select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_permis_role where role_code = #{roleCode}
+    </select>
     
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.RolePO">
         insert into t_mdm_permis_role (role_code, role_name,system_code, `type`, notes, status, create_time, modify_time)
         values (#{roleCode}, #{roleName}, #{systemCode}, #{type}, #{notes}, #{status}, #{createTime}, #{modifyTime})
       </insert>
+
+    <update id="updateStatus">
+        update t_mdm_permis_role
+        set `status` = #{status}
+        where role_code in
+        <foreach collection="roleCodes" close=")" open="(" item="item" separator=",">
+            #{item}
+        </foreach>
+    </update>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.RolePO">
         update t_mdm_permis_role
@@ -49,7 +97,7 @@
             </if>
         </set>
         <where>
-            <if test="id != null">
+            <if test="tid != null">
                 and id = #{tid}
             </if>
             <if test="roleCode != null and roleCode != ''">

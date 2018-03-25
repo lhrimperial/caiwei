@@ -1,14 +1,12 @@
 package com.caiwei.console.web.controller;
 
 import com.caiwei.console.web.domain.UserVO;
-import com.caiwei.console.web.service.IUserService;
+import com.caiwei.console.web.service.ISystemSetService;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
 import com.github.framework.server.web.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController extends AbstractController{
 
     @Autowired
-    private IUserService userService;
+    private ISystemSetService systemSetService;
 
     @RequestMapping("/index")
     public String index() {
@@ -28,15 +26,15 @@ public class UserController extends AbstractController{
 
     @ResponseBody
     @RequestMapping("/queryUserList")
-    public UserVO queryUserList(UserVO userVO) {
-        return userService.queryUserList(userVO);
+    public UserVO queryUserList(@ModelAttribute UserVO userVO) {
+        return systemSetService.queryUserList(userVO);
     }
 
     @ResponseBody
     @RequestMapping("/addUser")
     public ResponseVO<String> addUser(@RequestBody UserVO userVO) {
         ResponseVO responseVO = returnSuccess();
-        userService.addUser(userVO);
+        systemSetService.addUser(userVO);
         return responseVO;
     }
 
@@ -45,7 +43,7 @@ public class UserController extends AbstractController{
     @RequestMapping("/deleteUser")
     public ResponseVO<String> deleteUser(@RequestBody UserVO userVO) {
         ResponseVO responseVO = returnSuccess();
-        userService.deleteUser(userVO);
+        systemSetService.deleteUser(userVO);
         return responseVO;
     }
 }

@@ -21,4 +21,6 @@ public interface IEmployeeService {
     EmployeeDO findByEmpCode(String empCode);
 
     List<EmployeeDO> findByDeptCode(String deptCode);
+
+    List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO);
 }

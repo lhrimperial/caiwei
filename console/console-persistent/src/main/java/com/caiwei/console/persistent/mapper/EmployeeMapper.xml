@@ -20,6 +20,12 @@
         id, emp_code, emp_name, dept_code, dept_name, gender, mobile_no, email, tel_phone, status, create_time
       </sql>
 
+    <select id="findEmpByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.EmployeeDO">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_org_employee
+    </select>
+
     <select id="findByDeptCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
@@ -74,7 +80,7 @@
             </if>
         </set>
         <where>
-            <if test="id != null">
+            <if test="tid != null">
                 and id = #{tid}
             </if>
             <if test="empCode != null">

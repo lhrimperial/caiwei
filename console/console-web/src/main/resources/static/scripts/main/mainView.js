@@ -128,7 +128,7 @@ Ext.define('Caiwei.main.CurrentDeptChangeWindow', {
                 Caiwei.showErrorMes(message);
             }
         };
-        Caiwei.requestAjax('changeCurrentDept', params, successFun, failureFun);
+        console.requestAjax('changeCurrentDept', params, successFun, failureFun);
     },
     constructor: function(config){
         var me = this,
@@ -326,7 +326,7 @@ Ext.define('Caiwei.main.MainNav',{
                             }
                         };
                         //Ajax请求得到所有查询到的节点全路径
-                        Caiwei.requestJsonAjax('queryTreePathForName', params, successFun, failureFun);
+                        console.requestJsonAjax('queryTreePathForName', params, successFun, failureFun);
                     }
                 }
             });

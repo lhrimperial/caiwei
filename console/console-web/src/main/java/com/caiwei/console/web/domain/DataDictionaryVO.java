@@ -2,6 +2,7 @@ package com.caiwei.console.web.domain;
 
 import com.caiwei.console.common.domain.TermsCodeDO;
 import com.caiwei.console.common.domain.TermsValueDO;
+import com.github.framework.server.shared.domain.vo.BaseVO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  *
  */
-public class DataDictionaryVO implements Serializable{
+public class DataDictionaryVO extends BaseVO implements Serializable{
 
 
     private static final long serialVersionUID = 6663183729008187040L;

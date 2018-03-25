@@ -30,9 +30,36 @@
         <result column="resUri" property="resUri"/>
     </resultMap>
 
+    <sql id="param_sql">
+        <if test="userCode != null and userCode != ''">
+            and user_code = #{userCode}
+        </if>
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="empCode != null and empCode != ''">
+            and emp_code = #{empCode}
+        </if>
+        <if test="empName != null and empName != ''">
+            and emp_name like  concat('%',concat(#{empName},'%'))
+        </if>
+        <if test="deptCode != null and deptCode != ''">
+            and dept_code = #{deptCode}
+        </if>
+        <if test="lastLogin != null">
+            and last_login = #{lastLogin}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </sql>
+
     <select id="findUsers" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.PermisUserDO">
         select <include refid="Base_Column_List"/>
         from t_mdm_permis_user u
+        <where>
+            <include refid="param_sql"/>
+        </where>
     </select>
 
     <select id="queryOrgResCodeUrisByCode" resultMap="queryOrgResCodeUrisByCodeResultMap" parameterType="java.util.Map">
@@ -125,7 +152,7 @@
             <if test="userCode != null and userCode != ''">
                 and user_code = #{userCode}
             </if>
-            <if test="id != null">
+            <if test="tid != null">
                 and id = #{tid}
             </if>
         </where>

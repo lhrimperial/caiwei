@@ -11,13 +11,21 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, user_code, dept_code, role_code, status, create_time, modify_time
-  </sql>
+        id, user_code, dept_code, role_code, status, create_time, modify_time
+    </sql>
+
+    <update id="updateStatus" >
+        update t_mdm_permis_user_role set `status` = #{status}
+        where user_code in
+        <foreach collection="userCodes" separator="," item="item" open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
-    insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
-    values (#{userCode}, #{deptCode}, #{roleCode}, #{status}, #{createTime}, #{modifyTIme})
-  </insert>
+        insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
+        values (#{userCode}, #{deptCode}, #{roleCode}, #{status}, #{createTime}, #{modifyTIme})
+    </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
         update t_mdm_permis_user_role

@@ -67,7 +67,7 @@ function login(){
 				document.getElementById("error").innerText = message+"!";
 			}
 		};
-		Caiwei.requestJsonAjax('login', userVO, successFun, failureFun); // 发送AJAX请求
+        console.requestJsonAjax('login', userVO, successFun, failureFun); // 发送AJAX请求
 	}
 }
 

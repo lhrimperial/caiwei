@@ -1,45 +1,45 @@
 /**
  * @memo 动态加载JavaScript文件
  */
-var Caiwei = Caiwei || {};
-Caiwei.JsLoader = function() {
-   this.load = function(url) {
-		var me = this,
-			scripts = document.getElementsByTagName("script"),
-			len = scripts.length,
-			i, script, head;
-		for (i=0; i<len; i++) {
-			if (scripts[i].src && scripts[i].src.indexOf(url) != -1) {
-				me.onSuccess();
-				return;
-			}
-		}
-		script = document.createElement("script");
-		script.type = "text/javascript";
-		script.src = url;
-		head = document.getElementsByTagName("head")[0];
-		try {
-			head.appendChild(script);
-			script.onload = script.onreadystatechange = function() {
-				if (script.readyState && script.readyState != 'loaded' && script.readyState != 'complete') return;
-				script.onreadystatechange = script.onload = null; 
-				me.onSuccess();
-			}
-		} catch(e) {
-			//head.removeChild(script);
-			if(typeof(me.onFailure) == 'function') {
-				me.onFailure();
-			} else if(Ext != 'undefined' && Ext != null) {
-				Ext.MessageBox.alert("提示", "JavaScript文件加载失败.");
-			}
-		}
-	}
+var Frame = Frame || {};
+Frame.JsLoader = function() {
+    this.load = function(url) {
+        var me = this,
+            scripts = document.getElementsByTagName("script"),
+            len = scripts.length,
+            i, script, head;
+        for (i=0; i<len; i++) {
+            if (scripts[i].src && scripts[i].src.indexOf(url) != -1) {
+                me.onSuccess();
+                return;
+            }
+        }
+        script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = url;
+        head = document.getElementsByTagName("head")[0];
+        try {
+            head.appendChild(script);
+            script.onload = script.onreadystatechange = function() {
+                if (script.readyState && script.readyState != 'loaded' && script.readyState != 'complete') return;
+                script.onreadystatechange = script.onload = null;
+                me.onSuccess();
+            }
+        } catch(e) {
+            //head.removeChild(script);
+            if(typeof(me.onFailure) == 'function') {
+                me.onFailure();
+            } else if(Ext != 'undefined' && Ext != null) {
+                Ext.MessageBox.alert("提示", "JavaScript文件加载失败.");
+            }
+        }
+    }
 }
 
 // trim方法在IE下报错
 String.prototype.trim = function() {
-	return this.replace(/(^\s*)|(\s*$)/g, "");
-}  
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+}
 /**
  * 修改date对象数据的JSON提交方式
  * @param date 日期对象
@@ -60,7 +60,7 @@ Ext.override(Ext.window.Window, {
  * 仅适用于开发环境
  */
 Ext.data.proxy.Server.override({
-	timeout: 3000000
+    timeout: 3000000
 });
 
 
@@ -68,23 +68,23 @@ Ext.data.proxy.Server.override({
  * 修改combox下拉后的页面中的分页
  */
 /*Ext.view.BoundList.override({
-	createPagingToolbar: function() {
-        return Ext.widget('simplepaging', {
-            id: this.id + '-paging-toolbar',
-            pageSize: this.pageSize,
-            store: this.store,
-            border: false
-        });
-    }
-});*/
+ createPagingToolbar: function() {
+ return Ext.widget('simplepaging', {
+ id: this.id + '-paging-toolbar',
+ pageSize: this.pageSize,
+ store: this.store,
+ border: false
+ });
+ }
+ });*/
 
 /**
-*	修改默认提示框按钮的焦点
-*	更改提示框中按钮的默认位置需更改源码Ext.window.MessageBox类中
-*    buttonIds: [
-*        'cancel', 'no', 'yes', 'ok'
-*    ]
-*/
+ *	修改默认提示框按钮的焦点
+ *	更改提示框中按钮的默认位置需更改源码Ext.window.MessageBox类中
+ *    buttonIds: [
+ *        'cancel', 'no', 'yes', 'ok'
+ *    ]
+ */
 Ext.override(Ext.window.MessageBox, {
     defaultFocus: 2
 });
@@ -94,15 +94,15 @@ Ext.override(Ext.window.MessageBox, {
 /**
  * 关闭Tab功能
  * @param tID 待关闭的tab id
-*/
+ */
 /*function removeTab(tID) {
-	var tabPanel = Ext.getCmp('mainAreaPanel'),
-		tab = Ext.getCmp(tID);
-	if(tabPanel==null){
-		return;
-	}
-	tabPanel.remove(tab, true);
-}*/
+ var tabPanel = Ext.getCmp('mainAreaPanel'),
+ tab = Ext.getCmp(tID);
+ if(tabPanel==null){
+ return;
+ }
+ tabPanel.remove(tab, true);
+ }*/
 
 /**
  * 新建Tab功能
@@ -110,182 +110,182 @@ Ext.override(Ext.window.MessageBox, {
  * @param tText tab显示文本值
  * @param tLoc tab页面请求的URL
  * @param params 请求的参数
-*/
+ */
 /*function addTab() {
-	var tID = arguments[0],
-		tText = arguments[1],
-		tLoc = arguments[2],
-		tabPanel = Ext.getCmp('mainAreaPanel'),
-		tab = Ext.getCmp(tID);
-	if(tabPanel==null){
-		return;
-	}
-	tabPanel.params = arguments[3];
-	if(!tab) {
-		tabPanel.add({
-			id: tID,
-			title: tText,
-			layout: 'fit',
-			closable: true,
-			tabConfig: { width: 150 },
-			cls: 'autoHeight',
-			bodyCls: 'autoHeight',
-			loader: {
-				scripts: true,
-				autoLoad: true,
-				url: '../'+tLoc
-			}
-		});
-		tabPanel.setActiveTab(tabPanel.child('#'+tID));
-	} else {
-		tabPanel.setActiveTab(tab);
-	}
-}*/
+ var tID = arguments[0],
+ tText = arguments[1],
+ tLoc = arguments[2],
+ tabPanel = Ext.getCmp('mainAreaPanel'),
+ tab = Ext.getCmp(tID);
+ if(tabPanel==null){
+ return;
+ }
+ tabPanel.params = arguments[3];
+ if(!tab) {
+ tabPanel.add({
+ id: tID,
+ title: tText,
+ layout: 'fit',
+ closable: true,
+ tabConfig: { width: 150 },
+ cls: 'autoHeight',
+ bodyCls: 'autoHeight',
+ loader: {
+ scripts: true,
+ autoLoad: true,
+ url: '../'+tLoc
+ }
+ });
+ tabPanel.setActiveTab(tabPanel.child('#'+tID));
+ } else {
+ tabPanel.setActiveTab(tab);
+ }
+ }*/
 
 /**
  * 动态下拉框查询
  */
-Ext.define('Caiwei.commonselector.DynamicComboSelector',{
-	extend: 'Ext.form.ComboBox',
-	alias: 'widget.dynamiccomboselector',
-	triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
-	listWidth: this.width,//下拉列表宽度，从外面传入
-	multiSelect: false,//从外面传入
-	isPaging: false,//是否要分页
-	isEnterQuery: false,	//回车查询
-	displayField: null,//显示的字段，从外面传入
-	valueField: null,//提交时的字段,从外面传入
-	showContent: null,//需要从外面传入如：showContent:'{deptName}&nbsp;&nbsp;{deptCode}'
-	queryParam: null,//查询参数
-	triggerAction: 'query',
-	minChars:1,
-	hideTrigger:false,
-	listConfig: {
-		getInnerTpl: function() {
-			return this.up('combo').showContent;
-		}
-	},
-	getValueModel: function(){
-		var models = this.valueModels;
-		if(Ext.isEmpty(models)&&models.length>0){
-			return models[0];
-		}else{
-			return null;
-		}
-	},
+Ext.define('Frame.commonselector.DynamicComboSelector',{
+    extend: 'Ext.form.ComboBox',
+    alias: 'widget.dynamiccomboselector',
+    triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
+    listWidth: this.width,//下拉列表宽度，从外面传入
+    multiSelect: false,//从外面传入
+    isPaging: false,//是否要分页
+    isEnterQuery: false,	//回车查询
+    displayField: null,//显示的字段，从外面传入
+    valueField: null,//提交时的字段,从外面传入
+    showContent: null,//需要从外面传入如：showContent:'{deptName}&nbsp;&nbsp;{deptCode}'
+    queryParam: null,//查询参数
+    triggerAction: 'query',
+    minChars:1,
+    hideTrigger:false,
+    listConfig: {
+        getInnerTpl: function() {
+            return this.up('combo').showContent;
+        }
+    },
+    getValueModel: function(){
+        var models = this.valueModels;
+        if(Ext.isEmpty(models)&&models.length>0){
+            return models[0];
+        }else{
+            return null;
+        }
+    },
 	/*getChange: function(combo,newValue,oldValue){
-		if(combo.isExpanded==true){
-			combo.collapse();
-		}
-	},
-	getKeyPress: function( combo, event, eOpts ){
-		if(event.getKey() == event.ENTER){
-			combo.store.loadPage(1,{
-				scope: this,
-				callback: function(records, operation, success) {
-					if(records.length>0){
-						combo.expand();
-					}
-				}
-			});
-		}
-	},*/
-	getBeforeLoad: function(store,operation,e){
-		var me = this, searchParams = operation.getParams();
-		if (Ext.isEmpty(searchParams)) {
-			searchParams = {};
-		}
-		searchParams[me.queryParam] = me.rawValue;
-		Ext.apply(store.proxy.extraParams, searchParams);  
-	},
+	 if(combo.isExpanded==true){
+	 combo.collapse();
+	 }
+	 },
+	 getKeyPress: function( combo, event, eOpts ){
+	 if(event.getKey() == event.ENTER){
+	 combo.store.loadPage(1,{
+	 scope: this,
+	 callback: function(records, operation, success) {
+	 if(records.length>0){
+	 combo.expand();
+	 }
+	 }
+	 });
+	 }
+	 },*/
+    getBeforeLoad: function(store,operation,e){
+        var me = this, searchParams = operation.getParams();
+        if (Ext.isEmpty(searchParams)) {
+            searchParams = {};
+        }
+        searchParams[me.queryParam] = me.rawValue;
+        Ext.apply(store.proxy.extraParams, searchParams);
+    },
     initEvents: function() {
         var me = this;
         me.callParent(arguments);
-		//判断是否是回车去查询
-		//if(me.isEnterQuery==true){
-			//me.mon(me, 'change', me.getChange, me);
-			//me.mon(me, 'keypress', me.getKeyPress, me);
-		//}
-		me.mon(me.store, 'beforeLoad', me.getBeforeLoad, me);
+        //判断是否是回车去查询
+        //if(me.isEnterQuery==true){
+        //me.mon(me, 'change', me.getChange, me);
+        //me.mon(me, 'keypress', me.getKeyPress, me);
+        //}
+        me.mon(me.store, 'beforeLoad', me.getBeforeLoad, me);
     },
-	initComponent:function(){
-		var me = this;
-		//列表宽度自定义
-		me.on('expand', function(combo, eOpts ){
-				combo.getPicker().minWidth=me.listWidth;
-				combo.getPicker().setWidth(me.listWidth);
-		});
-		//判断是否要分页
-		if(me.isPaging==true){
-			me.pageSize = me.store.pageSize;
-		}
-		//判断下拉grid显示列
-		if(me.showContent==null){
-			me.showContent = '{'+me.displayField+'}';
-		}
-		//判断是否是回车去查询
-		if(me.isEnterQuery==true){
-			me.enableKeyEvents = true;
-			me.queryDelay = 1000000;//此处为了使回车时间生效
-		}
-		this.callParent(arguments);
-	}
-});	
+    initComponent:function(){
+        var me = this;
+        //列表宽度自定义
+        me.on('expand', function(combo, eOpts ){
+            combo.getPicker().minWidth=me.listWidth;
+            combo.getPicker().setWidth(me.listWidth);
+        });
+        //判断是否要分页
+        if(me.isPaging==true){
+            me.pageSize = me.store.pageSize;
+        }
+        //判断下拉grid显示列
+        if(me.showContent==null){
+            me.showContent = '{'+me.displayField+'}';
+        }
+        //判断是否是回车去查询
+        if(me.isEnterQuery==true){
+            me.enableKeyEvents = true;
+            me.queryDelay = 1000000;//此处为了使回车时间生效
+        }
+        this.callParent(arguments);
+    }
+});
 /**
  * 动态下拉多选框查询
  */
-Ext.define('Caiwei.commonselector.DynamicMultiSelectComboSelector',{
-	extend: 'Ext.form.field.ComboBox',
-	alias: 'widget.dynamicmulticomboselector',
-	triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
-	listWidth: this.width,//下拉列表宽度，从外面传入
-	isPaging: false,//是否要分页
-	isEnterQuery: false,	//回车查询
-	triggerOnClick: false,//得到焦点时，不进行下拉
-	multiSelect: true,
-	minChars:1,
-	listConfig: {
-		getInnerTpl: function() {
-			return this.up('combo').showContent;
-		}
-	},
-	onKeyPress:function(e, t){
-		var me = this;
-		if(e.getKey() == e.ENTER){
-			me.doRawQuery();
-		}else{
-			me.collapse();
-		}
-	},
-	initEvents: function(){
-		var me = this;
+Ext.define('Frame.commonselector.DynamicMultiSelectComboSelector',{
+    extend: 'Ext.form.field.ComboBox',
+    alias: 'widget.dynamicmulticomboselector',
+    triggerCls: Ext.baseCSSPrefix + 'form-search-trigger',
+    listWidth: this.width,//下拉列表宽度，从外面传入
+    isPaging: false,//是否要分页
+    isEnterQuery: false,	//回车查询
+    triggerOnClick: false,//得到焦点时，不进行下拉
+    multiSelect: true,
+    minChars:1,
+    listConfig: {
+        getInnerTpl: function() {
+            return this.up('combo').showContent;
+        }
+    },
+    onKeyPress:function(e, t){
+        var me = this;
+        if(e.getKey() == e.ENTER){
+            me.doRawQuery();
+        }else{
+            me.collapse();
+        }
+    },
+    initEvents: function(){
+        var me = this;
         me.callParent(arguments);
         if (me.enableKeyEvents&&me.isEnterQuery) {
-			me.mon(me.inputEl, 'keypress', me.onKeyPress, me);
+            me.mon(me.inputEl, 'keypress', me.onKeyPress, me);
         }
-	},
-	initComponent:function(){
-		var me = this;
-		//列表宽度自定义
-		me.on('expand', function(combo, eOpts ){
-				combo.getPicker().minWidth=me.listWidth;
-				combo.getPicker().setWidth(me.listWidth);
-		});
-		//判断是否要分页
-		if(me.isPaging){
-			me.pageSize = me.store.pageSize;
-		}
-		//判断是否是回车去查询
-		if(me.isEnterQuery){
-			me.enableKeyEvents = true;
-			//me.queryDelay = 1000000;//此处为了使回车时间生效
-		}
-		//判断下拉grid显示列
-		if(me.showContent==null){
-			me.showContent = '{'+me.displayField+'}';
-		}
-		this.callParent(arguments);
-	}
+    },
+    initComponent:function(){
+        var me = this;
+        //列表宽度自定义
+        me.on('expand', function(combo, eOpts ){
+            combo.getPicker().minWidth=me.listWidth;
+            combo.getPicker().setWidth(me.listWidth);
+        });
+        //判断是否要分页
+        if(me.isPaging){
+            me.pageSize = me.store.pageSize;
+        }
+        //判断是否是回车去查询
+        if(me.isEnterQuery){
+            me.enableKeyEvents = true;
+            //me.queryDelay = 1000000;//此处为了使回车时间生效
+        }
+        //判断下拉grid显示列
+        if(me.showContent==null){
+            me.showContent = '{'+me.displayField+'}';
+        }
+        this.callParent(arguments);
+    }
 });
 
 
@@ -294,23 +294,23 @@ Ext.define('Caiwei.commonselector.DynamicMultiSelectComboSelector',{
  * A control that allows selection of multiple items in a list.
  */
 Ext.define('Ext.ux.form.MultiSelect', {
-    
+
     extend: 'Ext.form.FieldContainer',
-    
+
     mixins: [
         'Ext.util.StoreHolder',
         'Ext.form.field.Field'
     ],
-    
+
     alternateClassName: 'Ext.ux.Multiselect',
     alias: ['widget.multiselectfield', 'widget.multiselect'],
-    
+
     requires: ['Ext.panel.Panel', 'Ext.view.BoundList', 'Ext.layout.container.Fit'],
-    
+
     uses: ['Ext.view.DragZone', 'Ext.view.DropZone'],
-    
+
     layout: 'anchor',
-    
+
     /**
      * @cfg {String} [dragGroup=""] The ddgroup name for the MultiSelect DragZone.
      */
@@ -318,11 +318,11 @@ Ext.define('Ext.ux.form.MultiSelect', {
     /**
      * @cfg {String} [dropGroup=""] The ddgroup name for the MultiSelect DropZone.
      */
-    
+
     /**
      * @cfg {String} [title=""] A title for the underlying panel.
      */
-    
+
     /**
      * @cfg {Boolean} [ddReorder=false] Whether the items in the MultiSelect list are drag/drop reorderable.
      */
@@ -371,14 +371,14 @@ Ext.define('Ext.ux.form.MultiSelect', {
     blankText: 'This field is required',
 
     /**
-     * @cfg {String} [minSelectionsText="Minimum {0}item(s) required"] 
-     * Validation message displayed when {@link #minSelections} is not met. 
+     * @cfg {String} [minSelectionsText="Minimum {0}item(s) required"]
+     * Validation message displayed when {@link #minSelections} is not met.
      * The {0} token will be replaced by the value of {@link #minSelections}.
      */
     minSelectionsText: 'Minimum {0} item(s) required',
-    
+
     /**
-     * @cfg {String} [maxSelectionsText="Maximum {0}item(s) allowed"] 
+     * @cfg {String} [maxSelectionsText="Maximum {0}item(s) allowed"]
      * Validation message displayed when {@link #maxSelections} is not met
      * The {0} token will be replaced by the value of {@link #maxSelections}.
      */
@@ -390,7 +390,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
      * parameters rather than a single delimited parameter, set this to `null`.
      */
     delimiter: ',',
-    
+
     /**
      * @cfg {String} [dragText="{0} Item{1}"] The text to show while dragging items.
      * {0} will be replaced by the number of items. {1} will be replaced by the plural
@@ -413,7 +413,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
      * {@link #valueField value}, while the value at index 1 is assumed to be the combo {@link #displayField text}.
      * </div></li></ul></div></li></ul></div>
      */
-    
+
     ignoreSelectChange: 0,
 
     /**
@@ -483,17 +483,17 @@ Ext.define('Ext.ux.form.MultiSelect', {
     onSelectChange: function(selModel, selections){
         if (!this.ignoreSelectChange) {
             this.setValue(selections);
-        }    
+        }
     },
-    
+
     getSelected: function(){
         return this.boundList.getSelectionModel().getSelection();
     },
-    
+
     // compare array values
     isEqual: function(v1, v2) {
         var fromArray = Ext.Array.from,
-            i = 0, 
+            i = 0,
             len;
 
         v1 = fromArray(v1);
@@ -512,11 +512,11 @@ Ext.define('Ext.ux.form.MultiSelect', {
 
         return true;
     },
-    
+
     afterRender: function(){
         var me = this,
             records;
-        
+
         me.callParent();
         if (me.selectOnRender) {
             records = me.getRecordsForValue(me.value);
@@ -526,8 +526,8 @@ Ext.define('Ext.ux.form.MultiSelect', {
                 --me.ignoreSelectChange;
             }
             delete me.toSelect;
-        }    
-        
+        }
+
         if (me.ddReorder && !me.dragGroup && !me.dropGroup){
             me.dragGroup = me.dropGroup = 'MultiselectDD-' + Ext.id();
         }
@@ -563,21 +563,21 @@ Ext.define('Ext.ux.form.MultiSelect', {
             });
         }
     },
-    
+
     isValid : function() {
         var me = this,
             disabled = me.disabled,
             validate = me.forceValidation || !disabled;
-            
-        
+
+
         return validate ? me.validateValue(me.value) : disabled;
     },
-    
+
     validateValue: function(value) {
         var me = this,
             errors = me.getErrors(value),
             isValid = Ext.isEmpty(errors);
-            
+
         if (!me.preventMark) {
             if (isValid) {
                 me.clearInvalid();
@@ -588,7 +588,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
 
         return isValid;
     },
-    
+
     markInvalid : function(errors) {
         // Save the message and fire the 'invalid' event
         var me = this,
@@ -615,7 +615,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
             me.updateLayout();
         }
     },
-    
+
     getSubmitData: function() {
         var me = this,
             data = null,
@@ -639,14 +639,14 @@ Ext.define('Ext.ux.form.MultiSelect', {
         var me = this,
             delimiter = me.delimiter,
             val = me.getValue();
-        
+
         return Ext.isString(delimiter) ? val.join(delimiter) : val;
     },
-    
+
     getValue: function(){
         return this.value || [];
     },
-    
+
     getRecordsForValue: function(value){
         var me = this,
             records = [],
@@ -657,19 +657,19 @@ Ext.define('Ext.ux.form.MultiSelect', {
             rec,
             j,
             valueLen;
-            
+
         for (valueLen = value.length; i < valueLen; ++i) {
             for (j = 0; j < allLen; ++j) {
-                rec = all[j];   
+                rec = all[j];
                 if (rec.get(valueField) == value[i]) {
                     records.push(rec);
                 }
-            }    
+            }
         }
-            
+
         return records;
     },
-    
+
     setupValue: function(value){
         var delimiter = this.delimiter,
             valueField = this.valueField,
@@ -677,14 +677,14 @@ Ext.define('Ext.ux.form.MultiSelect', {
             out,
             len,
             item;
-            
+
         if (Ext.isDefined(value)) {
             if (delimiter && Ext.isString(value)) {
                 value = value.split(delimiter);
             } else if (!Ext.isArray(value)) {
                 value = [value];
             }
-        
+
             for (len = value.length; i < len; ++i) {
                 item = value[i];
                 if (item && item.isModel) {
@@ -697,7 +697,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
         }
         return out;
     },
-    
+
     setValue: function(value){
         var me = this,
             selModel = me.boundList.getSelectionModel(),
@@ -714,7 +714,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
 
         value = me.setupValue(value);
         me.mixins.field.setValue.call(me, value);
-        
+
         if (me.rendered) {
             ++me.ignoreSelectChange;
             selModel.deselectAll();
@@ -726,11 +726,11 @@ Ext.define('Ext.ux.form.MultiSelect', {
             me.selectOnRender = true;
         }
     },
-    
+
     clearValue: function(){
-        this.setValue([]);    
+        this.setValue([]);
     },
-    
+
     onEnable: function(){
         var list = this.boundList;
         this.callParent();
@@ -738,7 +738,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
             list.enable();
         }
     },
-    
+
     onDisable: function(){
         var list = this.boundList;
         this.callParent();
@@ -746,7 +746,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
             list.disable();
         }
     },
-    
+
     getErrors : function(value) {
         var me = this,
             format = Ext.String.format,
@@ -767,23 +767,23 @@ Ext.define('Ext.ux.form.MultiSelect', {
         }
         return errors;
     },
-    
+
     onDestroy: function(){
         var me = this;
-        
+
         me.bindStore(null);
         Ext.destroy(me.dragZone, me.dropZone);
         me.callParent();
     },
-    
+
     onBindStore: function(store){
         var boundList = this.boundList;
-        
+
         if (boundList) {
             boundList.bindStore(store);
         }
     }
-    
+
 });
 
 
@@ -859,7 +859,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
                 return null;
             },
             getModelData: function(){
-                return null;    
+                return null;
             },
             flex: 1,
             dragGroup: me.ddGroup,
@@ -926,11 +926,11 @@ Ext.define('Ext.ux.form.ItemSelector', {
 
     /**
      * Get the selected records from the specified list.
-     * 
+     *
      * Records will be returned *in store order*, not in order of selection.
      * @param {Ext.view.BoundList} list The list to read selections from.
      * @return {Ext.data.Model[]} The selected records in store order.
-     * 
+     *
      */
     getSelections: function(list) {
         var store = list.getStore();
@@ -958,7 +958,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         store.insert(0, selected);
         store.resumeEvents();
         list.refresh();
-        this.syncValue(); 
+        this.syncValue();
         list.getSelectionModel().select(selected);
     },
 
@@ -1059,7 +1059,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
 
     // Synchronizes the submit value with the current state of the toStore
     syncValue: function() {
-        var me = this; 
+        var me = this;
         me.mixins.field.setValue.call(me, me.setupValue(me.toField.store.getRange()));
     },
 
@@ -1116,7 +1116,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
         Ext.suspendLayouts();
         fromField.boundList.refresh();
         toField.boundList.refresh();
-        Ext.resumeLayouts(true);        
+        Ext.resumeLayouts(true);
     },
 
     onBindStore: function(store, initial) {
@@ -1195,25 +1195,25 @@ Ext.override(Ext.view.Table, {
  * 设置只读添加红色星号
  */
 Ext.override(Ext.form.field.Base, {
-	initComponent:function () {
-    	var me = this;
-    	me.callParent();
-    	if (me.allowBlank === false && !Ext.isEmpty(me.fieldLabel)) {
-      		me.beforeLabelTextTpl = '<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>';
-    	}
-	}
+    initComponent:function () {
+        var me = this;
+        me.callParent();
+        if (me.allowBlank === false && !Ext.isEmpty(me.fieldLabel)) {
+            me.beforeLabelTextTpl = '<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>';
+        }
+    }
 });
 /**
  * 设置只读添加红色星号
  */
 Ext.override(Ext.form.FieldContainer, {
-	initComponent:function () {
-    	var me = this;
-    	me.callParent();
-    	if (me.allowBlank === false && !Ext.isEmpty(me.fieldLabel)) {
-      		me.beforeLabelTextTpl = '<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>';
-    	}
-	}
+    initComponent:function () {
+        var me = this;
+        me.callParent();
+        if (me.allowBlank === false && !Ext.isEmpty(me.fieldLabel)) {
+            me.beforeLabelTextTpl = '<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>';
+        }
+    }
 });
 
 /**
@@ -1234,12 +1234,12 @@ Ext.define('Ext.ux.rating.Picker', {
     extend: 'Ext.Widget',
     xtype: 'rating',
     focusable: true,
-    /*
-     * The "cachedConfig" block is basically the same as "config" except that these
-     * values are applied specially to the first instance of the class. After processing
-     * these configs, the resulting values are stored on the class `prototype` and the
-     * template DOM element also reflects these default values.
-     */
+	/*
+	 * The "cachedConfig" block is basically the same as "config" except that these
+	 * values are applied specially to the first instance of the class. After processing
+	 * these configs, the resulting values are stored on the class `prototype` and the
+	 * template DOM element also reflects these default values.
+	 */
     cachedConfig: {
         /**
          * @cfg {String} [family]
@@ -1727,7 +1727,7 @@ Ext.define('Ext.ux.grid.SubTable', {
 
     rowBodyTpl: ['<table class="' + Ext.baseCSSPrefix + 'grid-subtable"><tbody>',
         '{%',
-            'this.owner.renderTable(out, values);',
+        'this.owner.renderTable(out, values);',
         '%}',
         '</tbody></table>'
     ],
@@ -1802,7 +1802,7 @@ Ext.define('Ext.ux.grid.SubTable', {
             out.push('</tr>');
         }
     },
-    
+
     getRowBodyContentsFn: function(rowBodyTpl) {
         var me = this;
         return function (rowValues) {
@@ -1810,21 +1810,97 @@ Ext.define('Ext.ux.grid.SubTable', {
             return rowBodyTpl.applyTemplate(rowValues);
         };
     },
-    
+
     getAssociatedRecords: function(record) {
         return record[this.association]().getRange();
     }
 });
 
 /**
- * allowBlank = false 
+ * allowBlank = false
  * 过滤空格
  */
-Ext.override(Ext.form.TextField, { 
+Ext.override(Ext.form.TextField, {
     validator:function(text){
         if(this.allowBlank==false && Ext.util.Format.trim(text).length==0)
-          return false;
+            return false;
         else
-          return true;
+            return true;
     }
-}); 
+});
+
+Ext.define('Ext.ux.data.proxy.JsonAjaxProxy', {
+    extend:'Ext.data.proxy.Ajax',
+    alias:'proxy.jsonajax',
+    actionMethods : {
+        create: "POST",
+        read: "POST",
+        update: "POST",
+        destroy: "POST"
+    },
+    buildRequest:function (operation) {
+        var request = this.callParent(arguments);
+        // For documentation on jsonData see Ext.Ajax.request
+        request.jsonData = request.params;
+        request.params = {};
+        return request;
+    },
+    /*
+     * @override
+     * Inherit docs. We don't apply any encoding here because
+     * all of the direct requests go out as jsonData
+     */
+    applyEncoding: function(value){
+        return value;
+    }
+});
+
+
+Ext.define('Frame.errorMessage.Window', {
+    extend: 'Ext.window.Window',
+    title: '系统异常',
+    eTitle: '未知异常',
+    eDetailTitle: '异常详细信息',
+    resizable: false,
+    modal: true,
+    width: 500,
+    defaults: {
+        anchor: '100%',
+        autoScroll: true
+    },
+    message : null,
+    buttons: [{
+        text: 'OK',
+        handler: function(button, even) {
+            button.up('window').destroy();
+        }
+    }],
+    constructor: function(config) {
+        var me = this,
+            cfg = Ext.apply({}, config);
+        me.message = config.message;
+        me.requestId = config.requestId;
+        me.stackTrace = config.stackTrace;
+        me.items = [{
+            xtype: 'panel',
+            frame: true,
+            title: '请求id',
+            width: 500,
+            html: me.requestId
+        },{
+            xtype: 'panel',
+            frame: true,
+            title: me.eDetailTitle,
+            collapsible: true,
+            collapsed: true,
+            width: 500,
+            autoScroll: true,
+            items: [{
+                height: 200,
+                width: 500,
+                html: me.stackTrace
+            }]
+        }];
+        me.callParent([cfg]);
+    }
+});

@@ -63,7 +63,7 @@
             </if>
         </set>
         <where>
-            <if test="id != null">
+            <if test="tid != null">
                 and id = #{tid}
             </if>
             <if test="valueCode != null and valueCode != ''">

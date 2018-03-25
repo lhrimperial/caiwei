@@ -17,4 +17,6 @@ public interface EmployeeMapper {
 
     List<EmployeeDO> findByDeptCode(String deptCode);
 
+    List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO);
+
 }

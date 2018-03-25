@@ -1,47 +1,45 @@
 //------------------------------------常量----------------------------------
-var Caiwei = {};
-Caiwei.operatorCount = {
-	defaultV : 0,
-	successV : 1,
-	failureV : -1
+var console = {};
+console.operatorCount = {
+    defaultV : 0,
+    successV : 1,
+    failureV : -1
 }; // 操作返回值 1为成功，-1为失败
-Caiwei.delAgencyType = 'MANY'; // 删除的类型，批量
-Caiwei.delType = 'MANY'; // 删除的类型，批量
-
-Caiwei.viewState = {
-	add : 'ADD',
-	update : 'UPDATE',
-	view : 'VIEW'
+console.delAgencyType = 'MANY'; // 删除的类型，批量
+console.delType = 'MANY'; // 删除的类型，批量
+console.viewState = {
+    add : 'ADD',
+    update : 'UPDATE',
+    view : 'VIEW'
 }; // 查看状态viewState："ADD"新增,"UPDATE"修改,"VIEW"查看
-
-Caiwei.booleanType = {
-	yes : 'Y',
-	no : 'N'
+console.booleanType = {
+    yes : 'Y',
+    no : 'N'
 }; // booleanType 对应后台常量 "布尔类型"
-Caiwei.effectiveState = {
-	active : 'Y',
-	inactive : 'N'
+console.effectiveState = {
+    active : 'Y',
+    inactive : 'N'
 }; // booleanType 对应后台常量 "生效/未生效"
-Caiwei.booleanStr = {
-	yes : 'true',
-	no : 'false'
+console.booleanStr = {
+    yes : 'true',
+    no : 'false'
 }; // booleanStr 从复选框中得到值
-Caiwei.operateType = {
-	save : 'SAVE'
+console.operateType = {
+    save : 'SAVE'
 }; // 标识 是否 保存操作
-Caiwei.levelType = {
-	p : 'PARENT',
-	c : 'CHILDREN'
+console.levelType = {
+    p : 'PARENT',
+    c : 'CHILDREN'
 }; // 标识 是父容器还是子容器
 //图片glyph
-Caiwei.iconGlyph = {
-	add : 0xf055,//新增
-	update : 0xf044,//修改
-	del : 0xf014,//设置
-	download : 0xf019,//下载
-	upload : 0xf093,//上传
-	settings : 0xf013,//设置
-	search : 0xf002//查询
+console.iconGlyph = {
+    add : 0xf055,//新增
+    update : 0xf044,//修改
+    del : 0xf014,//设置
+    download : 0xf019,//下载
+    upload : 0xf093,//上传
+    settings : 0xf013,//设置
+    search : 0xf002//查询
 };
 
 
@@ -58,36 +56,95 @@ Caiwei.iconGlyph = {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.requestJsonAjax = function(url, params, successFn, failFn, asyncFlag) {
-    delete params["id"];
+console.requestJsonAjax = function(url, params, successFn, failFn, asyncFlag) {
     if(Ext.isEmpty(asyncFlag)){
-		asyncFlag = true;
-	}
-	//!(asyncFlag && true)
-	Ext.Ajax.request({
-		url:url,
-		async: asyncFlag,
-		jsonData:params,
-        headers:{
-            'Content-Type': 'application/json; charset=utf-8'
+        asyncFlag = true;
+    }
+    //!(asyncFlag && true)
+    Ext.Ajax.request({
+        url:url,
+        async: asyncFlag,
+        jsonData:params,
+        success:function(response){
+            var result = Ext.decode(response.responseText);
+            //系统异常
+            if(result.isException){
+                var errorWindow = Ext.create('Frame.errorMessage.Window',{
+                    message:result.message,
+                    requestId:result.requestId,
+                    stackTrace:result.stackTrace
+                });
+                errorWindow.show();
+            }else{
+                if(result.success){
+                    successFn(result);
+                }else {
+                    failFn(result);
+                }
+            }
         },
-		success:function(response){
-			var result = Ext.decode(response.responseText);
-			if(result.success){
-				successFn(result);
-			}else{
-				failFn(result);
-			}
-		},
-		failure:function(response){
-			var result = Ext.decode(response.responseText);
-			failFn(result);
-		},
-		exception:function(response){
-			var result = Ext.decode(response.responseText);
-			failFn(result);
-		}
-	});
+        failure:function(response){
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        },
+        exception:function(response){
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        }
+    });
+};
+
+/**
+ * <p>
+ * AJAX请求<br/>
+ * <p>
+ * @param url url请求地址
+ * @param params PARAMS参数
+ * @param successFn successFn调用成功
+ * @param failFn FAILFN调用失败
+ * @param eventFn 异常后触发操作
+ * @param syncFlag 是否异步
+ * @author 龙海仁
+ * @date 2015年5月13日
+ * @update
+ */
+console.requestJsonEventAjax = function(url, params, successFn, failFn, eventFn ,asyncFlag) {
+    if(Ext.isEmpty(asyncFlag)){
+        asyncFlag = true;
+    }
+    //!(asyncFlag && true)
+    Ext.Ajax.request({
+        url:url,
+        async: asyncFlag,
+        jsonData:params,
+        success:function(response){
+            var result = Ext.decode(response.responseText);
+            //系统异常
+            if(result.isException){
+                var errorWindow = Ext.create('Frame.errorMessage.Window',{
+                    message:result.message,
+                    requestId:result.requestId,
+                    stackTrace:result.stackTrace
+                });
+                eventFn();
+                errorWindow.show();
+            }else{
+                if(result.success){
+                    successFn(result);
+                }else {
+                    failFn(result);
+                }
+            }
+        },
+        failure:function(response){
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        },
+        exception:function(response){
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        }
+    });
 };
 
 
@@ -103,28 +160,28 @@ Caiwei.requestJsonAjax = function(url, params, successFn, failFn, asyncFlag) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.requestFileUploadAjax = function(url, form, successFn, failFn) {
-	Ext.Ajax.request({
-		url : url,
-		form : form,
-		isUpload : true,
-		success : function(form, action) {
-			var result = action.result;
-			if (result.success) {
-				successFn(result);
-			} else {
-				failFn(result);
-			}
-		},
-		failure : function(form, action) {
-			var result = action.result;
-			failFn(result);
-		},
-		exception : function(response) {
-			var result = Ext.decode(response.responseText);
-			failFn(result);
-		}
-	});
+console.requestFileUploadAjax = function(url, form, successFn, failFn) {
+    Ext.Ajax.request({
+        url : url,
+        form : form,
+        isUpload : true,
+        success : function(form, action) {
+            var result = action.result;
+            if (result.success) {
+                successFn(result);
+            } else {
+                failFn(result);
+            }
+        },
+        failure : function(form, action) {
+            var result = action.result;
+            failFn(result);
+        },
+        exception : function(response) {
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        }
+    });
 };
 
 /**
@@ -139,27 +196,27 @@ Caiwei.requestFileUploadAjax = function(url, form, successFn, failFn) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.requestAjax = function(url, params, successFn, failFn) {
-	Ext.Ajax.request({
-		url : url,
-		params : params,
-		success : function(response) {
-			var result = Ext.decode(response.responseText);
-			if (result.success) {
-				successFn(result);
-			} else {
-				failFn(result);
-			}
-		},
-		failure : function(response) {
-			var result = Ext.decode(response.responseText);
-			failFn(result);
-		},
-		exception : function(response) {
-			var result = Ext.decode(response.responseText);
-			failFn(result);
-		}
-	});
+console.requestAjax = function(url, params, successFn, failFn) {
+    Ext.Ajax.request({
+        url : url,
+        params : params,
+        success : function(response) {
+            var result = Ext.decode(response.responseText);
+            if (result.success) {
+                successFn(result);
+            } else {
+                failFn(result);
+            }
+        },
+        failure : function(response) {
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        },
+        exception : function(response) {
+            var result = Ext.decode(response.responseText);
+            failFn(result);
+        }
+    });
 };
 
 /**
@@ -174,21 +231,21 @@ Caiwei.requestAjax = function(url, params, successFn, failFn) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.formReset = function (form, formRecord, grid, girdData) {
-	if (!Ext.isEmpty(form) && !Ext.isEmpty(formRecord)) {
-		Ext.Array.each(form, function(name, index, countriesItSelf) {
-			form[index].loadRecord(formRecord[index]);
-		});
-	}
-	if (!Ext.isEmpty(grid)) {
-		Ext.Array.each(grid, function(name, index, countriesItSelf) {
-			if (Ext.isEmpty(girdData)) {
-				grid[index].store.loadData([]);
-			} else {
-				grid[index].store.loadPage(1);
-			}
-		});
-	}
+console.formReset = function (form, formRecord, grid, girdData) {
+    if (!Ext.isEmpty(form) && !Ext.isEmpty(formRecord)) {
+        Ext.Array.each(form, function(name, index, countriesItSelf) {
+            form[index].loadRecord(formRecord[index]);
+        });
+    }
+    if (!Ext.isEmpty(grid)) {
+        Ext.Array.each(grid, function(name, index, countriesItSelf) {
+            if (Ext.isEmpty(girdData)) {
+                grid[index].store.loadData([]);
+            } else {
+                grid[index].store.loadPage(1);
+            }
+        });
+    }
 };
 
 
@@ -203,21 +260,21 @@ Caiwei.formReset = function (form, formRecord, grid, girdData) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.formSetReadOnly = function(flag, form) {
-	var arr = form.items.items;
-	if (!Ext.isEmpty(arr)) {
-		for (var i = 0; i < arr.length; i++) {
-			arr[i].setReadOnly(flag);
-		}
-	}
+console.formSetReadOnly = function(flag, form) {
+    var arr = form.items.items;
+    if (!Ext.isEmpty(arr)) {
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].setReadOnly(flag);
+        }
+    }
 };
-Caiwei.formFieldSetReadOnly = function(flag, form) {
-	var arr = form.query('field');
-	if (!Ext.isEmpty(arr)) {
-		for (var i = 0; i < arr.length; i++) {
-			arr[i].setReadOnly(flag);
-		}
-	}
+console.formFieldSetReadOnly = function(flag, form) {
+    var arr = form.query('field');
+    if (!Ext.isEmpty(arr)) {
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].setReadOnly(flag);
+        }
+    }
 };
 
 /**
@@ -231,22 +288,22 @@ Caiwei.formFieldSetReadOnly = function(flag, form) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.showInfoMsg = function(message, fun) {
-	var len = message.length;
-	Ext.Msg.show({
-		title : 'caiwei提醒您:',
-		width : 110 + len * 15,
-		msg : '<div id="message">' + message + '</div>',
-		buttons : Ext.Msg.OK,
-		icon : Ext.MessageBox.INFO,
-		callback : function(e) {
-			if (!Ext.isEmpty(fun)) {
-				if (e == 'ok') {
-					fun();
-				}
-			}
-		}
-	});
+console.showInfoMsg = function(message, fun) {
+    var len = message.length;
+    Ext.Msg.show({
+        title : 'console提醒您:',
+        width : 110 + len * 15,
+        msg : '<div id="message">' + message + '</div>',
+        buttons : Ext.Msg.OK,
+        icon : Ext.MessageBox.INFO,
+        callback : function(e) {
+            if (!Ext.isEmpty(fun)) {
+                if (e == 'ok') {
+                    fun();
+                }
+            }
+        }
+    });
 
 };
 
@@ -261,24 +318,24 @@ Caiwei.showInfoMsg = function(message, fun) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.showWoringMessage = function(message, fun) {
-	var len = message.length;
-	Ext.Msg.show({
-		title : 'caiwei提醒您:',
-		msg : message,
-		// cls:'mesbox',
-		width : 110 + len * 15,
-		msg : '<div id="message">' + message + '</div>',
-		buttons : Ext.Msg.OK,
-		icon : Ext.MessageBox.WARNING,
-		callback : function(e) {
-			if (!Ext.isEmpty(fun)) {
-				if (e == 'ok') {
-					fun();
-				}
-			}
-		}
-	});
+console.showWoringMessage = function(message, fun) {
+    var len = message.length;
+    Ext.Msg.show({
+        title : 'console提醒您:',
+        msg : message,
+        // cls:'mesbox',
+        width : 110 + len * 15,
+        msg : '<div id="message">' + message + '</div>',
+        buttons : Ext.Msg.OK,
+        icon : Ext.MessageBox.WARNING,
+        callback : function(e) {
+            if (!Ext.isEmpty(fun)) {
+                if (e == 'ok') {
+                    fun();
+                }
+            }
+        }
+    });
 
 };
 
@@ -293,20 +350,20 @@ Caiwei.showWoringMessage = function(message, fun) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.showQuestionMes = function(message, fun) {
-	var len = message.length;
-	Ext.Msg.show({
-		title : 'caiwei提醒您:',
-		width : 110 + len * 15,
-		msg : '<div id="message">' + message + '</div>',
-		buttons : Ext.Msg.YESNO,
-		icon : Ext.MessageBox.QUESTION,
-		callback : function(e) {
-			if (!Ext.isEmpty(fun)) {
-				fun(e);
-			}
-		}
-	});
+console.showQuestionMes = function(message, fun) {
+    var len = message.length;
+    Ext.Msg.show({
+        title : 'console提醒您:',
+        width : 110 + len * 15,
+        msg : '<div id="message">' + message + '</div>',
+        buttons : Ext.Msg.YESNO,
+        icon : Ext.MessageBox.QUESTION,
+        callback : function(e) {
+            if (!Ext.isEmpty(fun)) {
+                fun(e);
+            }
+        }
+    });
 };
 
 /**
@@ -320,22 +377,22 @@ Caiwei.showQuestionMes = function(message, fun) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.showErrorMes = function(message, fun) {
-	var len = message.length;
-	Ext.Msg.show({
-		title : 'caiwei提醒您:',
-		width : 110 + len * 15,
-		msg : '<div id="message">' + message + '</div>',
-		buttons : Ext.Msg.OK,
-		icon : Ext.MessageBox.ERROR,
-		callback : function(e) {
-			if (!Ext.isEmpty(fun)) {
-				if (e == 'ok') {
-					fun();
-				}
-			}
-		}
-	});
+console.showErrorMes = function(message, fun) {
+    var len = message.length;
+    Ext.Msg.show({
+        title : 'console提醒您:',
+        width : 110 + len * 15,
+        msg : '<div id="message">' + message + '</div>',
+        buttons : Ext.Msg.OK,
+        icon : Ext.MessageBox.ERROR,
+        callback : function(e) {
+            if (!Ext.isEmpty(fun)) {
+                if (e == 'ok') {
+                    fun();
+                }
+            }
+        }
+    });
 };
 
 /**
@@ -350,20 +407,20 @@ Caiwei.showErrorMes = function(message, fun) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.operateWinBtn = function(win, viewState, operateType) {
-	// 查看状态下 只有 取消按钮可用 [添加,取消]按钮分别占 0和1
-	if (caiwei.viewState.view === viewState) {
-		var btnArr = win.query('button');
-		for (var i = 0; i < btnArr.length; i++) {
-			btnArr[i].setDisabled(i != 2);
-		}
-	} else if (!Ext.isEmpty(operateType)
-			&& caiwei.operateType.save === operateType) {
-		var btnArr = win.query('button');
-		for (var i = 0; i < btnArr.length; i++) {
-			btnArr[i].setDisabled(i > 2);
-		}
-	}
+console.operateWinBtn = function(win, viewState, operateType) {
+    // 查看状态下 只有 取消按钮可用 [添加,取消]按钮分别占 0和1
+    if (console.viewState.view === viewState) {
+        var btnArr = win.query('button');
+        for (var i = 0; i < btnArr.length; i++) {
+            btnArr[i].setDisabled(i != 2);
+        }
+    } else if (!Ext.isEmpty(operateType)
+        && console.operateType.save === operateType) {
+        var btnArr = win.query('button');
+        for (var i = 0; i < btnArr.length; i++) {
+            btnArr[i].setDisabled(i > 2);
+        }
+    }
 };
 
 /**
@@ -376,18 +433,18 @@ Caiwei.operateWinBtn = function(win, viewState, operateType) {
  * @update
  */
 Ext.override(Ext.form.RadioGroup, {
-	setValue : function(v) {
-		if (this.rendered)
-			this.items.each(function(item) {
-				item.setValue(item.inputValue == v);
-			});
-		else {
-			for (var k = 0; k < this.items.items.length; k++) {
-				this.items.items[k]
-						.setValue(this.items.items[k].inputValue == v);
-			}
-		}
-	}
+    setValue : function(v) {
+        if (this.rendered)
+            this.items.each(function(item) {
+                item.setValue(item.inputValue == v);
+            });
+        else {
+            for (var k = 0; k < this.items.items.length; k++) {
+                this.items.items[k]
+                    .setValue(this.items.items[k].inputValue == v);
+            }
+        }
+    }
 });
 
 /**
@@ -395,42 +452,42 @@ Ext.override(Ext.form.RadioGroup, {
  * <p>
  * 公共方法，通过storeId和model创建STORE<br/>
  * <p>
- * @param storeId 
+ * @param storeId
  * @param model store所用到的model名
  * @param fields store所用到的fields
- * @param data 
+ * @param data
  * @returns store 返回创建的store
  * @author 龙海仁
  * @date 2015年5月13日
  * @update
  */
-Caiwei.getStore = function(storeId, model, fields, data) {
-	var store = null;
-	if (!Ext.isEmpty(storeId)) {
-		store = Ext.data.StoreManager.lookup(storeId);
-	}
-	if (Ext.isEmpty(data)) {
-		data = [];
-	}
-	if (!Ext.isEmpty(model)) {
-		if (Ext.isEmpty(store)) {
-			store = Ext.create('Ext.data.Store', {
-				storeId : storeId,
-				model : model,
-				data : data
-			});
-		}
-	}
-	if (!Ext.isEmpty(fields)) {
-		if (Ext.isEmpty(store)) {
-			store = Ext.create('Ext.data.Store', {
-				storeId : storeId,
-				fields : fields,
-				data : data
-			});
-		}
-	}
-	return store;
+console.getStore = function(storeId, model, fields, data) {
+    var store = null;
+    if (!Ext.isEmpty(storeId)) {
+        store = Ext.data.StoreManager.lookup(storeId);
+    }
+    if (Ext.isEmpty(data)) {
+        data = [];
+    }
+    if (!Ext.isEmpty(model)) {
+        if (Ext.isEmpty(store)) {
+            store = Ext.create('Ext.data.Store', {
+                storeId : storeId,
+                model : model,
+                data : data
+            });
+        }
+    }
+    if (!Ext.isEmpty(fields)) {
+        if (Ext.isEmpty(store)) {
+            store = Ext.create('Ext.data.Store', {
+                storeId : storeId,
+                fields : fields,
+                data : data
+            });
+        }
+    }
+    return store;
 };
 
 
@@ -444,11 +501,11 @@ Caiwei.getStore = function(storeId, model, fields, data) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.setReadOnly = function(readOnlyIdList) {
-	for (var i = 0; i < readOnlyIdList.length; i++) {
-		Ext.getCmp(readOnlyIdList[i]).setReadOnly(true);
-		Ext.getCmp(readOnlyIdList[i]).addCls('readonly');
-	}
+console.setReadOnly = function(readOnlyIdList) {
+    for (var i = 0; i < readOnlyIdList.length; i++) {
+        Ext.getCmp(readOnlyIdList[i]).setReadOnly(true);
+        Ext.getCmp(readOnlyIdList[i]).addCls('readonly');
+    }
 };
 
 /**
@@ -461,11 +518,11 @@ Caiwei.setReadOnly = function(readOnlyIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.setHiddenAndDestroy = function(hiddenIdList) {
-	for (var i = 0; i < hiddenIdList.length; i++) {
-		Ext.getCmp(hiddenIdList[i]).hide();
-		Ext.getCmp(hiddenIdList[i]).destroy();
-	}
+console.setHiddenAndDestroy = function(hiddenIdList) {
+    for (var i = 0; i < hiddenIdList.length; i++) {
+        Ext.getCmp(hiddenIdList[i]).hide();
+        Ext.getCmp(hiddenIdList[i]).destroy();
+    }
 };
 
 /**
@@ -478,10 +535,10 @@ Caiwei.setHiddenAndDestroy = function(hiddenIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.setHidden = function(hiddenIdList) {
-	for (var i = 0; i < hiddenIdList.length; i++) {
-		Ext.getCmp(hiddenIdList[i]).hide();
-	}
+console.setHidden = function(hiddenIdList) {
+    for (var i = 0; i < hiddenIdList.length; i++) {
+        Ext.getCmp(hiddenIdList[i]).hide();
+    }
 };
 
 /**
@@ -494,10 +551,10 @@ Caiwei.setHidden = function(hiddenIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.setDestroy = function(destoryIdList) {
-	for (var i = 0; i < destoryIdList.length; i++) {
-		Ext.getCmp(destoryIdList[i]).destroy();
-	}
+console.setDestroy = function(destoryIdList) {
+    for (var i = 0; i < destoryIdList.length; i++) {
+        Ext.getCmp(destoryIdList[i]).destroy();
+    }
 };
 
 /**
@@ -510,10 +567,10 @@ Caiwei.setDestroy = function(destoryIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.setDisabled = function(disabledIdList) {
-	for (var i = 0; i < disabledIdList.length; i++) {
-		Ext.getCmp(disabledIdList[i]).setDisabled(true);
-	}
+console.setDisabled = function(disabledIdList) {
+    for (var i = 0; i < disabledIdList.length; i++) {
+        Ext.getCmp(disabledIdList[i]).setDisabled(true);
+    }
 };
 
 /**
@@ -526,10 +583,10 @@ Caiwei.setDisabled = function(disabledIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.clearListeners = function(clearIdList) {
-	for (var i = 0; i < clearIdList.length; i++) {
-		Ext.getCmp(clearIdList[i]).clearListeners();
-	}
+console.clearListeners = function(clearIdList) {
+    for (var i = 0; i < clearIdList.length; i++) {
+        Ext.getCmp(clearIdList[i]).clearListeners();
+    }
 };
 
 
@@ -543,15 +600,15 @@ Caiwei.clearListeners = function(clearIdList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.isHaveEmpty = function(array) {
-	var boolen = false;
-	for (var i = 0; i < array.length; i++) {
-		if (Ext.isEmpty(array[i])) {
-			boolen = true;
-			return boolen;
-		}
-	}
-	return boolen;
+console.isHaveEmpty = function(array) {
+    var boolen = false;
+    for (var i = 0; i < array.length; i++) {
+        if (Ext.isEmpty(array[i])) {
+            boolen = true;
+            return boolen;
+        }
+    }
+    return boolen;
 };
 
 /**
@@ -565,35 +622,35 @@ Caiwei.isHaveEmpty = function(array) {
  * @update
  */
 Date.prototype.format = function(format) {
-	if (Ext.isEmpty(this) || this.getTime() == 0
-			|| this.toString().indexOf('GMT') == -1) {
-		return null;
-	}
-	var o = {
-		"M+" : this.getMonth() + 1, // month
-		"d+" : this.getDate(), // day
-		"h+" : this.getHours(), // hour
-		"m+" : this.getMinutes(), // minute
-		"s+" : this.getSeconds(), // second
-		"q+" : Math.floor((this.getMonth() + 3) / 3), // quarter
-		"S" : this.getMilliseconds()
-	// millisecond
-	};
+    if (Ext.isEmpty(this) || this.getTime() == 0
+        || this.toString().indexOf('GMT') == -1) {
+        return null;
+    }
+    var o = {
+        "M+" : this.getMonth() + 1, // month
+        "d+" : this.getDate(), // day
+        "h+" : this.getHours(), // hour
+        "m+" : this.getMinutes(), // minute
+        "s+" : this.getSeconds(), // second
+        "q+" : Math.floor((this.getMonth() + 3) / 3), // quarter
+        "S" : this.getMilliseconds()
+        // millisecond
+    };
 
-	if (/(y+)/.test(format)) {
-		format = format.replace(RegExp.$1, (this.getFullYear() + "")
-				.substr(4 - RegExp.$1.length));
-	}
-	;
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + "")
+            .substr(4 - RegExp.$1.length));
+    }
+    ;
 
-	for ( var k in o) {
-		if (new RegExp("(" + k + ")").test(format)) {
-			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
-					: ("00" + o[k]).substr(("" + o[k]).length));
-		}
-	}
-	;
-	return format;
+    for ( var k in o) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+                : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+    }
+    ;
+    return format;
 };
 
 
@@ -608,12 +665,12 @@ Date.prototype.format = function(format) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.changeModelListToDataList = function(modelList) {
-	var dataList = new Array();
-	for (var i = 0; i < modelList.length; i++) {
-		dataList.push(modelList[i].data);
-	}
-	return dataList;
+console.changeModelListToDataList = function(modelList) {
+    var dataList = new Array();
+    for (var i = 0; i < modelList.length; i++) {
+        dataList.push(modelList[i].data);
+    }
+    return dataList;
 };
 
 /**
@@ -627,12 +684,12 @@ Caiwei.changeModelListToDataList = function(modelList) {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.copyModelListToDataList = function(modelList) {
-	var dataList = new Array();
-	for (var i = 0; i < modelList.length; i++) {
-		dataList.push(modelList[i]);
-	}
-	return dataList;
+console.copyModelListToDataList = function(modelList) {
+    var dataList = new Array();
+    for (var i = 0; i < modelList.length; i++) {
+        dataList.push(modelList[i]);
+    }
+    return dataList;
 };
 
 /**
@@ -645,9 +702,9 @@ Caiwei.copyModelListToDataList = function(modelList) {
  * @update
  */
 String.prototype.trim = function() {
-	// 用正则表达式将前后空格
-	// 用空字符串替代。
-	return this.replace(/(^\s*)|(\s*$)/g, "");
+    // 用正则表达式将前后空格
+    // 用空字符串替代。
+    return this.replace(/(^\s*)|(\s*$)/g, "");
 };
 
 
@@ -663,13 +720,13 @@ String.prototype.trim = function() {
  * @date 2015年5月13日
  * @update
  */
-Caiwei.addAll = function(list, all) {
-	var newlist = new Array();
-	newlist.push(all);
-	for (var i = 0; i < list.length; i++) {
-		newlist.push(list[i]);
-	}
-	return newlist;
+console.addAll = function(list, all) {
+    var newlist = new Array();
+    newlist.push(all);
+    for (var i = 0; i < list.length; i++) {
+        newlist.push(list[i]);
+    }
+    return newlist;
 };
 
 
@@ -679,61 +736,99 @@ Caiwei.addAll = function(list, all) {
  * 根据code获取name<br/>
  * <p>
  * @param list 集合
- * @param code 
+ * @param code
  * @author 龙海仁
  * @date 2015年5月13日
  * @update
  */
-Caiwei.changeCodeToName = function(list, code) {
-	var name = '';
-	for (var i = 0; i < list.length; i++) {
-		if (list[i].valueCode == code) {
-			name = list[i].valueName;
-		}
-	}
-	return name;
+console.changeCodeToName = function(list, code) {
+    var name = '';
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].valueCode == code) {
+            name = list[i].valueName;
+        }
+    }
+    return name;
 };
 /**
  * .
  * <p>
  * store中根据code获取name<br/>
  * <p>
- * @param store 
- * @param code 
+ * @param store
+ * @param code
  * @author 龙海仁
  * @date 2015年5月13日
  * @update
  */
-Caiwei.changeCodeToNameStore = function(store, code) {
-	var name = '';
-	if (!Ext.isEmpty(store)) {
-		store.each(function(record) {
-			if (record.get('valueCode') == code) {
-				name = record.get('valueName');
-			}
-		});
-	}
-	return name;
+console.changeCodeToNameStore = function(store, code) {
+    var name = '';
+    if (!Ext.isEmpty(store)) {
+        store.each(function(record) {
+            if (record.get('valueCode') == code) {
+                name = record.get('valueName');
+            }
+        });
+    }
+    return name;
 };
 
 
 /**
  * 获取浏览器高度
  */
-Caiwei.getBrowserHeight = function() {
+console.getBrowserHeight = function() {
     var browserHeight = document.documentElement.clientHeight;
     return browserHeight;
 };
-Caiwei.getBrowserWidth = function() {
+console.getBrowserWidth = function() {
     var browserWidth = document.documentElement.clientWidth;
-	
-	return browserWidth;
+
+    return browserWidth;
 };
 /**
  * 打印日志
  */
-Caiwei.log = function(message){
-	if(console){
-		console.log(message);
-	}
+console.log = function(message){
+    if(console){
+        console.log(message);
+    }
 }
+
+var loadWin;
+console.loadMaskshow = function(text){
+    if(Ext.isEmpty(text)){
+        text="Loading...";
+    }
+    if(Ext.isEmpty(loadWin)){
+        loadWin = Ext.create('Ext.window.Window', {
+            height: 120,
+            width: 200,
+            //hideShadowOnDeactivate : true,
+            plain:true,
+            //bodyStyle: 'background:#ffc; padding:10px;',
+            closable : false,
+            modal: true,
+            //frame:true,
+            loadMarsk:null,
+        });
+        var myMask = new Ext.LoadMask({
+            msg    : text,
+            target : loadWin
+        });
+        //myMask.show();
+        loadWin.loadMarsk=myMask;
+
+    }else{
+
+        loadWin.loadMarsk.msg=text;
+    }
+
+    loadWin.show();
+    loadWin.loadMarsk.show();
+};
+
+console.loadMaskClear = function(){
+    loadWin.loadMarsk.hide();
+    loadWin.hide();
+};

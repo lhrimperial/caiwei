@@ -25,7 +25,7 @@
         var failureFun = function(response){
             Caiwei.showErrorMes(response.resMsg);
         }
-        Caiwei.requestJsonAjax('currentUserInfo', params, successFun, failureFun);
+        console.requestJsonAjax('currentUserInfo', params, successFun, failureFun);
 	};
 	login.queryCurrentInfo();
 

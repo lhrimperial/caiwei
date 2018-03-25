@@ -1,6 +1,7 @@
 package com.caiwei.console.web.domain;
 
 import com.caiwei.console.common.domain.PermisUserDO;
+import com.github.framework.server.shared.domain.vo.BaseVO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  *
  */
-public class UserVO implements Serializable {
+public class UserVO extends BaseVO implements Serializable {
     private static final long serialVersionUID = 4565436761708584140L;
 
     private String userCode;

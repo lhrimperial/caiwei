@@ -21,7 +21,12 @@ public interface IPermisUserService {
 
     PermisUserDO findUserDetail(String userCode);
 
+    List<PermisUserDO> findUsers(PermisUserDO userDO, int pageNo, int pageSize);
+
     List<PermisUserDO> findUsers(PermisUserDO userDO);
 
     void updateStatus(List<String> userCodes, Byte status);
+
+    void updateUserRoleStatus(List<String> userCodes, Byte status);
+
 }

@@ -45,4 +45,9 @@ public class EmployeeService implements IEmployeeService {
     public List<EmployeeDO> findByDeptCode(String deptCode) {
         return employeeMapper.findByDeptCode(deptCode);
     }
+
+    @Override
+    public List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO) {
+        return employeeMapper.findEmpByParam(employeeDO);
+    }
 }
