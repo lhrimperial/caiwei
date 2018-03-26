@@ -43,9 +43,9 @@ Ext.define('Caiwei.sysset.user.OrgRoleWindow', {
     selectUserOrgRole: function() {
         var me = this;
         var params = {
-            'userVo': {
-                'userName': me.userName,
-                'orgCode': me.deptCode
+            'userDO': {
+                'userCode': me.userCode,
+                'deptCode': me.deptCode
             }
         };
         var successFun = function(res) {
@@ -191,10 +191,10 @@ Ext.define('Caiwei.sysset.user.UserDeptStore', {
     proxy: {
         type: 'ajax',
         actionMethods: 'POST',
-        url: '',
+        url: 'queryUserDept',
         reader: {
             type: 'json',
-            rootProperty: 'userOrgDataAutVo.userOrgDataAutList',
+            rootProperty: 'departmentDOS',
             totalProperty: 'totalCount'
         }
     },
@@ -202,7 +202,7 @@ Ext.define('Caiwei.sysset.user.UserDeptStore', {
         'beforeload': function(store, operation, eOpts) {
             var userCode = Ext.getCmp('caiwei_sysset_user_orgrolewindow_id').userCode;
             var params = {
-                'userOrgDataAutVo.userOrgDataAutEntity.userName': userName
+                'userDO.userCode': userCode
             }
             Ext.apply(store.proxy.extraParams, params);
         }

@@ -1,5 +1,6 @@
 package com.caiwei.console.web.domain;
 
+import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.common.domain.PermisUserDO;
 import com.github.framework.server.shared.domain.vo.BaseVO;
 
@@ -21,6 +22,15 @@ public class UserVO extends BaseVO implements Serializable {
 
     private PermisUserDO userDO;
     private List<PermisUserDO> userDOS;
+    private List<DepartmentDO> departmentDOS;
+
+    public List<DepartmentDO> getDepartmentDOS() {
+        return departmentDOS;
+    }
+
+    public void setDepartmentDOS(List<DepartmentDO> departmentDOS) {
+        this.departmentDOS = departmentDOS;
+    }
 
     public String getQueryParam() {
         return queryParam;

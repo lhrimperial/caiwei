@@ -47,6 +47,10 @@ public class UserController extends AbstractController{
         return responseVO;
     }
 
-
+    @ResponseBody
+    @RequestMapping("/queryUserDept")
+    public UserVO queryUserDept(@ModelAttribute UserVO userVO) {
+        return null;
+    }
 
 }
