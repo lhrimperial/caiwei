@@ -161,6 +161,15 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
         }
         return this.userAddWindow;
     },
+    roleConfigWindow: null,
+    getRoleConfigWindow: function() {
+        if (this.roleConfigWindow == null) {
+            this.roleConfigWindow = Ext.create('Caiwei.sysset.user.OrgRoleWindow');
+            this.roleConfigWindow.parent = this; // 父元素
+        }
+        return this.roleConfigWindow;
+
+    },
     addRole: function () {
         var me = this;
         var selections = me.getSelectionModel().getSelection(); //获取选中的数据
@@ -171,8 +180,8 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             Ext.MessageBox.alert('提示', '只能选择一个用户进行配置');
             return;
         }
-        var win = me.getRoleAddWindow();
-        win.userName = selections[0].get('userName');
+        var win = me.getRoleConfigWindow();
+        win.userCode = selections[0].get('userCode');
         win.getDeptGrid().getStore().load();
         win.show(); //显示部门角色窗口
     },
