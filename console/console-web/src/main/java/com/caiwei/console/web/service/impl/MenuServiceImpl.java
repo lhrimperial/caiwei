@@ -33,7 +33,7 @@ public class MenuServiceImpl implements IMenuService {
         List<ResourceNode> resources = findResources(node);
         for (ResourceNode res : resources) {
             // 转换菜单对象为节点对象
-            ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res,false);
+            ResourceTreeNode<ResourceNode> treeNode = ResourceTreeNode.changeResToTreeNode(res,false);
             nodes.add(treeNode);
         }
         return nodes;
@@ -91,7 +91,7 @@ public class MenuServiceImpl implements IMenuService {
             for (ResourceNode res : resList) {
                 UserMenuDO userMenu = userMenusMap.get(res.getCode());
                 res.setDisplayOrder(userMenu.getDisplayOrder().toString());
-                ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res, false);
+                ResourceTreeNode<ResourceNode> treeNode = ResourceTreeNode.changeResToTreeNode(res, false);
                 treeNode.setId(res.getCode() + "_usermenu");
                 String cls = treeNode.getCls();
                 treeNode.setCls(cls.substring(0, cls.length() - 1) + "3");
@@ -139,7 +139,7 @@ public class MenuServiceImpl implements IMenuService {
         resourceDO.setResName(menuName);
         List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
         for (ResourceDO res : resourceDOS) {
-            list.add(changeResToTreeNode(res.convert(res), true));
+            list.add(ResourceTreeNode.changeResToTreeNode(res.convert(res), true));
         }
         return list;
     }
@@ -151,35 +151,11 @@ public class MenuServiceImpl implements IMenuService {
         List<ResourceNode> resources = findResources(node);
         for (ResourceNode res : resources) {
             // 转换菜单对象为节点对象
-            ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res,true);
+            ResourceTreeNode<ResourceNode> treeNode = ResourceTreeNode.changeResToTreeNode(res,true);
             nodes.add(treeNode);
         }
         return nodes;
     }
 
-    // 转换菜单对象为树节点对象
-    private ResourceTreeNode<ResourceNode> changeResToTreeNode(ResourceNode res, boolean containNode) {
-        ResourceTreeNode<ResourceNode> treeNode = new ResourceTreeNode<ResourceNode>();
-        treeNode.setId(res.getFunctionCode());
-        treeNode.setText(res.getName());
-        treeNode.setExpandable(!ConsoleConstants.YES.equalsIgnoreCase(res.getLeafFlag()));
-        treeNode.setCls(res.getCls());
-        treeNode.setIconCls(res.getIconCls());
-        treeNode.setDisplayOrder(res.getDisplayOrder());
-        if (res.getResType().equalsIgnoreCase(FunctionType.MENU)) {
-            treeNode.setUri(res.getUri());
-            treeNode.setLeaf(true);
-        } else {
-            treeNode.setLeaf(false);
-        }
-        if (res.getParentResDO() != null) {
-            treeNode.setParentId(res.getParentResDO().getFunctionCode());
-        } else {
-            treeNode.setParentId(null);
-        }
-        if (containNode) {
-            treeNode.setResourceDO(res);
-        }
-        return treeNode;
-    }
+
 }

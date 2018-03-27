@@ -74,103 +74,83 @@ Ext.define('Caiwei.sysset.source.ResourceNode',{
 });
 
 /**
- * Resource Query Form
+ * 权限store
  */
-Ext.define('Caiwei.sysset.source.QueryForm', {
-    extend: 'Ext.form.Panel',
-    id: 'queryForm',
-    frame: true,
-    header: false,
-    height: 88,
-    collapsible: true,
-    layout: 'column',
-    region: 'north',
-    bodyStyle:'padding:6px;',
-    labelStyle : "text-align:right;width:40;",
-    default: {
-        margin: '5 10 5 0',
-        labelWidth: 40,
-        columnWidth: 0.2,
-        labelAlign: 'right'
+Ext.define('Caiwei.sysset.store.ResourceStore',{
+    extend : 'Ext.data.Store',
+    model : 'Caiwei.sysset.source.ResourceNode',
+    pageSize : 20,
+    proxy : {
+        type : 'ajax',
+        actionMethods : 'post',
+        url : 'queryResourceByExample',
+        reader : {
+            type : 'json',
+            rootProperty : 'resourceNodes',
+            totalProperty : 'totalCount' // 总个数
+        }
     },
-    defaultType: 'textfield',
-    constructor: function (config) {
-        var me = this,
-            cfg = Ext.apply({}, config);
-        me.items = [{
-            name: 'code',
-            fieldLabel: '资源编码',
-            xtype: 'textfield'
-        }, {
-            name: 'name',
-            fieldLabel: '资源名称',
-            xtype: 'textfield'
-        },/* {
-            name: 'entryUri',
-            fieldLabel: '资源URI',
-            xtype: 'textfield'
-        },*/{
-            name: 'active',
-            fieldLabel: '是否可用',
-            xtype: 'yesnocombselector',
-            value: 'Y',
-            isShowAll : true// 是否显示全部
-        }],
-            me.buttons = [{
-                text: '查询',
-                handler: function () {
-                    if (me.getForm().isValid()) {
-                        me.up().getResourceGrid().getPagingToolbar().moveFirst();
-                    }
-                }
-            }, {
-                text: '清空',
-                handler: function () {
-                    me.getForm().reset();
-                }
-            }];
-        me.callParent([cfg]);
+    listeners : {
+        beforeload : function(store, operation, eOpts) {
+           /* var queryRouteForm = Ext.getCmp('queryResourceForm');
+            if (queryRouteForm != null) {
+                var params = {
+                    'resourceNode.code' : queryRouteForm.getForm().findField('code').getValue()
+                };
+                Ext.apply(store.proxy.extraParams, params);
+            }*/
+        }
     }
 });
 
 /**
- * 资源store
+ * 权限查询表单
  */
-Ext.define('Caiwei.sysset.source.ResourceStore', {
-    extend: 'Ext.data.Store',
-    model: 'Caiwei.sysset.source.ResourceNode',
-    pageSize: 20,
-    proxy: {
-        type: 'ajax',
-        actionMethods: 'post',
-        url: 'listResource',
-        reader: {
-            type: 'json',
-            rootProperty: 'resourceNodes',
-            totalProperty: 'totalCount' //总个数
-        }
+/*
+Ext.define('Caiwei.sysset.source.queryFrom',{
+    extend : 'Ext.form.Panel',
+    id : 'caiwei_sysset_resoure_queryfrom_id',
+    frame : true,
+//	title : '查询条件',
+    height : 120,
+    collapsible : false,
+    layout : 'column',
+    defaults : {
+        rowspan : 2,
+        margin : '8 10 0 0',
+        labelAlign : 'right'
     },
-    listeners: {
-        beforeload: function (store, operation, eOpts) {
-            var queryForm = Ext.getCmp('queryForm');
-            if (queryForm != null) {
-                var params = {
-                    'resourceNode.code': queryForm.getForm().findField('code').getValue(),
-                    'resourceNode.name': queryForm.getForm().findField('name').getValue(),
-                    'resourceNode.active' : queryForm.getForm().findField('active').getValue()
-                };
-                Ext.apply(store.proxy.extraParams, params);
-            }
-        }
+    defaultType : 'textfield',
+    constructor : function(config) {
+        var me = this,
+            cfg = Ext.apply({}, config);
+        me.items = [{
+                name : 'firstCode',
+                fieldLabel: '权限',
+                columnWidth: 0.4,
+                xtype : 'resourceselector'
+            }];
+        me.buttons = [{
+                text : '查询',
+                handler : function() {
+                    me.up().getResourceGrid().getPagingToolbar().moveFirst();
+                }
+            }, {
+                text : '清空',
+                handler : function() {
+                    me.getForm().reset();
+                }
+            } ];
+        me.callParent([ cfg ]);
     }
 });
+*/
 
 /**
  * 权限管理详情视图(resource)
  */
 Ext.define('Caiwei.view.resource.Grid', {
     extend : 'Ext.grid.Panel',
-// extend : 'Ext.window.Window',
     id : 'resourceGrid2',
     frame : true,
     autoScroll : true,
@@ -261,7 +241,7 @@ Ext.define('Caiwei.view.resource.Grid', {
             cfg = Ext.apply({}, config);
         me.tbar = [ {
             xtype: 'addbutton',
-            text : '新增URL',//baseinfo.resource.i18n('butterfly.common.add'),
+            text : '新增URL',
             handler : function() {
                 // var winIn = me.getaddResourcewindow();
                 // winIn.show();
@@ -271,38 +251,26 @@ Ext.define('Caiwei.view.resource.Grid', {
                 // changbox.findField('code').setReadOnly(false);
                 // changbox.findField('name').setReadOnly(false);
             }
-        }/*,'-',{
+        },'-',{
             xtype :'updatebutton',
-            id : 'butterfly_bseinfo_resource_update_id',
-
-            text : baseinfo.resource.i18n('butterfly.common.update'),//'修改',
+            id : 'caiwei_sysset_resource_update_id',
+            text : '修改',
             handler : function() {
-                me.changResource();
+                // me.changResource();
             }
         },'-',{
             xtype : 'deletebutton',
-            id : 'butterfly_bseinfo_resource_delete_id',
-            text :baseinfo.resource.i18n('butterfly.common.delete'),// '删除',
+            id : 'caiwei_sysset_resource_delete_id',
+            text : '删除',
             handler : function() {
-                me.deleteResource();
+                // me.deleteResource();
             }
-        }*/];
-//		me.selModel = Ext.create('Ext.selection.CheckboxModel', { // 多选框
-//
-//            listeners: {
-//            selectionchange: function(sm, selections) {
-//                Ext.getCmp('butterfly_bseinfo_resource_update_id').setDisabled(selections.length !== 1);
-//                Ext.getCmp('butterfly_bseinfo_resource_delete_id').setDisabled(selections.length === 0);
-//
-//            }
-//        }
-//        });
+        }];
         me.store = Ext.create('Caiwei.sysset.source.ResourceStore', {
             autoLoad : false
         });
         me.callParent([ cfg ]);
     }
-
 });
 
 /**

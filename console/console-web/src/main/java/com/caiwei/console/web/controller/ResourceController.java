@@ -29,7 +29,7 @@ public class ResourceController {
 
     @ResponseBody
     @RequestMapping("/queryTreePathForName")
-    public ResponseVO<ResourceTreeNode> queryTreePathForName(@RequestBody String resourceName) {
+    public ResponseVO<List<ResourceTreeNode>> queryTreePathForName(@RequestBody String resourceName) {
         return null;
     }
 
@@ -41,8 +41,10 @@ public class ResourceController {
     }
 
     @ResponseBody
-    @RequestMapping("/listResource")
-    public ResponseVO<ResourceVO> listResource(@ModelAttribute ResourceVO resourceVO) {
+    @RequestMapping("/queryResourceByExample")
+    public ResourceVO queryResourceByExample(@ModelAttribute ResourceVO resourceVO) {
+
         return null;
     }
+
 }

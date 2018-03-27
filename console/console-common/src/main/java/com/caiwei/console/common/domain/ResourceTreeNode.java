@@ -1,5 +1,7 @@
 package com.caiwei.console.common.domain;
 
+import com.caiwei.console.common.define.ConsoleConstants;
+import com.github.framework.server.shared.define.FunctionType;
 import com.github.framework.server.shared.entity.BaseEntity;
 import com.github.framework.server.shared.entity.node.TreeNode;
 
@@ -82,5 +84,32 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
 
     public void setResourceDO(ResourceNode resourceDO) {
         this.resourceDO = resourceDO;
+    }
+
+
+    // 转换菜单对象为树节点对象
+    public static ResourceTreeNode<ResourceNode> changeResToTreeNode(ResourceNode res, boolean containNode) {
+        ResourceTreeNode<ResourceNode> treeNode = new ResourceTreeNode<ResourceNode>();
+        treeNode.setId(res.getFunctionCode());
+        treeNode.setText(res.getName());
+        treeNode.setExpandable(!ConsoleConstants.YES.equalsIgnoreCase(res.getLeafFlag()));
+        treeNode.setCls(res.getCls());
+        treeNode.setIconCls(res.getIconCls());
+        treeNode.setDisplayOrder(res.getDisplayOrder());
+        if (res.getResType().equalsIgnoreCase(FunctionType.MENU)) {
+            treeNode.setUri(res.getUri());
+            treeNode.setLeaf(true);
+        } else {
+            treeNode.setLeaf(false);
+        }
+        if (res.getParentResDO() != null) {
+            treeNode.setParentId(res.getParentResDO().getFunctionCode());
+        } else {
+            treeNode.setParentId(null);
+        }
+        if (containNode) {
+            treeNode.setResourceDO(res);
+        }
+        return treeNode;
     }
 }
