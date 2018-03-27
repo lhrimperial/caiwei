@@ -3,6 +3,7 @@ package com.caiwei.console.common.domain;
 import com.caiwei.console.common.define.ConsoleConstants;
 import com.github.framework.server.shared.define.Constants;
 import com.github.framework.server.shared.domain.BaseDO;
+import com.github.framework.util.string.StringUtils;
 
 /**
  *
@@ -181,13 +182,14 @@ public class ResourceDO extends BaseDO {
 
     public ResourceNode convert(ResourceDO resourceDO) {
         ResourceNode resourceNode = new ResourceNode();
+        resourceNode.setId(resourceDO.getTid()==null?"":String.valueOf(resourceDO.getTid()));
         resourceNode.setCode(resourceDO.getResCode());
         resourceNode.setName(resourceDO.getResName());
         resourceNode.setEntryUri(resourceDO.getEntryUrl());
         resourceNode.setResLevel(String.valueOf(resourceDO.getResLevel()));
         resourceNode.setParentResDO(null);
         resourceNode.setActive(Constants.PO_ACTIVE == resourceDO.getStatus() ? ConsoleConstants.YES : ConsoleConstants.NO);
-        resourceNode.setDisplayOrder(String.valueOf(resourceDO.displayOrder));
+        resourceNode.setDisplayOrder(String.valueOf(resourceDO.getDisplayOrder()));
         resourceNode.setChecked(Constants.YES == resourceDO.getChecked() ? ConsoleConstants.YES : ConsoleConstants.NO);
         resourceNode.setResType(String.valueOf(resourceDO.getResType()));
         resourceNode.setLeafFlag(Constants.YES == resourceDO.getLeafFlag() ? ConsoleConstants.YES : ConsoleConstants.NO);
@@ -197,5 +199,28 @@ public class ResourceDO extends BaseDO {
         resourceNode.setBelongSystemType(resourceDO.getSystemCode());
 
         return resourceNode;
+    }
+
+    public ResourceDO flipConvert(ResourceNode resourceNode) {
+        ResourceDO resourceDO = new ResourceDO();
+        resourceDO.setTid(StringUtils.isEmpty(resourceNode.getId())?null:Integer.valueOf(resourceNode.getId()));
+        resourceDO.setResCode(resourceNode.getCode());
+        resourceDO.setResName(resourceNode.getName());
+        resourceDO.setEntryUrl(resourceNode.getEntryUri());
+        resourceDO.setResLevel(Byte.valueOf(resourceNode.getResLevel()));
+        resourceDO.setStatus(ConsoleConstants.YES.equals(resourceNode.getActive()) ? Constants.PO_ACTIVE : Constants.PO_INACTIVE);
+        resourceDO.setDisplayOrder(Byte.valueOf(resourceNode.getDisplayOrder()));
+        resourceDO.setChecked(ConsoleConstants.YES.equals(resourceNode.getChecked()) ? Constants.YES : Constants.NO);
+        resourceDO.setResType(Byte.valueOf(resourceNode.getResType()));
+        resourceDO.setLeafFlag(ConsoleConstants.YES.equals(resourceNode.getLeafFlag()) ? Constants.YES : Constants.NO);
+        resourceDO.setIconCls(resourceNode.getIconCls());
+        resourceDO.setNodeCls(resourceNode.getCls());
+        resourceDO.setNotes(resourceNode.getNotes());
+        resourceDO.setSystemCode(resourceNode.getBelongSystemType());
+        if (resourceNode.getParentResDO() != null) {
+            resourceDO.setParentRes(resourceNode.getParentResDO().getCode());
+        }
+
+        return resourceDO;
     }
 }

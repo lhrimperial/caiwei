@@ -10,6 +10,7 @@ import com.caiwei.console.persistent.mapper.UserRoleMapper;
 import com.github.framework.server.cache.CacheManager;
 import com.github.framework.server.shared.define.Constants;
 import com.github.framework.util.serializer.BeanCopyUtils;
+import com.github.framework.util.string.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,9 @@ public class PermisUserService implements IPermisUserService {
         BeanCopyUtils.copyBean(permisUserDO, userPO);
         if (userPO.getModifyTime() == null) {
             userPO.setModifyTime(new Date());
+        }
+        if (StringUtils.isNotBlank(userPO.getActive())) {
+            userPO.setStatus(ConvertUtil.activeToStatus(userPO.getActive()));
         }
         return userMapper.update(userPO);
     }

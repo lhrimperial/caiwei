@@ -28,6 +28,9 @@ Ext.define('Caiwei.sysset.user.UserDO', {
     }, {
         name: 'notes',
         type: 'string'
+    },  {
+        name: 'active',
+        type: 'string'
     }, {
         name: 'createTime',
         type: 'date',
@@ -114,6 +117,7 @@ Ext.define('Caiwei.sysset.user.QueryForm', {
             name: 'active',
             fieldLabel: '是否可用',
             xtype: 'yesnocombselector',
+            value: 'Y',
             isShowAll : true// 是否显示全部
         }],
         me.buttons = [{
@@ -160,6 +164,50 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             this.userAddWindow.parent = this; // 父元素
         }
         return this.userAddWindow;
+    },
+    userUpdateWindow: null,
+    getUserUpdateWindow: function () {
+        if (this.userUpdateWindow == null) {
+            this.userUpdateWindow = Ext.create('Caiwei.sysset.user.UserUpdateWindow');
+            this.userUpdateWindow.parent = this; // 父元素
+        }
+        return this.userUpdateWindow;
+    },
+    updateUser: function () {
+        var me = this;
+        var selections = me.getSelectionModel().getSelection(); // 获取选中的数据
+        if (selections.length != 1) { // 判断是否选中了一条
+            console.showWoringMessage('请选择一条进行修改'); // 请选择一条进行作废操作！
+            return; // 没有则提示并返回
+        }
+        var id = selections[0].get('tid');
+        var params = {
+            'userDO': {
+                'tid' : id
+            }
+        }
+        var successFun = function (json) {
+            var updateWindow = me.getUserUpdateWindow(); //获得修改窗口
+            updateWindow.userDO = json.result.userDO;
+            updateWindow.show(); //显示修改窗口
+            updateWindow.getUserUpdateForm().getForm().findField('tid').setValue(updateWindow.userDO.tid);
+            updateWindow.getUserUpdateForm().getForm().findField('userCode').setValue(updateWindow.userDO.userCode);
+            // updateWindow.getUserUpdateForm().getForm().findField('passWord').setValue(updateWindow.userDO.passWord);
+            updateWindow.getUserUpdateForm().getForm().findField('empCode').setValue(updateWindow.userDO.empCode);
+            updateWindow.getUserUpdateForm().getForm().findField('empName').setValue(updateWindow.userDO.empName);
+            updateWindow.getUserUpdateForm().getForm().findField('deptCode').setValue(updateWindow.userDO.deptCode);
+            updateWindow.getUserUpdateForm().getForm().findField('notes').setValue(updateWindow.userDO.notes);
+            updateWindow.getUserUpdateForm().getForm().findField('active').setValue(updateWindow.userDO.active);
+        };
+        var failureFun = function (json) {
+            if (Ext.isEmpty(json)) {
+                console.showErrorMes('请求超时'); //请求超时
+            } else {
+                var message = json.resMsg;
+                console.showErrorMes(message);
+            }
+        };
+        console.requestJsonAjax('findUserById', params, successFun, failureFun);
     },
     roleConfigWindow: null,
     getRoleConfigWindow: function() {
@@ -282,12 +330,30 @@ Ext.define('Caiwei.sysset.user.UserGrid', {
             renderer: function(value) {
                 return timeRender(value);
             }
+        }, {
+            text: '是否有效',
+            dataIndex: 'active',
+            align: 'center',
+            flex: 1,
+            renderer: function(value) {
+                if (value == 'N') {
+                    return "否";
+                } else {
+                    return "是";
+                }
+            }
         }],
         me.tbar = [{
             text: '新增用户',
             xtype: 'addbutton',
             handler: function () {
                 me.getUserAddWindow().show();
+            }
+        },{
+            text: '修改用户',
+            xtype: 'addbutton',
+            handler: function () {
+                me.updateUser();
             }
         },{
             text: '角色配置',
@@ -476,6 +542,151 @@ Ext.define('Caiwei.sysset.user.UserAddWindow', {
     }
 });
 
+/**
+ *修改用户表单
+ */
+Ext.define('Caiwei.sysset.user.UserUpdateForm',{
+    extend: 'Ext.form.Panel',
+    header: false,
+    frame: true,
+    collapsible: true,
+    width: 300,
+    fieldDefaults: {
+        labelWidth: 100,
+        margin: '8 10 5 10'
+    },
+    defaultType: 'textfield',
+    constructor: function(config) {
+        var me = this,
+            cfg = Ext.apply({},
+                config);
+        me.items = [{
+            name: 'tid',
+            fieldLabel: 'ID',
+            xtype: 'textfield',
+            hidden:true
+        },{
+            name: 'userCode',
+            fieldLabel: '用户编码',
+            readOnly:true
+        },/*{
+            name: 'passWord',
+            fieldLabel: '用户密码',
+            xtype: 'textfield',
+            allowBlank: false
+        },*/{
+            name: 'empCode',
+            xtype: 'textfield',
+            fieldLabel: '员工编码',
+            readOnly: true
+        },{
+            xtype: 'textfield',
+            name: 'empName',
+            fieldLabel: '员工姓名',
+            readOnly: true
+        },{
+            xtype: 'textfield',
+            name: 'deptCode',
+            fieldLabel: '部门编码',
+            readOnly: true
+        },{
+            xtype: 'textarea',
+            name: 'notes',
+            fieldLabel: '备注'
+        },{
+            xtype: 'yesnocombselector',
+            name: 'active',
+            fieldLabel: '是否可用'
+        }];
+        me.callParent([cfg]);
+    }
+});
+
+/**
+ * 修改用户
+ */
+Ext.define('Caiwei.sysset.user.UserUpdateWindow',{
+    extend: 'Ext.window.Window',
+    title: '修改用户',
+    closable: true,
+    parent: null,
+    // 父元素
+    modal: true,
+    resizable: false,
+    // 可以调整窗口的大小
+    closeAction: 'hide',
+    // 点击关闭是隐藏窗口
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
+    listeners: {
+        beforehide: function(me) { // 隐藏WINDOW的时候清除数据
+            me.getUserUpdateForm().getForm().reset(); // 表格重置
+        },
+        beforeshow: function(me) { // 显示WINDOW的时候清除数据
+            var fielsds = me.getUserUpdateForm().getForm().getFields();
+            if (!Ext.isEmpty(fielsds)) {
+                fielsds.each(function(item, index, length) {
+                    item.clearInvalid();
+                    item.unsetActiveError();
+                });
+            }
+            fielsds = null;
+        }
+    },
+    userUpdateForm: null,
+    getUserUpdateForm: function() {
+        if (Ext.isEmpty(this.userUpdateForm)) {
+            this.userUpdateForm = Ext.create('Caiwei.sysset.user.UserUpdateForm');
+        }
+        return this.userUpdateForm;
+    },
+    submitUserValue: function() {
+        var me = this;
+        if (me.getUserUpdateForm().getForm().isValid()) { // 校验form是否通过校验
+            var userModel = new Caiwei.sysset.user.UserDO();
+            me.getUserUpdateForm().getForm().updateRecord(userModel); // 将FORM中数据设置到MODEL里面
+            var params = {
+                'userDO': userModel.data
+            }
+            var successFun = function(json) {
+                var message = json.resMsg;
+                console.showInfoMsg(message); // 提示新增成功
+                me.close();
+                me.parent.getStore().load(); // 成功之后重新查询刷新结果集
+            };
+            var failureFun = function(json) {
+                if (Ext.isEmpty(json)) {
+                    console.showErrorMes('连接超时'); // 请求超时
+                } else {
+                    var message = json.resMsg;
+                    console.showErrorMes(message); // 提示失败原因
+                }
+            };
+            console.requestJsonAjax('updateUser', params, successFun, failureFun); //  发送AJAX请求
+        }
+    },
+    constructor: function(config) {
+        var me = this,
+            cfg = Ext.apply({},
+                config);
+        me.fbar = [{
+            text: '取消',
+            // 取消
+            handler: function() {
+                me.close();
+            }
+        },{
+            text: '保存',
+            handler: function() {
+                me.submitUserValue();
+            }
+        }];
+        me.items = [me.getUserUpdateForm()];
+        me.callParent([cfg]);
+    }
+});
 
 Ext.onReady(function() {
     var queryForm = Ext.create("Caiwei.sysset.user.QueryForm");

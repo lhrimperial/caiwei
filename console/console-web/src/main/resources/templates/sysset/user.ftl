@@ -5,7 +5,8 @@
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <#include "../common/common.ftl">
 <#include "../common/head.ftl">
-<script type="text/javascript" src="${scripts}/sysset/user.js?version=0.0.1"></script>
+    <script type="text/javascript" src="${scripts}/sysset/user.js?version=0.0.1"></script>
+    <script type="text/javascript" src="${scripts}/sysset/userRole.js?version=0.0.1"></script>
 </head>
 <body>
 </body>

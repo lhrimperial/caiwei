@@ -27,6 +27,54 @@
         checked, leaf_flag, node_cls, icon_cls, system_code, notes, status, create_time, modify_time
       </sql>
 
+    <sql id="param_sql">
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="resCode != null and resCode != ''">
+            and res_code = #{resCode}
+        </if>
+        <if test="resName != null and resName != ''">
+            and res_name like concat('%',concat(#{resName},'%'))
+        </if>
+        <if test="entryUrl != null  and entryUrl != ''">
+            and entry_url like concat('%',concat(#{entryUrl},'%'))
+        </if>
+        <if test="resLevel != null">
+            and res_level = #{resLevel}
+        </if>
+        <if test="parentRes != null  and parentRes != ''">
+            and parent_res = #{parentRes}
+        </if>
+        <if test="resType != null">
+            and res_type = #{resType}
+        </if>
+        <if test="displayOrder != null">
+            and display_order = #{displayOrder}
+        </if>
+        <if test="checked != null">
+            and checked = #{checked}
+        </if>
+        <if test="leafFlag != null">
+            and leaf_flag = #{leafFlag}
+        </if>
+        <if test="systemCode != null  and systemCode != ''">
+            and system_code = #{systemCode}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </sql>
+
+    <select id="queryResourcesByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.ResourceDO">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mdm_permis_resource
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
     <select id="findByResCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>

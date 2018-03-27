@@ -2,6 +2,7 @@ package com.caiwei.console.web.domain;
 
 import com.caiwei.console.common.domain.DepartmentDO;
 import com.caiwei.console.common.domain.PermisUserDO;
+import com.caiwei.console.common.domain.UserRoleDO;
 import com.github.framework.server.shared.domain.vo.BaseVO;
 
 import java.io.Serializable;

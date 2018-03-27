@@ -1,6 +1,7 @@
 package com.caiwei.console.persistent.mapper;
 
 import com.caiwei.console.common.domain.RoleDO;
+import com.caiwei.console.common.domain.UserRoleDO;
 import com.caiwei.console.persistent.domain.RolePO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,10 @@ public interface RoleMapper {
     RoleDO findByCode(String roleCode);
 
     List<RoleDO> findByParam(RoleDO roleDO);
+
+    List<RoleDO> queryOrgRoleByUserCode(@Param("userCode") String userCode, @Param("deptCode") String deptCode);
+
+    int deleteUserRole(@Param("userCode") String userCode, @Param("deptCode") String deptCode);
+
+    int batchSaveUserRole(List<UserRoleDO> userRoleDOS);
 }

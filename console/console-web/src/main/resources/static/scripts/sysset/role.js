@@ -22,6 +22,9 @@ Ext.define('Caiwei.sysset.role.RoleDO', {
         name: 'notes',
         type: 'string'
     }, {
+        name: 'active',
+        type: 'string'
+    }, {
         name: 'createTime',
         type: 'date',
         convert: dateConvert
@@ -111,6 +114,7 @@ Ext.define('Caiwei.sysset.role.QueryForm', {
             name: 'active',
             fieldLabel: '是否可用',
             xtype: 'yesnocombselector',
+            value: 'Y',
             isShowAll : true// 是否显示全部
         }],
             me.buttons = [{
@@ -191,6 +195,7 @@ Ext.define('Caiwei.sysset.role.RoleGrid', {
             updateWindow.getRoleUpdateForm().getForm().findField('systemCode').setValue(updateWindow.roleDO.systemCode);
             updateWindow.getRoleUpdateForm().getForm().findField('type').setValue(updateWindow.roleDO.type);
             updateWindow.getRoleUpdateForm().getForm().findField('notes').setValue(updateWindow.roleDO.notes);
+            updateWindow.getRoleUpdateForm().getForm().findField('active').setValue(updateWindow.roleDO.active);
         };
         var failureFun = function (json) {
             if (Ext.isEmpty(json)) {
@@ -293,6 +298,18 @@ Ext.define('Caiwei.sysset.role.RoleGrid', {
             flex: 1,
             renderer: function(value) {
                 return timeRender(value);
+            }
+        }, {
+            text: '是否有效',
+            dataIndex: 'active',
+            align: 'center',
+            flex: 1,
+            renderer: function(value) {
+                if (value == 'N') {
+                    return "否";
+                } else {
+                    return "是";
+                }
             }
         }],
         me.tbar = [{
@@ -515,6 +532,10 @@ Ext.define('Caiwei.sysset.role.RoleUpdateForm', {
             xtype: 'textarea',
             name: 'notes',
             fieldLabel: '备注'
+        },{
+            xtype: 'yesnocombselector',
+            name: 'active',
+            fieldLabel: '是否可用'
         }];
         me.callParent([cfg]);
     }

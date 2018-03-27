@@ -16,4 +16,6 @@ public interface ResourceMapper {
     ResourceDO findByResCode(String resCode);
 
     List<ResourceDO> findByParentCode(String parentCode);
+
+    List<ResourceDO> queryResourcesByParam(ResourceDO resourceDO);
 }

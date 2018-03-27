@@ -13,4 +13,6 @@ public interface IMenuService {
 
     List<ResourceTreeNode> queryTreePathForName(String menuName);
 
+    List<ResourceTreeNode> queryResourceByParentRes(String node);
+
 }

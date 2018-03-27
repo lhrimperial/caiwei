@@ -4,10 +4,7 @@ import com.caiwei.console.business.service.IUserMenuService;
 import com.caiwei.console.common.context.PermisUserContext;
 import com.caiwei.console.common.define.ConsoleConstants;
 import com.caiwei.console.common.define.DictionaryValueConstants;
-import com.caiwei.console.common.domain.PermisUserDO;
-import com.caiwei.console.common.domain.ResourceNode;
-import com.caiwei.console.common.domain.ResourceTreeNode;
-import com.caiwei.console.common.domain.UserMenuDO;
+import com.caiwei.console.common.domain.*;
 import com.caiwei.console.common.exception.LoginException;
 import com.caiwei.console.web.service.IMenuService;
 import com.github.framework.server.context.UserContext;
@@ -36,7 +33,7 @@ public class MenuServiceImpl implements IMenuService {
         List<ResourceNode> resources = findResources(node);
         for (ResourceNode res : resources) {
             // 转换菜单对象为节点对象
-            ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res);
+            ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res,false);
             nodes.add(treeNode);
         }
         return nodes;
@@ -94,7 +91,7 @@ public class MenuServiceImpl implements IMenuService {
             for (ResourceNode res : resList) {
                 UserMenuDO userMenu = userMenusMap.get(res.getCode());
                 res.setDisplayOrder(userMenu.getDisplayOrder().toString());
-                ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res);
+                ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res, false);
                 treeNode.setId(res.getCode() + "_usermenu");
                 String cls = treeNode.getCls();
                 treeNode.setCls(cls.substring(0, cls.length() - 1) + "3");
@@ -113,8 +110,7 @@ public class MenuServiceImpl implements IMenuService {
         return userMenusTreeNode;
     }
 
-    private Map<String, UserMenuDO> createUserMenus()
-    {
+    private Map<String, UserMenuDO> createUserMenus() {
         // 获得当前用户
         PermisUserDO user = (PermisUserDO) UserContext.getCurrentUser();
         // 获得当前用户当前所在部门的所有权限信息集合
@@ -138,11 +134,31 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public List<ResourceTreeNode> queryTreePathForName(String menuName) {
-        return null;
+        List<ResourceTreeNode> list = new ArrayList<>();
+        ResourceDO resourceDO = new ResourceDO();
+        resourceDO.setResName(menuName);
+        List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
+        for (ResourceDO res : resourceDOS) {
+            list.add(changeResToTreeNode(res.convert(res), true));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ResourceTreeNode> queryResourceByParentRes(String node) {
+        List<ResourceTreeNode> nodes = new ArrayList<>();
+        // 得到点击的节点下的子节点菜单集合
+        List<ResourceNode> resources = findResources(node);
+        for (ResourceNode res : resources) {
+            // 转换菜单对象为节点对象
+            ResourceTreeNode<ResourceNode> treeNode = changeResToTreeNode(res,true);
+            nodes.add(treeNode);
+        }
+        return nodes;
     }
 
     // 转换菜单对象为树节点对象
-    private ResourceTreeNode<ResourceNode> changeResToTreeNode(ResourceNode res) {
+    private ResourceTreeNode<ResourceNode> changeResToTreeNode(ResourceNode res, boolean containNode) {
         ResourceTreeNode<ResourceNode> treeNode = new ResourceTreeNode<ResourceNode>();
         treeNode.setId(res.getFunctionCode());
         treeNode.setText(res.getName());
@@ -160,6 +176,9 @@ public class MenuServiceImpl implements IMenuService {
             treeNode.setParentId(res.getParentResDO().getFunctionCode());
         } else {
             treeNode.setParentId(null);
+        }
+        if (containNode) {
+            treeNode.setResourceDO(res);
         }
         return treeNode;
     }

@@ -5,6 +5,7 @@ import com.caiwei.console.web.service.IMenuService;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
 import com.github.framework.server.web.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,9 @@ public class MenuController extends AbstractController {
      * @return
      */
     @RequestMapping("/queryTreePathForName")
-    public List<ResourceTreeNode> queryTreePathForName(String menuName) {
-        return null;
+    public ResponseVO<List<ResourceTreeNode>> queryTreePathForName(@RequestBody String menuName) {
+        ResponseVO responseVO = returnSuccess();
+        responseVO.setResult(menuService.queryTreePathForName(menuName));
+        return responseVO;
     }
 }

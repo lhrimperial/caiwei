@@ -287,7 +287,7 @@ Ext.define('Caiwei.main.MainNav',{
                         var successFun = function(json) {
                             var view = me.getView(),
                                 position = false,
-                                pathList = json.pathList;
+                                pathList = json.result;
                             me.expandNodes = [];
                             me.collapseAll();
                             if(pathList.length==0){
@@ -295,7 +295,6 @@ Ext.define('Caiwei.main.MainNav',{
                                 return;
                             }
                             for(var i=0;i<pathList.length;i++){
-                                Caiwei.log(pathList[i]);
                                 me.expandPath(pathList[i],'id','/',function(success, lastNode){
                                     if(success){
                                         var nodeHtmlEl = view.getNode(lastNode),
@@ -312,17 +311,17 @@ Ext.define('Caiwei.main.MainNav',{
                                             position = true;
                                         }
                                     }else{
-                                        Caiwei.log('展开失败');
+                                        console.log('展开失败');
                                     }
                                 });
                             }
                         };
                         var failureFun = function(json) {
                             if (Ext.isEmpty(json)) {
-                                Caiwei.showErrorMes('请求超时'); // 请求超时
+                                console.showErrorMes('请求超时'); // 请求超时
                             } else {
                                 var message = json.message;
-                                Caiwei.showErrorMes(message);
+                                console.showErrorMes(message);
                             }
                         };
                         //Ajax请求得到所有查询到的节点全路径

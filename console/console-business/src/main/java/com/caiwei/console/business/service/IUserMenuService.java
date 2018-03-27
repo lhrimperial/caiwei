@@ -1,5 +1,6 @@
 package com.caiwei.console.business.service;
 
+import com.caiwei.console.common.domain.ResourceDO;
 import com.caiwei.console.common.domain.ResourceNode;
 import com.caiwei.console.common.domain.UserMenuDO;
 
@@ -17,4 +18,6 @@ public interface IUserMenuService {
     List<ResourceNode> queryResourceBatchByCode(String[] resCodes);
 
     List<ResourceNode> queryResourcesByParentCode(String parentCode);
+
+    List<ResourceDO> queryResourcesByParam(ResourceDO resourceDO);
 }

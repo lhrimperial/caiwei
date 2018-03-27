@@ -50,33 +50,33 @@ Ext.define('Caiwei.sysset.user.OrgRoleWindow', {
         };
         var successFun = function(res) {
             //获取后台返回角色信息
-            var result = res.userVo.roleEntityList;
+            var roleDOS = res.result.roleDOS;
             var roleCodes = new Array();
-            if(!Ext.isEmpty(result)){
+            if(!Ext.isEmpty(roleDOS)){
                 //遍历角色信息
-                Ext.Array.forEach(result,function(role,index,array){
-                    roleCodes.push(role.code);
+                Ext.Array.forEach(roleDOS,function(role,index,array){
+                    roleCodes.push(role.roleCode);
                 });
             }
             //添加已有角色信息
-            Ext.getCmp('butterfly_baseinfo_user_itemselector_id').setValue(roleCodes);
+            Ext.getCmp('caiwei_sysset_user_itemselector_id').setValue(roleCodes);
         };
 
         var failureFun = function(json) {
             if (Ext.isEmpty(json)) {
-                butterfly.showErrorMes('请求超时'); //请求超时
+                console.showErrorMes('请求超时'); //请求超时
             } else {
-                var message = json.message;
-                butterfly.showErrorMes(message);
+                var message = json.resMsg;
+                console.showErrorMes(message);
             }
         };
-        butterfly.requestJsonAjax('userAction!queryOrgRoleByUserName.action', params, successFun, failureFun);
+        console.requestJsonAjax('queryOrgRoleByUserCode', params, successFun, failureFun);
     },
     deptGrid: null,
     getDeptGrid: function() {
         var me = this;
         if (this.deptGrid == null) {
-            this.deptGrid = Ext.create('Butterfly.baseinfo.user.UserDeptGrid');
+            this.deptGrid = Ext.create('Caiwei.sysset.user.UserDeptGrid');
         }
         return this.deptGrid;
     },
@@ -84,69 +84,135 @@ Ext.define('Caiwei.sysset.user.OrgRoleWindow', {
     getRolePanel: function() {
         var me = this;
         if (this.rolePanel == null) {
-            this.rolePanel = Ext.create('Butterfly.baseinfo.user.RolePanel');
+            this.rolePanel = Ext.create('Caiwei.sysset.user.RolePanel');
         }
         return this.rolePanel;
     },
     submitUserOrgRole: function() {
         var me = this;
-        if(Ext.isEmpty(me.userName)||Ext.isEmpty(me.deptCode)){
+        if(Ext.isEmpty(me.userCode)||Ext.isEmpty(me.deptCode)){
             return;
         }
         var userOrgRoleList = new Array();
         //获取分配角色信息
-        var roleCodes = Ext.getCmp('butterfly_baseinfo_user_itemselector_id').getValue();
+        var roleCodes = Ext.getCmp('caiwei_sysset_user_itemselector_id').getValue();
         Ext.Array.forEach(roleCodes,function(roleCode,index,array){
                 userOrgRoleList.push(roleCode);
             }
         );
         var params = {
-            'userVo': {
-                'userName': me.userName,
-                'orgCode': me.deptCode,
+            'userDO': {
+                'userCode': me.userCode,
+                'deptCode': me.deptCode,
                 'roleCodes': userOrgRoleList
             }
         }
         var successFun = function(json) {
-            var message = json.message;
-            butterfly.showInfoMsg(message); //提示新增成功
+            var message = json.result;
+            console.showInfoMsg(message); //提示新增成功
             me.close();
             //me.parent.getStore().load(); //成功之后重新查询刷新结果集
         };
         var failureFun = function(json) {
             if (Ext.isEmpty(json)) {
-                butterfly.showErrorMes('连接超时'); //请求超时
+                console.showErrorMes('连接超时'); //请求超时
             } else {
                 var message = json.message;
-                butterfly.showErrorMes(message); //提示失败原因
+                console.showErrorMes(message); //提示失败原因
             }
         };
         //发送AJAX请求
-        butterfly.requestJsonAjax('userAction!updateUserOrgRole.action', params, successFun, failureFun);
+        console.requestJsonAjax('updateUserOrgRole', params, successFun, failureFun);
     },
     constructor: function(config) {
         var me = this,
             cfg = Ext.apply({},
                 config);
-        me.items = [/*me.getSearchDept(),*/ me.getDeptGrid(), me.getRolePanel()];
+        me.items = [me.getSearchDept(), me.getDeptGrid(), me.getRolePanel()];
         me.fbar = [{
-            text: '取消',
-            // 取消
-            handler: function() {
-                me.close();
-            }
-        },
-            {
+                text: '取消',
+                // 取消
+                handler: function() {
+                    me.close();
+                }
+            },{
                 text: '保存',
                 // 保存
                 handler: function() {
                     me.submitUserOrgRole();
                 }
             }];
-        me.callParent([cfg]);
-
+    me.callParent([cfg]);
     }
 });
+
+//角色信息model
+Ext.define('Caiwei.sysset.user.RoleModel', {
+    extend: 'Ext.data.Model',
+    fields: [{
+        name: 'tid',
+        type: 'string'
+    },{
+        name: 'roleCode',
+        type: 'string'
+    },{
+        name: 'roleName',
+        type: 'string'
+    },{
+        name: 'systemCode',
+        type: 'string'
+    },{
+        name: 'type',
+        type: 'string'
+    },{
+        name: 'notes',
+        type: 'string'
+    }]
+});
+//角色信息store
+Ext.define('Caiwei.sysset.user.RoleStore',{
+    extend: 'Ext.data.Store',
+    autoLoad: true,
+    model: 'Caiwei.sysset.user.RoleModel',
+    proxy: {
+        type: 'ajax',
+        actionMethods: 'post',
+        url: 'queryAllRole',
+        reader: {
+            type: 'json',
+            rootProperty: 'roleDOS'
+        }
+    },
+    listeners: {
+        'beforeload': function(store, operation, eOpts) {
+            var params = {
+                'userDO': {}
+            }
+            Ext.apply(store.proxy.extraParams, params);
+        }
+    }
+});
+
+//分配角色panel
+Ext.define('Caiwei.sysset.user.RolePanel',{
+    extend: 'Ext.form.Panel',
+    header: false,
+    layout: 'fit',
+    height: 250,
+    items: [{
+        xtype: 'itemselector',
+        name: 'itemselector',
+        anchor: '100%',
+        id: 'caiwei_sysset_user_itemselector_id',
+        store: Ext.create('Caiwei.sysset.user.RoleStore'),
+        displayField: 'roleName',
+        valueField: 'roleCode',
+        msgTarget: 'side',
+        fromTitle: '待分配角色',
+        toTitle: '已分配角色'
+    }]
+});
+
 //部门查询panel
 Ext.define('Caiwei.sysset.user.DeptQueryPanel', {
     id: 'caiwei_sysset_user_deptqueryForm_id',
@@ -202,7 +268,7 @@ Ext.define('Caiwei.sysset.user.UserDeptStore', {
         'beforeload': function(store, operation, eOpts) {
             var userCode = Ext.getCmp('caiwei_sysset_user_orgrolewindow_id').userCode;
             var params = {
-                'userDO.userCode': userCode
+                'userCode': userCode
             }
             Ext.apply(store.proxy.extraParams, params);
         }

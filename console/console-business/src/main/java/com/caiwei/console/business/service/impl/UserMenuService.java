@@ -7,9 +7,11 @@ import com.caiwei.console.common.domain.ResourceDO;
 import com.caiwei.console.common.domain.ResourceNode;
 import com.caiwei.console.common.domain.UserMenuDO;
 import com.caiwei.console.common.exception.ResourceException;
+import com.caiwei.console.persistent.mapper.ResourceMapper;
 import com.github.framework.server.cache.CacheManager;
 import com.github.framework.server.cache.ICache;
 import com.github.framework.util.string.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ import java.util.List;
  */
 @Service
 public class UserMenuService implements IUserMenuService {
+
+    @Autowired
+    private ResourceMapper resourceMapper;
 
 
     @Override
@@ -61,5 +66,10 @@ public class UserMenuService implements IUserMenuService {
             throw new ResourceException(ResourceException.RESOURCE_URI_NULL);
         }
         return resMenus;
+    }
+
+    @Override
+    public List<ResourceDO> queryResourcesByParam(ResourceDO resourceDO) {
+        return resourceMapper.queryResourcesByParam(resourceDO);
     }
 }

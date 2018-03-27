@@ -7,6 +7,10 @@ import com.caiwei.console.web.domain.UserVO;
  *
  **/
 public interface ISystemSetService {
+    /**
+     * user set
+     */
+    UserVO findUserById(UserVO userVO);
 
     UserVO queryUserList(UserVO userVO);
 
@@ -16,6 +20,20 @@ public interface ISystemSetService {
 
     void deleteUser(UserVO userVO);
 
+    /**
+     * role config
+     */
+    UserVO queryUserDept(UserVO userVO);
+
+    RoleVO queryOrgRoleByUserCode(UserVO userVO);
+
+    RoleVO queryAllRole(RoleVO roleVO);
+
+    void updateUserOrgRole(UserVO userVO);
+
+    /**
+     * role set
+     */
     RoleVO queryRoleList(RoleVO roleVO);
 
     void addRole(RoleVO roleVO);

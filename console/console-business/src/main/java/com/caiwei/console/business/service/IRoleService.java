@@ -1,6 +1,7 @@
 package com.caiwei.console.business.service;
 
 import com.caiwei.console.common.domain.RoleDO;
+import com.caiwei.console.common.domain.UserRoleDO;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public interface IRoleService {
     RoleDO findByCode(String roleCode);
 
     List<RoleDO> findByParam(RoleDO roleDO, int pageNo, int pageSize);
+
+    List<RoleDO> queryOrgRoleByUserCode(String userCode, String deptCode);
+
+    int deleteUserRole(String userCode, String deptCode);
+
+    int batchSaveUserRole(List<UserRoleDO> userRoleDOS);
 }

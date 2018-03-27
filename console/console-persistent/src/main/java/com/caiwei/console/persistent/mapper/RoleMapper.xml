@@ -15,38 +15,55 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, role_code, role_name, system_code, `type`, notes, status, create_time, modify_time
+        r.id,r.role_code,r.role_name,r.system_code,r.`type`,r.notes,r.status,r.create_time,r.modify_time
     </sql>
 
     <sql id="param_sql">
         <if test="tid != null">
-            and id = #{tid}
+            and r.id = #{tid}
         </if>
         <if test="roleCode != null and roleCode != ''">
-            and role_code = #{roleCode}
+            and r.role_code = #{roleCode}
         </if>
         <if test="roleName != null  and roleName != ''">
-            and role_name like concat('%',concat(#{roleName},'%'))
+            and r.role_name like concat('%',concat(#{roleName},'%'))
         </if>
         <if test="systemCode != null and systemCode != ''">
-            and system_code = #{systemCode}
+            and r.system_code = #{systemCode}
         </if>
         <if test="type != null and type != ''">
-            and `type` = #{type}
+            and r.`type` = #{type}
         </if>
         <if test="status != null">
-            and status = #{status}
+            and r.status = #{status}
         </if>
     </sql>
+    
+    <delete id="deleteUserRole" >
+        delete from t_mdm_permis_user_role where user_code = #{userCode} and dept_code = #{deptCode}
+    </delete>
+
+    <select id="queryOrgRoleByUserCode" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_permis_role r,
+        t_mdm_permis_user_role ur
+        where r.role_code = ur.role_code
+        <if test="userCode != null and userCode != ''">
+            and ur.user_code = #{userCode}
+        </if>
+        <if test="deptCode != null and deptCode != ''">
+            and ur.dept_code = #{deptCode}
+        </if>
+    </select>
 
     <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select <include refid="Base_Column_List"/>
-        from t_mdm_permis_role where id = #{tid}
+        from t_mdm_permis_role r where r.id = #{tid}
     </select>
 
     <select id="findByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.RoleDO">
         select <include refid="Base_Column_List"/>
-        from t_mdm_permis_role
+        from t_mdm_permis_role r
         <where>
             <include refid="param_sql"/>
         </where>
@@ -54,13 +71,21 @@
 
     <select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select <include refid="Base_Column_List"/>
-        from t_mdm_permis_role where role_code = #{roleCode}
+        from t_mdm_permis_role r where r.role_code = #{roleCode}
     </select>
     
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.RolePO">
         insert into t_mdm_permis_role (role_code, role_name,system_code, `type`, notes, status, create_time, modify_time)
         values (#{roleCode}, #{roleName}, #{systemCode}, #{type}, #{notes}, #{status}, #{createTime}, #{modifyTime})
       </insert>
+
+    <insert id="batchSaveUserRole" parameterType="java.util.List">
+        insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userCode}, #{item.deptCode}, #{item.roleCode}, #{item.status}, #{item.createTime}, #{item.modifyTIme})
+        </foreach>
+    </insert>
 
     <update id="updateStatus">
         update t_mdm_permis_role
