@@ -76,7 +76,7 @@ Ext.define('Caiwei.sysset.source.ResourceNode',{
 /**
  * 权限store
  */
-Ext.define('Caiwei.sysset.store.ResourceStore',{
+Ext.define('Caiwei.sysset.source.ResourceStore',{
     extend : 'Ext.data.Store',
     model : 'Caiwei.sysset.source.ResourceNode',
     pageSize : 20,
@@ -92,13 +92,10 @@ Ext.define('Caiwei.sysset.store.ResourceStore',{
     },
     listeners : {
         beforeload : function(store, operation, eOpts) {
-           /* var queryRouteForm = Ext.getCmp('queryResourceForm');
-            if (queryRouteForm != null) {
-                var params = {
-                    'resourceNode.code' : queryRouteForm.getForm().findField('code').getValue()
-                };
-                Ext.apply(store.proxy.extraParams, params);
-            }*/
+            var params = {
+                'resourceNode.code':'console_1'
+            };
+            Ext.apply(store.proxy.extraParams, params);
         }
     }
 });
@@ -106,13 +103,12 @@ Ext.define('Caiwei.sysset.store.ResourceStore',{
 /**
  * 权限查询表单
  */
-/*
 Ext.define('Caiwei.sysset.source.queryFrom',{
     extend : 'Ext.form.Panel',
     id : 'caiwei_sysset_resoure_queryfrom_id',
     frame : true,
 //	title : '查询条件',
-    height : 120,
+    height : 70,
     collapsible : false,
     layout : 'column',
     defaults : {
@@ -128,7 +124,7 @@ Ext.define('Caiwei.sysset.source.queryFrom',{
                 name : 'firstCode',
                 fieldLabel: '权限',
                 columnWidth: 0.4,
-                xtype : 'resourceselector'
+                xtype : 'textfield'
             }];
         me.buttons = [{
                 text : '查询',
@@ -144,7 +140,6 @@ Ext.define('Caiwei.sysset.source.queryFrom',{
         me.callParent([ cfg ]);
     }
 });
-*/
 
 /**
  * 权限管理详情视图(resource)
@@ -157,85 +152,85 @@ Ext.define('Caiwei.view.resource.Grid', {
 // height : butterfly.getBrowserHeight() - 120,
     height : 40,
     width : '100%',
-    // addResourcewindow :null,
-    // getaddResourcewindow : function(){
-    //     if (this.addResourcewindow == null) {
-    //
-    //         this.addResourcewindow = Ext.create('Butterfly.view.addResource.window');
-    //         this.addResourcewindow.parent = this; // 父元素
-    //     }
-    //     return this.addResourcewindow;
-    // },
-    // changResource :function(){
-    //     var me = this;
-    //     var selections = me.up().getresourceTree().getSelectionModel().getSelection(); // 获取选中的数据
-    //     if (selections.length != 1) { // 判断是否选中了一条
-    //         butterfly.showWoringMessage(baseinfo.resource.i18n('bse.route.selectedone')); // 请选择一条进行作废操作！
-    //         return; // 没有则提示并返回
-    //     }
-    //     var winIn = me.getaddResourcewindow();
-    //     winIn.show();
-    //     winIn.setTitle(baseinfo.resource.i18n('butterfly.common.update'));//修改');
-    //     changbox = winIn.getResourceFrom().getForm();
-    //     winIn.setupdate();
-    //     var resobj = selections[0].get('resourceEntity');
-    //     changbox.findField('id').setValue(resobj.id);
-    //     changbox.findField('code').setValue(resobj.code);
-    //     changbox.findField('name').setValue(resobj.name);
-    //     changbox.findField('entryUri').setValue(resobj.entryUri);
-    //     changbox.findField('resLevel').setValue(resobj.resLevel);
-    //     changbox.findField('displayOrder').setValue(resobj.displayOrder);
-    //     changbox.findField('checked').setValue(resobj.checked);
-    //     changbox.findField('resType').setValue(resobj.resType);
-    //     changbox.findField('leafFlag').setValue(resobj.leafFlag);
-    //     changbox.findField('iconCls').setValue(resobj.iconCls);
-    //     changbox.findField('cls').setValue(resobj.cls);
-    //     changbox.findField('notes').setValue(resobj.notes);
-    //     changbox.findField('belongSystemType').setValue(resobj.belongSystemType);
-    //     Ext.getCmp('butterfly_bse_resource_sele').setCombValue(resobj.parentRes.name,resobj.parentRes.code);
-    //     changbox.findField('code').setReadOnly(true);
-    //     changbox.findField('name').setReadOnly(true);
-    //
-    // },
-    // deleteResource : function(){
-    //     var me = this;
-    //     var selections = me.up().getresourceTree().getSelectionModel().getSelection(); // 获取选中的数据
-    //     if (selections.length < 1) { // 判断是否至少选中了一条
-    //         butterfly.showWoringMessage(baseinfo.route.i18n('bse.resource.selectedone')); // 请选择一条进行作废操作！
-    //         return; // 没有则提示并返回
-    //     }
-    //     var resourceEntityList = new Array();
-    //     for (var i = 0; i < selections.length; i++) {
-    //         resourceEntityList.push({
-    //             'id': selections[0].get('resourceEntity').id,
-    //             'code': selections[0].get('resourceEntity').code
-    //         });
-    //     }
-    //     butterfly.showQuestionMes(baseinfo.resource.i18n('bse.resource.deleteresource'),//'是否要删除?其子节点也将被删除',
-    //         function(e) {
-    //             if (e == 'yes') { // 询问是否删除，是则发送请求
-    //                 var params = {
-    //                     'resourceVo': {
-    //                         'resourceEntityList': resourceEntityList
-    //                     }
-    //                 };
-    //                 var successFun = function(json) {
-    //                     var message = json.message;
-    //                     butterfly.showInfoMsg(message);
-    //                     me.up().getresourceTree().getStore().load();
-    //                 };
-    //                 var failureFun = function(json) {
-    //                     if (Ext.isEmpty(json)) {
-    //                         butterfly.showErrorMes(baseinfo.resource.i18n('bse.resource.timeout')); // 请求超时
-    //                     } else {
-    //                         var message = json.message;
-    //                         butterfly.showErrorMes(message);
-    //                     }
-    //                 };
-    //                 butterfly.requestJsonAjax('resourceAction!deleteResource.action', params, successFun, failureFun);
-    //             }
-    //         });
-    // },
+    addResourceWindow :null,
+    getaddResourceWindow : function(){
+        if (this.addResourceWindow == null) {
+
+            this.addResourceWindow = Ext.create('Butterfly.view.addResource.window');
+            this.addResourceWindow.parent = this; // 父元素
+        }
+        return this.addResourceWindow;
+    },
+    changResource :function(){
+        var me = this;
+        var selections = me.up().getresourceTree().getSelectionModel().getSelection(); // 获取选中的数据
+        if (selections.length != 1) { // 判断是否选中了一条
+            butterfly.showWoringMessage(baseinfo.resource.i18n('bse.route.selectedone')); // 请选择一条进行作废操作！
+            return; // 没有则提示并返回
+        }
+        var winIn = me.getaddResourcewindow();
+        winIn.show();
+        winIn.setTitle(baseinfo.resource.i18n('butterfly.common.update'));//修改');
+        changbox = winIn.getResourceFrom().getForm();
+        winIn.setupdate();
+        var resobj = selections[0].get('resourceEntity');
+        changbox.findField('id').setValue(resobj.id);
+        changbox.findField('code').setValue(resobj.code);
+        changbox.findField('name').setValue(resobj.name);
+        changbox.findField('entryUri').setValue(resobj.entryUri);
+        changbox.findField('resLevel').setValue(resobj.resLevel);
+        changbox.findField('displayOrder').setValue(resobj.displayOrder);
+        changbox.findField('checked').setValue(resobj.checked);
+        changbox.findField('resType').setValue(resobj.resType);
+        changbox.findField('leafFlag').setValue(resobj.leafFlag);
+        changbox.findField('iconCls').setValue(resobj.iconCls);
+        changbox.findField('cls').setValue(resobj.cls);
+        changbox.findField('notes').setValue(resobj.notes);
+        changbox.findField('belongSystemType').setValue(resobj.belongSystemType);
+        Ext.getCmp('butterfly_bse_resource_sele').setCombValue(resobj.parentRes.name,resobj.parentRes.code);
+        changbox.findField('code').setReadOnly(true);
+        changbox.findField('name').setReadOnly(true);
+
+    },
+    deleteResource : function(){
+        var me = this;
+        var selections = me.up().getresourceTree().getSelectionModel().getSelection(); // 获取选中的数据
+        if (selections.length < 1) { // 判断是否至少选中了一条
+            butterfly.showWoringMessage(baseinfo.route.i18n('bse.resource.selectedone')); // 请选择一条进行作废操作！
+            return; // 没有则提示并返回
+        }
+        var resourceEntityList = new Array();
+        for (var i = 0; i < selections.length; i++) {
+            resourceEntityList.push({
+                'id': selections[0].get('resourceEntity').id,
+                'code': selections[0].get('resourceEntity').code
+            });
+        }
+        butterfly.showQuestionMes(baseinfo.resource.i18n('bse.resource.deleteresource'),//'是否要删除?其子节点也将被删除',
+            function(e) {
+                if (e == 'yes') { // 询问是否删除，是则发送请求
+                    var params = {
+                        'resourceVo': {
+                            'resourceEntityList': resourceEntityList
+                        }
+                    };
+                    var successFun = function(json) {
+                        var message = json.message;
+                        butterfly.showInfoMsg(message);
+                        me.up().getresourceTree().getStore().load();
+                    };
+                    var failureFun = function(json) {
+                        if (Ext.isEmpty(json)) {
+                            butterfly.showErrorMes(baseinfo.resource.i18n('bse.resource.timeout')); // 请求超时
+                        } else {
+                            var message = json.message;
+                            butterfly.showErrorMes(message);
+                        }
+                    };
+                    butterfly.requestJsonAjax('resourceAction!deleteResource.action', params, successFun, failureFun);
+                }
+            });
+    },
     constructor : function(config) {
         var me = this,
             cfg = Ext.apply({}, config);
@@ -539,21 +534,23 @@ Ext.onReady(function() {
      * 权限信息页面
      */
     Ext.QuickTips.init();
-
+    var queryForm = Ext.create('Caiwei.sysset.source.queryFrom');
     var resourceGrid = Ext.create('Caiwei.view.resource.Grid');
     var resourceRoleTree = Ext.create('Caiwei.resource.role.RoleTree');
 
     Ext.create('Ext.panel.Panel', {
         renderTo : Ext.getBody(),
         id : 'resourcePanel',
-
+        getQueryForm: function(){
+          return queryForm;
+        },
         getResourceGrid : function() {
             return resourceGrid;
         },
         getResourceRoleTree : function(){
             return resourceRoleTree;
         },
-        items : [resourceGrid,resourceRoleTree ]
+        items : [/*queryForm,*/resourceGrid,resourceRoleTree ]
     });
 });
 

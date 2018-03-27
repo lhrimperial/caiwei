@@ -4,7 +4,9 @@ import com.caiwei.console.business.service.IUserMenuService;
 import com.caiwei.console.common.domain.ResourceDO;
 import com.caiwei.console.common.domain.ResourceNode;
 import com.caiwei.console.common.domain.ResourceTreeNode;
+import com.caiwei.console.web.domain.ResourceVO;
 import com.caiwei.console.web.service.IResourceService;
+import com.github.framework.server.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class ResourceServiceImpl implements IResourceService {
         resourceDO.setResName(resourceName);
         List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
         for (ResourceDO res : resourceDOS) {
-            list.add(ResourceTreeNode.changeResToTreeNode(res.convert(res), true));
+            list.add(ResourceTreeNode.changeResToTreeNode(ResourceDO.convert(res), true));
         }
         return list;
     }
@@ -42,5 +44,20 @@ public class ResourceServiceImpl implements IResourceService {
             nodes.add(treeNode);
         }
         return nodes;
+    }
+
+    @Override
+    public ResourceVO queryResourceByExample(ResourceVO resourceVO) {
+        if (resourceVO == null) {
+            throw new BusinessException("参数不能为空！");
+        }
+        ResourceDO resourceDO = ResourceDO.flipConvert(resourceVO.getResourceNode());
+        List<ResourceDO> list = userMenuService.queryResourcesByParam(resourceDO);
+        List<ResourceNode> resourceNodes = new ArrayList<>();
+        for (ResourceDO res : list) {
+            resourceNodes.add(ResourceDO.convert(res));
+        }
+        resourceVO.setResourceNodes(resourceNodes);
+        return resourceVO;
     }
 }

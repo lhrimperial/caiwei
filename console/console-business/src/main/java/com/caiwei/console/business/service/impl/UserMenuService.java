@@ -42,7 +42,7 @@ public class UserMenuService implements IUserMenuService {
         ResourceNode res = null;
         if (resCache != null) {
             ResourceDO  resourceDO = resCache.get(resCode);
-            res = resourceDO.convert(resourceDO);
+            res = ResourceDO.convert(resourceDO);
         }
         return res;
     }

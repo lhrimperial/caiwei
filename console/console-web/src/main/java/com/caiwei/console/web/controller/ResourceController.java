@@ -3,7 +3,9 @@ package com.caiwei.console.web.controller;
 import com.caiwei.console.common.domain.ResourceTreeNode;
 import com.caiwei.console.web.domain.ResourceVO;
 import com.caiwei.console.web.service.IMenuService;
+import com.caiwei.console.web.service.IResourceService;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
+import com.github.framework.server.web.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,9 +20,12 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/resource")
-public class ResourceController {
+public class ResourceController extends AbstractController{
     @Autowired
     private IMenuService menuService;
+
+    @Autowired
+    private IResourceService resourceService;
 
     @RequestMapping("/index")
     public String index() {
@@ -30,7 +35,9 @@ public class ResourceController {
     @ResponseBody
     @RequestMapping("/queryTreePathForName")
     public ResponseVO<List<ResourceTreeNode>> queryTreePathForName(@RequestBody String resourceName) {
-        return null;
+        ResponseVO responseVO = returnSuccess();
+        responseVO.setResult(resourceService.queryTreePathForName(resourceName));
+        return responseVO;
     }
 
     @ResponseBody
@@ -43,8 +50,8 @@ public class ResourceController {
     @ResponseBody
     @RequestMapping("/queryResourceByExample")
     public ResourceVO queryResourceByExample(@ModelAttribute ResourceVO resourceVO) {
-
-        return null;
+        return resourceService.queryResourceByExample(resourceVO);
     }
+
 
 }

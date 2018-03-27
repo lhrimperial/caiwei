@@ -8,7 +8,6 @@ import com.caiwei.console.common.domain.*;
 import com.caiwei.console.common.exception.LoginException;
 import com.caiwei.console.web.service.IMenuService;
 import com.github.framework.server.context.UserContext;
-import com.github.framework.server.shared.define.Constants;
 import com.github.framework.server.shared.define.FunctionType;
 import com.github.framework.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +138,7 @@ public class MenuServiceImpl implements IMenuService {
         resourceDO.setResName(menuName);
         List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
         for (ResourceDO res : resourceDOS) {
-            list.add(ResourceTreeNode.changeResToTreeNode(res.convert(res), true));
+            list.add(ResourceTreeNode.changeResToTreeNode(ResourceDO.convert(res), true));
         }
         return list;
     }

@@ -180,7 +180,7 @@ public class ResourceDO extends BaseDO {
         this.notes = notes;
     }
 
-    public ResourceNode convert(ResourceDO resourceDO) {
+    public static ResourceNode convert(ResourceDO resourceDO) {
         ResourceNode resourceNode = new ResourceNode();
         resourceNode.setId(resourceDO.getTid()==null?"":String.valueOf(resourceDO.getTid()));
         resourceNode.setCode(resourceDO.getResCode());
@@ -201,7 +201,7 @@ public class ResourceDO extends BaseDO {
         return resourceNode;
     }
 
-    public ResourceDO flipConvert(ResourceNode resourceNode) {
+    public static ResourceDO flipConvert(ResourceNode resourceNode) {
         ResourceDO resourceDO = new ResourceDO();
         resourceDO.setTid(StringUtils.isEmpty(resourceNode.getId())?null:Integer.valueOf(resourceNode.getId()));
         resourceDO.setResCode(resourceNode.getCode());

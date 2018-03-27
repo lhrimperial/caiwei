@@ -24,7 +24,7 @@ public class ResourceMenuCacheProvider implements ITTLCacheProvider<List<Resourc
 		List<ResourceDO> res = resourceMapper.findByParentCode(key);
 		List<ResourceNode> resMenus = new ArrayList<>(res.size());
 		for (ResourceDO re : res) {
-			resMenus.add(re.convert(re));
+			resMenus.add(ResourceDO.convert(re));
 		}
 		return resMenus;
 	}
