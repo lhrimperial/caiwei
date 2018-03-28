@@ -35,6 +35,7 @@ public class ResourceDO extends BaseDO {
      * 上级权限
      */
     private String parentRes;
+    private ResourceDO parentDO;
 
     /**
      * 权限类型(1：子系统 2：模块 3：菜单 4：按钮)
@@ -116,6 +117,14 @@ public class ResourceDO extends BaseDO {
         this.parentRes = parentRes;
     }
 
+    public ResourceDO getParentDO() {
+        return parentDO;
+    }
+
+    public void setParentDO(ResourceDO parentDO) {
+        this.parentDO = parentDO;
+    }
+
     public Byte getResType() {
         return resType;
     }
@@ -181,13 +190,17 @@ public class ResourceDO extends BaseDO {
     }
 
     public static ResourceNode convert(ResourceDO resourceDO) {
+        if (resourceDO == null) {
+            return null;
+        }
         ResourceNode resourceNode = new ResourceNode();
         resourceNode.setId(resourceDO.getTid()==null?"":String.valueOf(resourceDO.getTid()));
         resourceNode.setCode(resourceDO.getResCode());
         resourceNode.setName(resourceDO.getResName());
         resourceNode.setEntryUri(resourceDO.getEntryUrl());
         resourceNode.setResLevel(String.valueOf(resourceDO.getResLevel()));
-        resourceNode.setParentResDO(null);
+        resourceNode.setParentNode(ResourceDO.convert(resourceDO.getParentDO()));
+        resourceNode.setParentRes(resourceDO.getParentRes());
         resourceNode.setActive(Constants.PO_ACTIVE == resourceDO.getStatus() ? ConsoleConstants.YES : ConsoleConstants.NO);
         resourceNode.setDisplayOrder(String.valueOf(resourceDO.getDisplayOrder()));
         resourceNode.setChecked(Constants.YES == resourceDO.getChecked() ? ConsoleConstants.YES : ConsoleConstants.NO);
@@ -202,24 +215,26 @@ public class ResourceDO extends BaseDO {
     }
 
     public static ResourceDO flipConvert(ResourceNode resourceNode) {
+        if (resourceNode == null) {
+            return null;
+        }
         ResourceDO resourceDO = new ResourceDO();
         resourceDO.setTid(StringUtils.isEmpty(resourceNode.getId())?null:Integer.valueOf(resourceNode.getId()));
         resourceDO.setResCode(resourceNode.getCode());
         resourceDO.setResName(resourceNode.getName());
         resourceDO.setEntryUrl(resourceNode.getEntryUri());
-        resourceDO.setResLevel(Byte.valueOf(resourceNode.getResLevel()));
-        resourceDO.setStatus(ConsoleConstants.YES.equals(resourceNode.getActive()) ? Constants.PO_ACTIVE : Constants.PO_INACTIVE);
-        resourceDO.setDisplayOrder(Byte.valueOf(resourceNode.getDisplayOrder()));
-        resourceDO.setChecked(ConsoleConstants.YES.equals(resourceNode.getChecked()) ? Constants.YES : Constants.NO);
-        resourceDO.setResType(Byte.valueOf(resourceNode.getResType()));
-        resourceDO.setLeafFlag(ConsoleConstants.YES.equals(resourceNode.getLeafFlag()) ? Constants.YES : Constants.NO);
+        resourceDO.setResLevel(StringUtils.isEmpty(resourceNode.getResLevel())?null:Byte.valueOf(resourceNode.getResLevel()));
+        resourceDO.setStatus(resourceNode.getActive()==null?null:ConsoleConstants.YES.equals(resourceNode.getActive()) ? Constants.PO_ACTIVE : Constants.PO_INACTIVE);
+        resourceDO.setDisplayOrder(StringUtils.isEmpty(resourceNode.getDisplayOrder())?null:Byte.valueOf(resourceNode.getDisplayOrder()));
+        resourceDO.setChecked(resourceNode.getChecked()==null?null:ConsoleConstants.YES.equals(resourceNode.getChecked()) ? Constants.YES : Constants.NO);
+        resourceDO.setResType(StringUtils.isEmpty(resourceNode.getResType())?null:Byte.valueOf(resourceNode.getResType()));
+        resourceDO.setLeafFlag(resourceNode.getLeafFlag()==null?null:ConsoleConstants.YES.equals(resourceNode.getLeafFlag()) ? Constants.YES : Constants.NO);
         resourceDO.setIconCls(resourceNode.getIconCls());
         resourceDO.setNodeCls(resourceNode.getCls());
         resourceDO.setNotes(resourceNode.getNotes());
         resourceDO.setSystemCode(resourceNode.getBelongSystemType());
-        if (resourceNode.getParentResDO() != null) {
-            resourceDO.setParentRes(resourceNode.getParentResDO().getCode());
-        }
+        resourceDO.setParentDO(ResourceDO.flipConvert(resourceNode.getParentNode()));
+        resourceDO.setParentRes(resourceNode.getParentRes());
 
         return resourceDO;
     }

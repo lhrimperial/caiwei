@@ -7,6 +7,7 @@
         <result column="value_code" property="valueCode"/>
         <result column="value_name" property="valueName"/>
         <result column="terms_code" property="termsCode"/>
+        <result column="terms_name" property="termsName"/>
         <result column="value_seq" property="valueSeq"/>
         <result column="notes" property="notes"/>
         <result column="status" property="status"/>
@@ -15,8 +16,45 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, value_code, value_name, terms_code, value_seq, notes, status, create_time, modify_time
+        id, value_code, value_name, terms_code, terms_name, value_seq, notes, status, create_time, modify_time
     </sql>
+
+    <sql id="param_sql">
+        <if test="valueName != null and valueName != ''">
+            and value_name like concat('%',concat(#{valueName},'%'))
+        </if>
+        <if test="termsName != null and termsName != ''">
+            and terms_name like concat('%',concat(#{termsName},'%'))
+        </if>
+        <if test="termsCode != null and termsCode != ''">
+            and terms_code = #{termsCode}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="valueCode != null and valueCode != ''">
+            and value_code = #{valueCode}
+        </if>
+    </sql>
+
+    <select id="findTermsValueByParam" parameterType="com.caiwei.console.common.domain.TermsValueDO" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_data_termsvalue
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
+    <select id="totalCount" parameterType="com.caiwei.console.common.domain.TermsValueDO" resultType="java.lang.Long">
+        select count(id)
+        from t_mdm_data_termsvalue
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
 
     <select id="findByTermsCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
@@ -33,8 +71,8 @@
     </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
-    insert into t_mdm_data_termsvalue (value_code, value_name, terms_code, value_seq, notes, status, create_time, modify_time)
-    values (#{valueCode}, #{valueName}, #{termsCode}, #{valueSeq}, #{notes}, #{status}, #{createTime}, modifyTime)
+    insert into t_mdm_data_termsvalue (value_code, value_name, terms_code, terms_name, value_seq, notes, status, create_time, modify_time)
+    values (#{valueCode}, #{valueName}, #{termsCode}, #{termsName}, #{valueSeq}, #{notes}, #{status}, #{createTime}, modifyTime)
   </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
@@ -42,6 +80,9 @@
         <set>
             <if test="valueName != null and valueName != ''">
                 value_name = #{valueName},
+            </if>
+            <if test="termsName != null and termsName != ''">
+                terms_name = #{termsName},
             </if>
             <if test="termsCode != null and termsCode != ''">
                 terms_code = #{termsCode},
@@ -70,5 +111,9 @@
                 and value_code = #{valueCode}
             </if>
         </where>
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+
     </update>
 </mapper>

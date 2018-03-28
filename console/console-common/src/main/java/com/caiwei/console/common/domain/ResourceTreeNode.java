@@ -28,7 +28,7 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
     //菜单的显示顺序
     private String displayOrder;
 
-    private ResourceNode resourceDO;
+    private ResourceNode resourceNode;
 
     public String getUri() {
         return uri;
@@ -78,14 +78,13 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
         this.displayOrder = displayOrder;
     }
 
-    public ResourceNode getResourceDO() {
-        return resourceDO;
+    public ResourceNode getResourceNode() {
+        return resourceNode;
     }
 
-    public void setResourceDO(ResourceNode resourceDO) {
-        this.resourceDO = resourceDO;
+    public void setResourceNode(ResourceNode resourceNode) {
+        this.resourceNode = resourceNode;
     }
-
 
     // 转换菜单对象为树节点对象
     public static ResourceTreeNode<ResourceNode> changeResToTreeNode(ResourceNode res, boolean containNode) {
@@ -102,13 +101,13 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
         } else {
             treeNode.setLeaf(false);
         }
-        if (res.getParentResDO() != null) {
-            treeNode.setParentId(res.getParentResDO().getFunctionCode());
+        if (res.getParentRes() != null) {
+            treeNode.setParentId(res.getParentRes());
         } else {
             treeNode.setParentId(null);
         }
         if (containNode) {
-            treeNode.setResourceDO(res);
+            treeNode.setResourceNode(res);
         }
         return treeNode;
     }

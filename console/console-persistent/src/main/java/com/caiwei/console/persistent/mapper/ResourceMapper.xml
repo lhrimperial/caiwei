@@ -22,54 +22,143 @@
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
 
+    <resultMap id="ContainParentMap" type="com.caiwei.console.common.domain.ResourceDO">
+        <result column="rs_id" property="tid"/>
+        <result column="rs_res_code" property="resCode"/>
+        <result column="rs_res_name" property="resName"/>
+        <result column="rs_entry_url" property="entryUrl"/>
+        <result column="rs_res_level" property="resLevel"/>
+        <result column="rs_parent_res" property="parentRes"/>
+        <result column="rs_res_type" property="resType"/>
+        <result column="rs_display_order" property="displayOrder"/>
+        <result column="rs_checked" property="checked"/>
+        <result column="rs_leaf_flag" property="leafFlag"/>
+        <result column="rs_node_cls" property="nodeCls"/>
+        <result column="rs_icon_cls" property="iconCls"/>
+        <result column="rs_system_code" property="systemCode"/>
+        <result column="rs_notes" property="notes"/>
+        <result column="rs_status" property="status"/>
+        <result column="rs_create_time" property="createTime"/>
+        <result column="rs_modify_time" property="modifyTime"/>
+        <association property="parentDO" column="parent_res" javaType="com.caiwei.console.common.domain.ResourceDO">
+            <result column="pr_id" property="tid"/>
+            <result column="pr_res_code" property="resCode"/>
+            <result column="pr_res_name" property="resName"/>
+            <result column="pr_entry_url" property="entryUrl"/>
+            <result column="pr_res_level" property="resLevel"/>
+            <result column="pr_parent_res" property="parentRes"/>
+            <result column="pr_res_type" property="resType"/>
+            <result column="pr_display_order" property="displayOrder"/>
+            <result column="pr_checked" property="checked"/>
+            <result column="pr_leaf_flag" property="leafFlag"/>
+            <result column="pr_node_cls" property="nodeCls"/>
+            <result column="pr_icon_cls" property="iconCls"/>
+            <result column="pr_system_code" property="systemCode"/>
+            <result column="pr_notes" property="notes"/>
+            <result column="pr_status" property="status"/>
+            <result column="pr_create_time" property="createTime"/>
+            <result column="pr_modify_time" property="modifyTime"/>
+        </association>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, res_code, res_name, entry_url, res_level, parent_res, res_type, display_order,
         checked, leaf_flag, node_cls, icon_cls, system_code, notes, status, create_time, modify_time
       </sql>
 
+    <sql id="contain_parent_sql">
+        rs.id as rs_id,
+        rs.res_code as rs_res_code,
+        rs.res_name as rs_res_name,
+        rs.entry_url as rs_entry_url,
+        rs.res_level as rs_res_level,
+        rs.parent_res as rs_parent_res,
+        rs.res_type as rs_res_type,
+        rs.display_order as rs_display_order,
+        rs.checked as rs_checked,
+        rs.leaf_flag as rs_leaf_flag,
+        rs.node_cls as rs_node_cls,
+        rs.icon_cls as rs_icon_cls,
+        rs.system_code as rs_system_code,
+        rs.notes as rs_notes,
+        rs.status as rs_status,
+        rs.create_time as rs_create_time,
+        rs.modify_time as rs_modify_time,
+        pr.id as pr_id,
+        pr.res_code as pr_res_code,
+        pr.res_name as pr_res_name,
+        pr.entry_url as pr_entry_url,
+        pr.res_level as pr_res_level,
+        pr.parent_res as pr_parent_res,
+        pr.res_type as pr_res_type,
+        pr.display_order as pr_display_order,
+        pr.checked as pr_checked,
+        pr.leaf_flag as pr_leaf_flag,
+        pr.node_cls as pr_node_cls,
+        pr.icon_cls as pr_icon_cls,
+        pr.system_code as pr_system_code,
+        pr.notes as pr_notes,
+        pr.status as pr_status,
+        pr.create_time as pr_create_time,
+        pr.modify_time as pr_modify_time
+    </sql>
+
     <sql id="param_sql">
         <if test="tid != null">
-            and id = #{tid}
+            and rs.id = #{tid}
         </if>
         <if test="resCode != null and resCode != ''">
-            and res_code = #{resCode}
+            and rs.res_code = #{resCode}
         </if>
         <if test="resName != null and resName != ''">
-            and res_name like concat('%',concat(#{resName},'%'))
+            and rs.res_name like concat('%',concat(#{resName},'%'))
         </if>
         <if test="entryUrl != null  and entryUrl != ''">
-            and entry_url like concat('%',concat(#{entryUrl},'%'))
+            and rs.entry_url like concat('%',concat(#{entryUrl},'%'))
         </if>
         <if test="resLevel != null">
-            and res_level = #{resLevel}
+            and rs.res_level = #{resLevel}
         </if>
         <if test="parentRes != null  and parentRes != ''">
-            and parent_res = #{parentRes}
+            and rs.parent_res = #{parentRes}
         </if>
         <if test="resType != null">
-            and res_type = #{resType}
+            and rs.res_type = #{resType}
         </if>
         <if test="displayOrder != null">
-            and display_order = #{displayOrder}
+            and rs.display_order = #{displayOrder}
         </if>
         <if test="checked != null">
-            and checked = #{checked}
+            and rs.checked = #{checked}
         </if>
         <if test="leafFlag != null">
-            and leaf_flag = #{leafFlag}
+            and rs.leaf_flag = #{leafFlag}
         </if>
         <if test="systemCode != null  and systemCode != ''">
-            and system_code = #{systemCode}
+            and rs.system_code = #{systemCode}
         </if>
         <if test="status != null">
-            and status = #{status}
+            and rs.status = #{status}
         </if>
     </sql>
+
+    <update id="updateStatus" parameterType="java.util.List">
+        update t_mdm_permis_resource
+        set status = #{status}
+        where res_code in
+        <foreach collection="resCodes" separator="," close=")" item="item" open="(">
+            #{item}
+        </foreach>
+        or parent_res in
+        <foreach collection="resCodes" separator="," close=")" item="item" open="(">
+            #{item}
+        </foreach>
+    </update>
 
     <select id="queryResourcesByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.ResourceDO">
         select
         <include refid="Base_Column_List"/>
-        from t_mdm_permis_resource
+        from t_mdm_permis_resource rs
         <where>
             <include refid="param_sql"/>
         </where>
@@ -81,10 +170,12 @@
         from t_mdm_permis_resource where res_code = #{resCode}
     </select>
 
-    <select id="findByParentCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="findByParentCode" resultMap="ContainParentMap" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List"/>
-        from t_mdm_permis_resource where parent_res = #{resCode}
+        <include refid="contain_parent_sql"/>
+        from t_mdm_permis_resource rs
+        left join t_mdm_permis_resource pr on rs.parent_res = pr.res_code
+        where rs.parent_res = #{resCode}
     </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.ResourcePO">

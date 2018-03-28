@@ -15,9 +15,15 @@ import java.util.List;
  */
 public interface ITermsValueService {
 
-    int insertTermsCode(TermsCodePO termsCodeDO);
+    List<TermsCodeDO> findTermsCodeByParam(TermsCodeDO termsCodeDO);
 
-    int updateTermsCode(TermsCodePO termsCodeDO);
+    List<TermsValueDO> findTermsValueByParam(TermsValueDO termsValueDO, int pageNo, int pageSize);
+
+    long totalCount(TermsValueDO termsValueDO);
+
+    int insertTermsCode(TermsCodeDO termsCodeDO);
+
+    int updateTermsCode(TermsCodeDO termsCodeDO);
 
     int deleteTermsCode(String termsCode);
 
@@ -25,13 +31,15 @@ public interface ITermsValueService {
 
     List<TermsCodeDO> findAllCode();
 
-    int insertTermsValue(TermsValuePO termsValueDO);
+    int insertTermsValue(TermsValueDO termsValueDO);
 
-    int updateTermsValue(TermsValuePO termsValueDO);
+    int updateTermsValue(TermsValueDO termsValueDO);
 
     int deleteTermsValue(String valueCode);
 
     TermsValueDO findByTermsCodeAndValueCode(String termsCode, String valueCode);
 
     List<TermsValueDO> findByTermsCode(String termsCode);
+
+    int updateBatch(List<TermsValuePO> termsValueDOS);
 }

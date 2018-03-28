@@ -24,5 +24,7 @@ public interface UserMapper {
 
     List<PermisUserDO> findUsers(PermisUserDO userDO);
 
+    long totalCount(PermisUserDO userDO);
+
     void updateStatus(@Param("userCodes") List<String> userCodes, @Param("status") Byte status);
 }

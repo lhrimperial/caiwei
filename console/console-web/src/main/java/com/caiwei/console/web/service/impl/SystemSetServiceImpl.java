@@ -55,6 +55,7 @@ public class SystemSetServiceImpl implements ISystemSetService {
     @Override
     public UserVO queryUserList(UserVO userVO) {
         userVO.setUserDOS(permisUserService.findUsers(userVO.getUserDO(), userVO.getPageNo(), userVO.getPageSize()));
+        userVO.setTotalCount(permisUserService.totalCount(userVO.getUserDO()));
         return userVO;
     }
 
@@ -133,6 +134,7 @@ public class SystemSetServiceImpl implements ISystemSetService {
     @Override
     public RoleVO queryRoleList(RoleVO roleVO) {
         roleVO.setRoleDOS(roleService.findByParam(roleVO.getRoleDO(), roleVO.getPageNo(), roleVO.getPageSize()));
+        roleVO.setTotalCount(roleService.totalCount(roleVO.getRoleDO()));
         return roleVO;
     }
 

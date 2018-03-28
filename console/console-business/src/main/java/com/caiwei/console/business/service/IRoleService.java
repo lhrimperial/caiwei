@@ -24,6 +24,8 @@ public interface IRoleService {
 
     List<RoleDO> findByParam(RoleDO roleDO, int pageNo, int pageSize);
 
+    long totalCount(RoleDO roleDO);
+
     List<RoleDO> queryOrgRoleByUserCode(String userCode, String deptCode);
 
     int deleteUserRole(String userCode, String deptCode);

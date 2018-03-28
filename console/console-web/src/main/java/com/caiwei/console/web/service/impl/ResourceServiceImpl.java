@@ -37,10 +37,10 @@ public class ResourceServiceImpl implements IResourceService {
     @Override
     public List<ResourceTreeNode> queryResourceByParentRes(String node) {
         List<ResourceTreeNode> nodes = new ArrayList<>();
-        List<ResourceNode> childResources = userMenuService.queryResourcesByParentCode(node);
+        List<ResourceNode> childResources = userMenuService.queryResourcesByParentCode(node, false);
         for (ResourceNode res : childResources) {
             // 转换菜单对象为节点对象
-            ResourceTreeNode<ResourceNode> treeNode = ResourceTreeNode.changeResToTreeNode(res,false);
+            ResourceTreeNode<ResourceNode> treeNode = ResourceTreeNode.changeResToTreeNode(res,true);
             nodes.add(treeNode);
         }
         return nodes;
@@ -59,5 +59,35 @@ public class ResourceServiceImpl implements IResourceService {
         }
         resourceVO.setResourceNodes(resourceNodes);
         return resourceVO;
+    }
+
+    @Override
+    public void addResource(ResourceVO resourceVO) {
+        if (resourceVO == null) {
+            throw new BusinessException("提交参数为空!");
+        }
+        ResourceDO resourceDO = ResourceDO.flipConvert(resourceVO.getResourceNode());
+        userMenuService.addResource(resourceDO);
+    }
+
+    @Override
+    public void updateResource(ResourceVO resourceVO) {
+        if (resourceVO == null) {
+            throw new BusinessException("提交参数为空!");
+        }
+        ResourceDO resourceDO = ResourceDO.flipConvert(resourceVO.getResourceNode());
+        userMenuService.updateResource(resourceDO);
+    }
+
+    @Override
+    public void deleteResource(ResourceVO resourceVO) {
+        if (resourceVO == null) {
+            throw new BusinessException("提交参数为空!");
+        }
+        List<String> resCodes = new ArrayList<>();
+        for (ResourceNode node : resourceVO.getResourceNodes()) {
+            resCodes.add(node.getCode());
+        }
+        userMenuService.deleteResource(resCodes);
     }
 }

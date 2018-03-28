@@ -85,6 +85,11 @@ public class PermisUserService implements IPermisUserService {
     }
 
     @Override
+    public long totalCount(PermisUserDO userDO) {
+        return userMapper.totalCount(userDO);
+    }
+
+    @Override
     public List<PermisUserDO> findUsers(PermisUserDO userDO) {
         if (userDO != null) {
             userDO.setStatus(ConvertUtil.activeToStatus(userDO.getActive()));

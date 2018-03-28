@@ -54,6 +54,13 @@
         </if>
     </sql>
 
+    <select id="totalCount" parameterType="com.caiwei.console.common.domain.PermisUserDO" resultType="java.lang.Long">
+        select count(id) from t_mdm_permis_user
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
     <select id="findUsers" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.PermisUserDO">
         select <include refid="Base_Column_List"/>
         from t_mdm_permis_user u

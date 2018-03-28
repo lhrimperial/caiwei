@@ -34,7 +34,8 @@ public class ResourceNode extends BaseEntity implements IFunction {
     /**
      * 父功能
      */
-    private ResourceNode parentResDO;
+    private String parentRes;
+    private ResourceNode parentNode;
 
     /**
      * 是否有效
@@ -147,12 +148,20 @@ public class ResourceNode extends BaseEntity implements IFunction {
         this.resLevel = resLevel;
     }
 
-    public ResourceNode getParentResDO() {
-        return parentResDO;
+    public String getParentRes() {
+        return parentRes;
     }
 
-    public void setParentResDO(ResourceNode parentResDO) {
-        this.parentResDO = parentResDO;
+    public void setParentRes(String parentRes) {
+        this.parentRes = parentRes;
+    }
+
+    public ResourceNode getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(ResourceNode parentNode) {
+        this.parentNode = parentNode;
     }
 
     public String getActive() {

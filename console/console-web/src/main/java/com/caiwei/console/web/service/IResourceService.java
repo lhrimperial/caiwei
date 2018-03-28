@@ -16,5 +16,9 @@ public interface IResourceService {
 
     ResourceVO queryResourceByExample(ResourceVO resourceVO);
 
+    void addResource(ResourceVO resourceVO);
 
+    void updateResource(ResourceVO resourceVO);
+
+    void deleteResource(ResourceVO resourceVO);
 }

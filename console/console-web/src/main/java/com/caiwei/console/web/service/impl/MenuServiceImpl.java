@@ -50,7 +50,7 @@ public class MenuServiceImpl implements IMenuService {
 
         // 菜单对象集合
         List<ResourceNode> resNodes = new ArrayList<ResourceNode>();
-        List<ResourceNode> childResources = userMenuService.queryResourcesByParentCode(parentCode);
+        List<ResourceNode> childResources = userMenuService.queryResourcesByParentCode(parentCode,true);
         for (ResourceNode res : childResources) {
             // 判断权限是否为空
             if (res == null) {

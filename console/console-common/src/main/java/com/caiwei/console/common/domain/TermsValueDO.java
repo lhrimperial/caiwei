@@ -24,11 +24,24 @@ public class TermsValueDO extends BaseDO {
     private String termsCode;
 
     /**
+     * 词条名称
+     */
+    private String termsName;
+
+    /**
      * 排序
      */
     private Byte valueSeq;
 
     private String notes;
+
+    public String getTermsName() {
+        return termsName;
+    }
+
+    public void setTermsName(String termsName) {
+        this.termsName = termsName;
+    }
 
     public String getValueCode() {
         return valueCode;

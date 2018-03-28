@@ -16,4 +16,6 @@ public interface TermsCodeMapper {
     int update(TermsCodePO record);
 
     List<TermsCodeDO> findAllCode();
+
+    List<TermsCodeDO> findTermsCodeByParam(TermsCodeDO termsCodeDO);
 }

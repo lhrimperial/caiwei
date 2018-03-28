@@ -94,6 +94,11 @@ public class RoleService implements IRoleService {
     }
 
     @Override
+    public long totalCount(RoleDO roleDO) {
+        return roleMapper.totalCount(roleDO);
+    }
+
+    @Override
     public List<RoleDO> queryOrgRoleByUserCode(String userCode, String deptCode) {
         return roleMapper.queryOrgRoleByUserCode(userCode, deptCode);
     }

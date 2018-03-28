@@ -30,6 +30,29 @@
         id, terms_code, terms_name, notes, status, create_time
       </sql>
 
+    <sql id="param_sql">
+        <if test="termsName != null and termsName != ''">
+            and terms_name like concat('%',concat(#{termsName},'%'))
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="termsCode != null and termsCode != ''">
+            and terms_code = #{termsCode}
+        </if>
+    </sql>
+
+    <select id="findTermsCodeByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.TermsCodeDO">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_data_termscode
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
     <select id="findAllCode"  resultMap="ContainValueResultMap">
         select
             tc.id,

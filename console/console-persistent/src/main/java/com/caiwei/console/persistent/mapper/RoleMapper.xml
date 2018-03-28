@@ -61,6 +61,14 @@
         from t_mdm_permis_role r where r.id = #{tid}
     </select>
 
+    <select id="totalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.RoleDO">
+        select count(id)
+        from t_mdm_permis_role r
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
     <select id="findByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.RoleDO">
         select <include refid="Base_Column_List"/>
         from t_mdm_permis_role r

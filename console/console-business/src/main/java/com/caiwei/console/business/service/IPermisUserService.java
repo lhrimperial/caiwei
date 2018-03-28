@@ -23,6 +23,8 @@ public interface IPermisUserService {
 
     List<PermisUserDO> findUsers(PermisUserDO userDO, int pageNo, int pageSize);
 
+    long totalCount(PermisUserDO userDO);
+
     List<PermisUserDO> findUsers(PermisUserDO userDO);
 
     void updateStatus(List<String> userCodes, Byte status);

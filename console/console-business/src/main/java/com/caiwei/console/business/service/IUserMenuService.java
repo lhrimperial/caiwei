@@ -17,7 +17,13 @@ public interface IUserMenuService {
 
     List<ResourceNode> queryResourceBatchByCode(String[] resCodes);
 
-    List<ResourceNode> queryResourcesByParentCode(String parentCode);
+    List<ResourceNode> queryResourcesByParentCode(String parentCode, boolean cache);
 
     List<ResourceDO> queryResourcesByParam(ResourceDO resourceDO);
+
+    void addResource(ResourceDO resourceDO);
+
+    void updateResource(ResourceDO resourceDO);
+
+    void deleteResource(List<String> resourceCodes);
 }

@@ -23,6 +23,8 @@ public interface RoleMapper {
 
     List<RoleDO> findByParam(RoleDO roleDO);
 
+    long totalCount(RoleDO roleDO);
+
     List<RoleDO> queryOrgRoleByUserCode(@Param("userCode") String userCode, @Param("deptCode") String deptCode);
 
     int deleteUserRole(@Param("userCode") String userCode, @Param("deptCode") String deptCode);

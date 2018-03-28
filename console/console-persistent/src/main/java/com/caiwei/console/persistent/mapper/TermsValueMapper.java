@@ -17,4 +17,10 @@ public interface TermsValueMapper {
     int insert(TermsValuePO record);
 
     int update(TermsValuePO record);
+
+    int updateBatch(List<TermsValuePO> termsValueDOS);
+
+    List<TermsValueDO> findTermsValueByParam(TermsValueDO termsValueDO);
+
+    long totalCount(TermsValueDO termsValueDO);
 }

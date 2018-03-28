@@ -3,15 +3,20 @@ package com.caiwei.console.business.service.impl;
 import com.caiwei.console.business.service.ITermsValueService;
 import com.caiwei.console.common.domain.TermsCodeDO;
 import com.caiwei.console.common.domain.TermsValueDO;
+import com.caiwei.console.common.util.ConvertUtil;
 import com.caiwei.console.persistent.domain.TermsCodePO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 import com.caiwei.console.persistent.mapper.TermsCodeMapper;
 import com.caiwei.console.persistent.mapper.TermsValueMapper;
 import com.github.framework.server.shared.define.Constants;
+import com.github.framework.util.serializer.BeanCopyUtils;
+import com.github.framework.util.string.StringUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,13 +35,47 @@ public class TermsValueService implements ITermsValueService {
     private TermsValueMapper termsValueMapper;
 
     @Override
-    public int insertTermsCode(TermsCodePO termsCodeDO) {
-        return termsCodeMapper.insert(termsCodeDO);
+    public List<TermsCodeDO> findTermsCodeByParam(TermsCodeDO termsCodeDO) {
+        if (termsCodeDO != null && StringUtils.isNotBlank(termsCodeDO.getActive())) {
+            termsCodeDO.setStatus(ConvertUtil.activeToStatus(termsCodeDO.getActive()));
+        }
+        return termsCodeMapper.findTermsCodeByParam(termsCodeDO);
     }
 
     @Override
-    public int updateTermsCode(TermsCodePO termsCodeDO) {
-        return termsCodeMapper.update(termsCodeDO);
+    public List<TermsValueDO> findTermsValueByParam(TermsValueDO termsValueDO, int pageNo, int pageSize) {
+        if (termsValueDO != null && StringUtils.isNotBlank(termsValueDO.getActive())) {
+            termsValueDO.setStatus(ConvertUtil.activeToStatus(termsValueDO.getActive()));
+        }
+        PageHelper.startPage(pageNo, pageSize);
+        return termsValueMapper.findTermsValueByParam(termsValueDO);
+    }
+
+    @Override
+    public long totalCount(TermsValueDO termsValueDO) {
+        return termsValueMapper.totalCount(termsValueDO);
+    }
+
+    @Override
+    public int insertTermsCode(TermsCodeDO termsCodeDO) {
+        TermsCodePO termsCodePO = new TermsCodePO();
+        BeanCopyUtils.copyBean(termsCodeDO, termsCodePO);
+        if (termsCodePO.getCreateTime() == null) {
+            termsCodePO.setCreateTime(new Date());
+            termsCodePO.setModifyTime(new Date());
+        }
+        termsCodePO.setStatus(Constants.PO_ACTIVE);
+        return termsCodeMapper.insert(termsCodePO);
+    }
+
+    @Override
+    public int updateTermsCode(TermsCodeDO termsCodeDO) {
+        TermsCodePO termsCodePO = new TermsCodePO();
+        BeanCopyUtils.copyBean(termsCodeDO, termsCodePO);
+        if (termsCodePO.getCreateTime() == null) {
+            termsCodePO.setModifyTime(new Date());
+        }
+        return termsCodeMapper.update(termsCodePO);
     }
 
     @Override
@@ -58,13 +97,21 @@ public class TermsValueService implements ITermsValueService {
 
 
     @Override
-    public int insertTermsValue(TermsValuePO termsValueDO) {
-        return termsValueMapper.insert(termsValueDO);
+    public int insertTermsValue(TermsValueDO termsValueDO) {
+        TermsValuePO termsValuePO = new TermsValuePO();
+        BeanCopyUtils.copyBean(termsValueDO, termsValuePO);
+        termsValuePO.setStatus(Constants.PO_ACTIVE);
+        termsValuePO.setCreateTime(new Date());
+        termsValuePO.setModifyTime(new Date());
+        return termsValueMapper.insert(termsValuePO);
     }
 
     @Override
-    public int updateTermsValue(TermsValuePO termsValueDO) {
-        return termsValueMapper.update(termsValueDO);
+    public int updateTermsValue(TermsValueDO termsValueDO) {
+        TermsValuePO termsValuePO = new TermsValuePO();
+        BeanCopyUtils.copyBean(termsValueDO, termsValuePO);
+        termsValuePO.setModifyTime(new Date());
+        return termsValueMapper.update(termsValuePO);
     }
 
     @Override
@@ -81,5 +128,14 @@ public class TermsValueService implements ITermsValueService {
     @Override
     public List<TermsValueDO> findByTermsCode(String termsCode) {
         return termsValueMapper.findByTermsCode(termsCode);
+    }
+
+    @Override
+    public int updateBatch(List<TermsValuePO> termsValueDOS) {
+        int count = 0;
+        for (TermsValuePO po : termsValueDOS) {
+            count+=termsValueMapper.update(po);
+        }
+        return count;
     }
 }
