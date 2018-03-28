@@ -27,9 +27,6 @@ public class ResourceController extends AbstractController{
     private Logger logger = LoggerFactory.getLogger(ResourceController.class);
 
     @Autowired
-    private IMenuService menuService;
-
-    @Autowired
     private IResourceService resourceService;
 
     @RequestMapping("/index")
