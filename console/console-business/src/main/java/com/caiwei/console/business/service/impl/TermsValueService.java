@@ -111,6 +111,7 @@ public class TermsValueService implements ITermsValueService {
         TermsValuePO termsValuePO = new TermsValuePO();
         BeanCopyUtils.copyBean(termsValueDO, termsValuePO);
         termsValuePO.setModifyTime(new Date());
+        termsValuePO.setStatus(StringUtils.isBlank(termsValueDO.getActive())?null:ConvertUtil.activeToStatus(termsValueDO.getActive()));
         return termsValueMapper.update(termsValuePO);
     }
 
@@ -137,5 +138,10 @@ public class TermsValueService implements ITermsValueService {
             count+=termsValueMapper.update(po);
         }
         return count;
+    }
+
+    @Override
+    public TermsValueDO findByID(Integer tid) {
+        return termsValueMapper.findByID(tid);
     }
 }

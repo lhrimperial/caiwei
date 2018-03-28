@@ -40,6 +40,11 @@
         </if>
     </sql>
 
+    <select id="findByID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_data_termsvalue where id = #{tid}
+    </select>
+
     <select id="findTermsValueByParam" parameterType="com.caiwei.console.common.domain.TermsValueDO" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from t_mdm_data_termsvalue
@@ -71,9 +76,9 @@
     </select>
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
-    insert into t_mdm_data_termsvalue (value_code, value_name, terms_code, terms_name, value_seq, notes, status, create_time, modify_time)
-    values (#{valueCode}, #{valueName}, #{termsCode}, #{termsName}, #{valueSeq}, #{notes}, #{status}, #{createTime}, modifyTime)
-  </insert>
+        insert into t_mdm_data_termsvalue (value_code, value_name, terms_code, terms_name, value_seq, notes, status, create_time, modify_time)
+        values (#{valueCode}, #{valueName}, #{termsCode}, #{termsName}, #{valueSeq}, #{notes}, #{status}, #{createTime}, #{modifyTime})
+      </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
         update t_mdm_data_termsvalue

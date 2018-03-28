@@ -1,6 +1,5 @@
 package com.caiwei.console.web.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.caiwei.console.business.service.IDepartmentService;
 import com.caiwei.console.business.service.IPermisUserService;
 import com.caiwei.console.business.service.IRoleService;
@@ -54,7 +53,7 @@ public class SystemSetServiceImpl implements ISystemSetService {
 
     @Override
     public UserVO queryUserList(UserVO userVO) {
-        userVO.setUserDOS(permisUserService.findUsers(userVO.getUserDO(), userVO.getPageNo(), userVO.getPageSize()));
+        userVO.setUserDOS(permisUserService.findUsers(userVO.getUserDO(), userVO.getPage(), userVO.getLimit()));
         userVO.setTotalCount(permisUserService.totalCount(userVO.getUserDO()));
         return userVO;
     }
@@ -133,7 +132,7 @@ public class SystemSetServiceImpl implements ISystemSetService {
 
     @Override
     public RoleVO queryRoleList(RoleVO roleVO) {
-        roleVO.setRoleDOS(roleService.findByParam(roleVO.getRoleDO(), roleVO.getPageNo(), roleVO.getPageSize()));
+        roleVO.setRoleDOS(roleService.findByParam(roleVO.getRoleDO(), roleVO.getPage(), roleVO.getLimit()));
         roleVO.setTotalCount(roleService.totalCount(roleVO.getRoleDO()));
         return roleVO;
     }

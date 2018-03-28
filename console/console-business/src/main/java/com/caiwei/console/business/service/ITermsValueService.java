@@ -4,7 +4,6 @@ package com.caiwei.console.business.service;
 
 import com.caiwei.console.common.domain.TermsCodeDO;
 import com.caiwei.console.common.domain.TermsValueDO;
-import com.caiwei.console.persistent.domain.TermsCodePO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 
 import java.util.List;
@@ -42,4 +41,7 @@ public interface ITermsValueService {
     List<TermsValueDO> findByTermsCode(String termsCode);
 
     int updateBatch(List<TermsValuePO> termsValueDOS);
+
+    TermsValueDO findByID(Integer tid);
+
 }

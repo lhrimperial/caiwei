@@ -15,6 +15,7 @@ Ext.define('Caiwei.commonSelector.CommonCombSelector', {
     valueField : null,// 值
     queryParam : null,// 查询参数
     realValue : null,
+    selectCall : null,
     setCombValue : function(displayText, valueText) {
         var me = this, key = me.displayField + '', value = me.valueField
             + '';
@@ -50,9 +51,11 @@ Ext.define('Caiwei.commonSelector.CommonCombSelector', {
             }
         },
         select:function(comb, records, obs){
+            var me = this;
             comb.record = records;
             var data = records.data;
             comb.realValue = data[comb.valueField];
+            me.selectCall(comb, records, obs);
             //显示情况控件
             comb.getTrigger('clear').show();
         },

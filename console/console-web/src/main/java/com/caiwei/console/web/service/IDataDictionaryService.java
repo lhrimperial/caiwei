@@ -18,4 +18,9 @@ public interface IDataDictionaryService {
     void addTermsCode(DataDictionaryVO dataDictionaryVO);
 
     void addTermsValue(DataDictionaryVO dataDictionaryVO);
+
+    DataDictionaryVO findDataDictionaryById(DataDictionaryVO dataDictionaryVO);
+
+    void updateDataDictionary(DataDictionaryVO dataDictionaryVO);
+
 }

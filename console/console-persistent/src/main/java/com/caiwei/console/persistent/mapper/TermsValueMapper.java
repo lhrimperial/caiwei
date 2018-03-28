@@ -23,4 +23,6 @@ public interface TermsValueMapper {
     List<TermsValueDO> findTermsValueByParam(TermsValueDO termsValueDO);
 
     long totalCount(TermsValueDO termsValueDO);
+
+    TermsValueDO findByID(Integer tid);
 }

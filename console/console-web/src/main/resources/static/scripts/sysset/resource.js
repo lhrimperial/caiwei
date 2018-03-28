@@ -347,7 +347,7 @@ Ext.define('Caiwei.view.resourceFrom', {
         },{
             id : 'caiwei_bse_resource_active_flag',
             name : 'active',
-            fieldLabel : '是否叶可用',
+            fieldLabel : '是否有效',
             columnWidth: 0.45,
             value: "Y",
             xtype:'yesnocheckbox'
@@ -661,6 +661,21 @@ Ext.define('Caiwei.resource.role.RoleTree',{
             if(resource==null||resource=='')
                 return '';
             return resource.entryUri;
+        }
+    },{
+        text: '是否有效',
+        width: 100,
+        dataIndex: 'resourceNode',
+        renderer: function(resource) {
+            if(resource==null||resource==''){
+                return '';
+            } else {
+                if (resource.active == 'N') {
+                    return "否";
+                } else {
+                    return "是";
+                }
+            }
         }
     },{
         text: '功能层级',

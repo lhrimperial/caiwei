@@ -81,4 +81,30 @@ public class TermsController extends AbstractController {
         return responseVO;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/findDataDictionaryById")
+    public ResponseVO<DataDictionaryVO> findDataDictionaryById(@RequestBody DataDictionaryVO dataDictionaryVO) {
+        ResponseVO responseVO = returnSuccess();
+        try {
+            responseVO.setResult(dataDictionaryService.findDataDictionaryById(dataDictionaryVO));
+        } catch (BusinessException e) {
+            responseVO = returnError(e.getMessage());
+        }
+        return responseVO;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/updateDataDictionary")
+    public ResponseVO<String> updateDataDictionary(@RequestBody DataDictionaryVO dataDictionaryVO) {
+        ResponseVO responseVO = returnSuccess();
+        try {
+            dataDictionaryService.updateDataDictionary(dataDictionaryVO);
+        } catch (BusinessException e) {
+            responseVO = returnError(e.getMessage());
+        }
+        return responseVO;
+    }
+
 }

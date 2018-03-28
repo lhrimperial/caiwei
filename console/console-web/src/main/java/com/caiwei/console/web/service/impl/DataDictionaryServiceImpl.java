@@ -3,7 +3,6 @@ package com.caiwei.console.web.service.impl;
 import com.caiwei.console.business.service.ITermsValueService;
 import com.caiwei.console.common.domain.TermsCodeDO;
 import com.caiwei.console.common.domain.TermsValueDO;
-import com.caiwei.console.persistent.domain.TermsCodePO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 import com.caiwei.console.web.domain.DataDictionaryVO;
 import com.caiwei.console.web.service.IDataDictionaryService;
@@ -47,7 +46,7 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
         if (dataDictionaryVO == null) {
             throw new BusinessException("请求参数为空！");
         }
-        List<TermsValueDO> termsValueDOS = termsValueService.findTermsValueByParam(dataDictionaryVO.getTermsValueDO(), dataDictionaryVO.getPageNo(), dataDictionaryVO.getPageSize());
+        List<TermsValueDO> termsValueDOS = termsValueService.findTermsValueByParam(dataDictionaryVO.getTermsValueDO(), dataDictionaryVO.getPage(), dataDictionaryVO.getLimit());
         dataDictionaryVO.setTermsValueDOS(termsValueDOS);
         dataDictionaryVO.setTotalCount(termsValueService.totalCount(dataDictionaryVO.getTermsValueDO()));
         return dataDictionaryVO;
@@ -85,5 +84,25 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
         }
         TermsValueDO termsValueDO = dataDictionaryVO.getTermsValueDO();
         termsValueService.insertTermsValue(termsValueDO);
+    }
+
+    @Override
+    public DataDictionaryVO findDataDictionaryById(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null || dataDictionaryVO.getTermsValueDO() == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        TermsValueDO termsValueDO = termsValueService.findByID(dataDictionaryVO.getTermsValueDO().getTid());
+        dataDictionaryVO.setTermsValueDO(termsValueDO);
+        return dataDictionaryVO;
+    }
+
+
+    @Override
+    public void updateDataDictionary(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        TermsValueDO termsValueDO = dataDictionaryVO.getTermsValueDO();
+        termsValueService.updateTermsValue(termsValueDO);
     }
 }
