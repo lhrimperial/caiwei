@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2018-03-27 19:37:42
+Date: 2018-03-28 20:38:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,12 +29,15 @@ CREATE TABLE `t_mdm_data_termscode` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_terms_code` (`terms_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_mdm_data_termscode
 -- ----------------------------
 INSERT INTO `t_mdm_data_termscode` VALUES ('1', 'GENDER', '性别', null, '0', '2018-03-09 15:54:19', null);
+INSERT INTO `t_mdm_data_termscode` VALUES ('2', 'SYSTEM_TYPE', '系统类型', null, '0', '2018-03-28 09:41:54', null);
+INSERT INTO `t_mdm_data_termscode` VALUES ('3', 'JURISDICTION_TYPE', '权限类型', null, '0', '2018-03-28 09:41:54', null);
+INSERT INTO `t_mdm_data_termscode` VALUES ('4', 'RESOURCES_LEVEL', '权限级别', null, '0', '2018-03-28 09:41:54', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_data_termsvalue
@@ -45,6 +48,7 @@ CREATE TABLE `t_mdm_data_termsvalue` (
   `value_code` varchar(50) NOT NULL COMMENT '值编码',
   `value_name` varchar(100) NOT NULL COMMENT '值名称',
   `terms_code` varchar(50) NOT NULL COMMENT '条款编码',
+  `terms_name` varchar(100) NOT NULL,
   `value_seq` tinyint(1) DEFAULT NULL COMMENT '排序',
   `notes` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
@@ -53,13 +57,23 @@ CREATE TABLE `t_mdm_data_termsvalue` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_value_code` (`value_code`) USING BTREE,
   KEY `idx_terms_code` (`terms_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_mdm_data_termsvalue
 -- ----------------------------
-INSERT INTO `t_mdm_data_termsvalue` VALUES ('1', 'FEMALE', '女', 'GENDER', '1', null, '0', '2018-03-09 15:56:57', null);
-INSERT INTO `t_mdm_data_termsvalue` VALUES ('2', 'MALE', '男', 'GENDER', '2', null, '0', '2018-03-09 15:56:57', null);
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('1', 'FEMALE', '女', 'GENDER', '性别', '1', null, '1', '2018-03-09 15:56:57', '2018-03-28 17:47:17');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('2', 'MALE', '男', 'GENDER', '性别', '2', null, '1', '2018-03-09 15:56:57', '2018-03-28 17:47:17');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('3', 'WEB', 'WEB', 'SYSTEM_TYPE', '系统类型', '1', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:18');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('4', 'APP', 'APP', 'SYSTEM_TYPE', '系统类型', '2', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:26');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('5', '1', '子系统', 'JURISDICTION_TYPE', '权限类型', '1', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:26');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('6', '2', '模块', 'JURISDICTION_TYPE', '权限类型', '2', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:27');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('7', '3', '菜单', 'JURISDICTION_TYPE', '权限类型', '3', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:28');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('8', '4', '按钮', 'JURISDICTION_TYPE', '权限类型', '4', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:33');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('9', '1', '1', 'RESOURCES_LEVEL', '权限级别', '1', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:33');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('10', '2', '2', 'RESOURCES_LEVEL', '权限级别', '2', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:34');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('11', '3', '3', 'RESOURCES_LEVEL', '权限级别', '3', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:35');
+INSERT INTO `t_mdm_data_termsvalue` VALUES ('12', '4', '4', 'RESOURCES_LEVEL', '权限级别', '4', null, '0', '2018-03-28 09:50:08', '2018-03-28 16:49:38');
 
 -- ----------------------------
 -- Table structure for t_mdm_org_department
@@ -135,18 +149,20 @@ CREATE TABLE `t_mdm_permis_resource` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_resource_code` (`res_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_mdm_permis_resource
 -- ----------------------------
-INSERT INTO `t_mdm_permis_resource` VALUES ('1', 'console_1', 'CONSOLE系统', '', '1', '', '1', '1', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-10 19:14:48');
-INSERT INTO `t_mdm_permis_resource` VALUES ('2', 'console_110', '综合管理', '', '2', 'console_1', '2', '1', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-10 19:14:42');
-INSERT INTO `t_mdm_permis_resource` VALUES ('3', 'console_120', '基础数据', '', '2', 'console_1', '2', '2', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-10 19:14:31');
-INSERT INTO `t_mdm_permis_resource` VALUES ('4', 'console_130', '系统设置', '', '2', 'console_1', '2', '3', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'web', '', '0', '2018-03-08 11:17:12', '2018-03-10 19:14:29');
-INSERT INTO `t_mdm_permis_resource` VALUES ('5', 'console_130001', '用户管理', '/console/user/index', '3', 'console_130', '3', '1', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'web', '', '0', '2018-03-09 18:13:59', '2018-03-10 17:23:12');
-INSERT INTO `t_mdm_permis_resource` VALUES ('6', 'console_130002', '角色管理', '/console/role/index', '3', 'console_130', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'web', '', '0', '2018-03-09 18:13:59', '2018-03-24 16:13:18');
-INSERT INTO `t_mdm_permis_resource` VALUES ('7', 'console_130003', '资源管理', '/console/resource/index', '3', 'console_130', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'web', '', '0', '2018-03-09 18:13:59', '2018-03-24 16:13:18');
+INSERT INTO `t_mdm_permis_resource` VALUES ('1', 'console_1', 'CONSOLE系统', '', '1', '', '1', '1', '0', '1', 'ye1-node-lvl1', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-08 11:17:12', '2018-03-28 10:38:38');
+INSERT INTO `t_mdm_permis_resource` VALUES ('2', 'console_110', '综合管理', '', '2', 'console_1', '2', '1', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-08 11:17:12', '2018-03-28 10:38:38');
+INSERT INTO `t_mdm_permis_resource` VALUES ('3', 'console_120', '基础数据', '', '2', 'console_1', '2', '2', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-08 11:17:12', '2018-03-28 10:38:38');
+INSERT INTO `t_mdm_permis_resource` VALUES ('4', 'console_130', '系统设置', '', '2', 'console_1', '2', '3', '0', '1', 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-08 11:17:12', '2018-03-28 10:39:19');
+INSERT INTO `t_mdm_permis_resource` VALUES ('5', 'console_130001', '用户管理', '/console/user/index', '3', 'console_130', '3', '1', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-09 18:13:59', '2018-03-28 10:39:19');
+INSERT INTO `t_mdm_permis_resource` VALUES ('6', 'console_130002', '角色管理', '/console/role/index', '3', 'console_130', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-09 18:13:59', '2018-03-28 10:39:19');
+INSERT INTO `t_mdm_permis_resource` VALUES ('7', 'console_130003', '资源管理', '/console/resource/index', '3', 'console_130', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-09 18:13:59', '2018-03-28 10:39:19');
+INSERT INTO `t_mdm_permis_resource` VALUES ('8', 'console_120001', '词条管理', '/console/terms/index', '3', 'console_120', '3', '1', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', '0', '2018-03-28 12:45:11', '2018-03-28 12:45:11');
+INSERT INTO `t_mdm_permis_resource` VALUES ('9', 'console_120002', '词条管理1', '/console/terms/index', '3', 'console_120', '3', '2', '0', '0', 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', '0', null, '2018-03-28 14:50:03');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role
@@ -187,7 +203,7 @@ CREATE TABLE `t_mdm_permis_role_resource` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_role_code` (`role_code`) USING BTREE,
   KEY `idx_res_code` (`res_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_mdm_permis_role_resource
@@ -199,6 +215,7 @@ INSERT INTO `t_mdm_permis_role_resource` VALUES ('4', 'admin', 'console_130', '0
 INSERT INTO `t_mdm_permis_role_resource` VALUES ('5', 'admin', 'console_130001', '0', '2018-03-09 22:16:30', null);
 INSERT INTO `t_mdm_permis_role_resource` VALUES ('6', 'admin', 'console_130002', '0', '2018-03-09 22:16:30', null);
 INSERT INTO `t_mdm_permis_role_resource` VALUES ('7', 'admin', 'console_130003', '0', '2018-03-09 22:16:30', null);
+INSERT INTO `t_mdm_permis_role_resource` VALUES ('8', 'admin', 'console_120001', '0', '2018-03-09 22:16:30', null);
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_user
