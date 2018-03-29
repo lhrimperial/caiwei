@@ -17,6 +17,8 @@ public class DataDictionaryVO extends BaseVO implements Serializable{
 
     private Long clientVersionNo;
 
+    private List<String> termsCodes;
+
     private TermsCodeDO termsCodeDO;
 
     private TermsValueDO termsValueDO;
@@ -24,6 +26,14 @@ public class DataDictionaryVO extends BaseVO implements Serializable{
     private List<TermsCodeDO> termsCodeDOS;
 
     private List<TermsValueDO> termsValueDOS;
+
+    public List<String> getTermsCodes() {
+        return termsCodes;
+    }
+
+    public void setTermsCodes(List<String> termsCodes) {
+        this.termsCodes = termsCodes;
+    }
 
     public Long getClientVersionNo() {
         return clientVersionNo;

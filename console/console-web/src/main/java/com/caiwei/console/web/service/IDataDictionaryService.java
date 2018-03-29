@@ -9,6 +9,14 @@ public interface IDataDictionaryService {
 
     public DataDictionaryVO searchDataDictionary();
 
+    DataDictionaryVO queryTermsCodeByID(DataDictionaryVO dataDictionaryVO);
+
+    DataDictionaryVO queryTermsCodeByParam(DataDictionaryVO dataDictionaryVO);
+
+    void deleteTermsCode(DataDictionaryVO dataDictionaryVO);
+
+    void updateTermsCode(DataDictionaryVO dataDictionaryVO);
+
     DataDictionaryVO queryDataDictionaryByTermsCode(DataDictionaryVO dataDictionaryVO);
 
     DataDictionaryVO queryDataDictionaryValueByTermsValue(DataDictionaryVO dataDictionaryVO);

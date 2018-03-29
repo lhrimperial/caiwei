@@ -30,6 +30,53 @@ public class TermsController extends AbstractController {
         return "/dataset/terms";
     }
 
+    @RequestMapping("/dictionary")
+    public String dictionary() {
+        return "/dataset/dictionary";
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryTermsCodeByParam")
+    public DataDictionaryVO queryTermsCodeByParam(DataDictionaryVO dataDictionaryVO) {
+        return dataDictionaryService.queryTermsCodeByParam(dataDictionaryVO);
+    }
+
+    @ResponseBody
+    @RequestMapping("/findTermsCodeByID")
+    public ResponseVO<DataDictionaryVO> findTermsCodeByID(@RequestBody DataDictionaryVO dataDictionaryVO) {
+        ResponseVO responseVO = returnSuccess();
+        try {
+            responseVO.setResult(dataDictionaryService.queryTermsCodeByID(dataDictionaryVO));
+        } catch (BusinessException e) {
+            responseVO = returnError(e.getMessage());
+        }
+        return responseVO;
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteTermsCode")
+    public ResponseVO<String> deleteTermsCode(@RequestBody DataDictionaryVO dataDictionaryVO) {
+        ResponseVO responseVO = returnSuccess();
+        try {
+            dataDictionaryService.deleteTermsCode(dataDictionaryVO);
+        } catch (BusinessException e) {
+            responseVO = returnError(e.getMessage());
+        }
+        return responseVO;
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateTermsCode")
+    public ResponseVO<String> updateTermsCode(@RequestBody DataDictionaryVO dataDictionaryVO) {
+        ResponseVO responseVO = returnSuccess();
+        try {
+            dataDictionaryService.updateTermsCode(dataDictionaryVO);
+        } catch (BusinessException e) {
+            responseVO = returnError(e.getMessage());
+        }
+        return responseVO;
+    }
+
     @ResponseBody
     @RequestMapping("/queryDataDictionaryByTermsCode")
     public DataDictionaryVO queryDataDictionaryByTermsCode(DataDictionaryVO dataDictionaryVO) {

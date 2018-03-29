@@ -84,7 +84,7 @@ Ext.define('Caiwei.sysset.user.QueryForm', {
     header: false,
     height: 70,
     collapsible: true,
-    layout: 'column',
+    layout: 'hbox',
     region: 'north',
     bodyStyle: {
         padding: '6px',

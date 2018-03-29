@@ -182,14 +182,14 @@ Ext.define('Caiwei.view.resource.Grid', {
         },'-',{
             xtype :'updatebutton',
             id : 'caiwei_sysset_resource_update_id',
-            text : '修改',
+            text : '修改RUL',
             handler : function() {
                 me.changResource();
             }
         },'-',{
             xtype : 'deletebutton',
             id : 'caiwei_sysset_resource_delete_id',
-            text : '删除',
+            text : '删除URL',
             handler : function() {
                 me.deleteResource();
             }

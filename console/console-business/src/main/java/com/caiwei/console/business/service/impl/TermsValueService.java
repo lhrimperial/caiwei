@@ -35,6 +35,33 @@ public class TermsValueService implements ITermsValueService {
     private TermsValueMapper termsValueMapper;
 
     @Override
+    public int batchUpdateTermsCodeStatus(List<String> termsCodes, Byte status) {
+        return termsCodeMapper.batchUpdateTermsCodeStatus(termsCodes,status);
+    }
+
+    @Override
+    public TermsCodeDO queryTermsCodeByID(Integer tid) {
+        return termsCodeMapper.queryTermsCodeByID(tid);
+    }
+
+    @Override
+    public List<TermsCodeDO> findTermsCodeByPage(TermsCodeDO termsCodeDO, int pageNo, int pageSize) {
+        if (termsCodeDO != null && StringUtils.isNotBlank(termsCodeDO.getActive())) {
+            termsCodeDO.setStatus(ConvertUtil.activeToStatus(termsCodeDO.getActive()));
+        }
+        PageHelper.startPage(pageNo, pageSize);
+        return termsCodeMapper.findTermsCodeByParam(termsCodeDO);
+    }
+
+    @Override
+    public long termsCodeTotalCount(TermsCodeDO termsCodeDO) {
+        if (termsCodeDO != null && StringUtils.isNotBlank(termsCodeDO.getActive())) {
+            termsCodeDO.setStatus(ConvertUtil.activeToStatus(termsCodeDO.getActive()));
+        }
+        return termsCodeMapper.termsCodeTotalCount(termsCodeDO);
+    }
+
+    @Override
     public List<TermsCodeDO> findTermsCodeByParam(TermsCodeDO termsCodeDO) {
         if (termsCodeDO != null && StringUtils.isNotBlank(termsCodeDO.getActive())) {
             termsCodeDO.setStatus(ConvertUtil.activeToStatus(termsCodeDO.getActive()));
@@ -53,6 +80,9 @@ public class TermsValueService implements ITermsValueService {
 
     @Override
     public long totalCount(TermsValueDO termsValueDO) {
+        if (termsValueDO != null && StringUtils.isNotBlank(termsValueDO.getActive())) {
+            termsValueDO.setStatus(ConvertUtil.activeToStatus(termsValueDO.getActive()));
+        }
         return termsValueMapper.totalCount(termsValueDO);
     }
 
@@ -75,6 +105,7 @@ public class TermsValueService implements ITermsValueService {
         if (termsCodePO.getCreateTime() == null) {
             termsCodePO.setModifyTime(new Date());
         }
+        termsCodePO.setStatus(StringUtils.isBlank(termsCodeDO.getActive())?null:ConvertUtil.activeToStatus(termsCodeDO.getActive()));
         return termsCodeMapper.update(termsCodePO);
     }
 

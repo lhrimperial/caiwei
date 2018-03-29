@@ -9,6 +9,7 @@
         <result column="role_code" property="roleCode"/>
         <result column="status" property="status"/>
         <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, user_code, dept_code, role_code, status, create_time, modify_time
@@ -24,7 +25,7 @@
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.UserRolePO">
         insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
-        values (#{userCode}, #{deptCode}, #{roleCode}, #{status}, #{createTime}, #{modifyTIme})
+        values (#{userCode}, #{deptCode}, #{roleCode}, #{status}, #{createTime}, #{modifyTime})
     </insert>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.UserRolePO">

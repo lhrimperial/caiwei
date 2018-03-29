@@ -1,7 +1,7 @@
 /**
  * 数据字典词条model
  */
-Ext.define('Caiwei.model.TermsCodeDO', {
+Ext.define('Caiwei.dataset.TermsCodeDO', {
     extend: 'Ext.data.Model',
     fields: [{
         name: 'termsCode',
@@ -23,51 +23,11 @@ Ext.define('Caiwei.model.TermsCodeDO', {
 });
 
 /**
- * 数据字典值model
+ * 词条store
  */
-Ext.define('Caiwei.model.TermsValueDO', {
-    extend: 'Ext.data.Model',
-    fields: [{
-        name: 'tid',
-        // 词条编码
-        type: 'int'
-    },{
-        name: 'termsName',
-        // 词条编码
-        type: 'string'
-    },{
-        name: 'termsCode',
-        // 词条编码
-        type: 'string'
-    },{
-        name: 'valueName',
-        // 值名称
-        type: 'string'
-    },{
-        name: 'valueCode',
-        // 值代码
-        type: 'string'
-    },{
-        name: 'valueSeq',
-        // 顺序
-        type: 'string'
-    },{
-        name: 'active',
-        // 是否可用
-        type: 'string'
-    },{
-        name: 'notes',
-        // 备注
-        type: 'string'
-    }]
-});
-
-/**
- * 数据字典词条名称下拉框store
- */
-Ext.define('Caiwei.commonSelector.DataDictionaryStore', {
+Ext.define('Caiwei.dataset.TermsCodeStore', {
     extend: 'Ext.data.Store',
-    model: 'Caiwei.model.TermsCodeDO',
+    model: 'Caiwei.dataset.TermsCodeDO',
     proxy: {
         type: 'ajax',
         url: 'queryDataDictionaryByTermsCode',
@@ -76,34 +36,15 @@ Ext.define('Caiwei.commonSelector.DataDictionaryStore', {
             type: 'json',
             root: 'termsCodeDOS'
         }
-    }
-});
-/**
- * 数据字典信息store
- */
-Ext.define('Caiwei.store.DataDictionaryValueStore', {
-    extend: 'Ext.data.Store',
-    model: 'Caiwei.model.TermsValueDO',
-    pageSize: 20,
-    proxy: {
-        type: 'ajax',
-        actionMethods: 'post',
-        url: 'queryDataDictionaryValueByTermsValue',
-        reader: {
-            type: 'json',
-            rootProperty: 'termsValueDOS',
-            totalProperty: 'totalCount' // 总个数
-        }
     },
     listeners: {
-        beforeload: function(store, operation, eOpts) {
-            var queryForm = Ext.getCmp('queryForm');
+        beforeload: function (store, operation, eOpts) {
+            var queryForm = Ext.getCmp('termsCodeQueryForm');
             if (queryForm != null) {
                 var params = {
-                    'termsValueDO.termsCode': queryForm.getForm().findField('termsCode').getValue(),
-                    'termsValueDO.valueCode': queryForm.getForm().findField('valueCode').getValue(),
-                    'termsValueDO.valueName': queryForm.getForm().findField('valueName').getValue(),
-                    'termsValueDO.active': queryForm.getForm().findField('active').getValue()
+                    'termsCodeDO.termsCode': queryForm.getForm().findField('termsCode').getValue(),
+                    'termsCodeDO.termsName': queryForm.getForm().findField('termsName').getValue(),
+                    'termsCodeDO.active' : queryForm.getForm().findField('active').getValue()
                 };
                 Ext.apply(store.proxy.extraParams, params);
             }
@@ -112,125 +53,100 @@ Ext.define('Caiwei.store.DataDictionaryValueStore', {
 });
 
 /**
- * 数据字典词条名称下拉框
+ * Role Query Form
  */
-Ext.define('Caiwei.selector.DataDictionarySelector', {
-    extend: 'Caiwei.commonSelector.CommonCombSelector',
-    alias: 'widget.datadictionaryselector',
-    displayField: 'termsName',
-    // 显示名称
-    valueField: 'termsCode',
-    // 值
-    queryParam: 'termsCodeDO.termsName',
-    selectCall: function (comb, records, obs) {
-        Ext.getCmp('caiwei_form_terms_name').setValue(records.data.termsName);
-    },
-    // 查询参数
-    constructor: function(config) {
-        var me = this,
-            cfg = Ext.apply({},
-                config);
-        me.store = Ext.create('Caiwei.commonSelector.DataDictionaryStore');
-        me.callParent([cfg]);
-    }
-});
-
-/**
- * 查询表单
- */
-Ext.define('Caiwei.view.dataDictionary.QueryForm', {
+Ext.define('Caiwei.dataset.TermsCodeQueryForm', {
     extend: 'Ext.form.Panel',
-    id: 'queryForm',
+    id: 'termsCodeQueryForm',
     frame: true,
-    title : '查询条件',
-    height: 120,
+    header: false,
+    height: 88,
     collapsible: true,
-    layout: 'hbox',
-    defaults: {
-        colspan: 1,
-        margin: '8 10 5 10',
-        labelAlign : 'right'
+    layout: 'column',
+    region: 'north',
+    bodyStyle:'padding:6px;',
+    labelStyle : "text-align:right;width:40;",
+    default: {
+        margin: '5 10 5 0',
+        labelWidth: 40,
+        columnWidth: 0.2,
+        labelAlign: 'right'
     },
     defaultType: 'textfield',
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
-            cfg = Ext.apply({},config);
-
+            cfg = Ext.apply({}, config);
         me.items = [{
             name: 'termsCode',
-            fieldLabel:  '词条名称',
-            width: 250,
-            xtype: 'datadictionaryselector'
-        },{
-            name: 'valueCode',
-            fieldLabel: '值编码',
-            width: 250,
+            fieldLabel: '词条编码',
             xtype: 'textfield'
-        },{
-            name: 'valueName',
-            fieldLabel: '值名称',
-            width: 250,
+        }, {
+            name: 'termsName',
+            fieldLabel: '词条名称',
             xtype: 'textfield'
-        },{
+        }, {
+            style:'margin-top:5px;',
             name: 'active',
-            fieldLabel: '是否有效',
+            fieldLabel: '是否可用',
+            xtype: 'yesnocombselector',
             value: 'Y',
-            width: 250,
-            isShowAll: true,
-            xtype: 'yesnocombselector'
+            isShowAll : true// 是否显示全部
         }],
-        me.buttons = [{
-            text: '查询',
-            handler: function() {
-                if (me.getForm().isValid()) {
-                    me.up().getDataDictionaryGrid().getPagingToolbar().moveFirst();;
+            me.buttons = [{
+                text: '查询',
+                handler: function () {
+                    if (me.getForm().isValid()) {
+                        me.up().getTermsCodeGrid().getPagingToolbar().moveFirst();
+                    }
                 }
-            }
-        },{
-            text: '清除',
-            handler: function() {
-                me.getForm().reset();
-            }
-        }];
+            }, {
+                text: '清空',
+                handler: function () {
+                    me.getForm().reset();
+                }
+            }];
         me.callParent([cfg]);
     }
 });
 
 /**
- * 数据字典信息表格
+ * 用户角色信息
  */
-Ext.define('Caiwei.view.dataDictionary.TermsCodeGrid', {
+Ext.define('Caiwei.dataset.TermsCodeGrid', {
     extend: 'Ext.grid.Panel',
     frame: true,
     autoScroll: true,
-    height: console.getBrowserHeight() - 120,
+    width: '100%',
+    height: document.documentElement.clientHeight - 150,
     stripeRows: true,
     // 交替行效果
-    selType: "rowmodel",
-    // 选择类型设置为：行选择
+    region: 'center',
     emptyText: '查询结果为空',
-    // 查询结果为空
-    columnLines: true,
-    viewConfig: {
-        enableTextSelection: true
-    },
-    dataDictionaryValueAddWindow: null,
-    getDataDictionaryValueAddWindow: function() {
-        if (this.dataDictionaryValueAddWindow == null) {
-            this.dataDictionaryValueAddWindow = Ext.create('Caiwei.view.dataDictionary.DataDictionaryValueAddWindow');
-            this.dataDictionaryValueAddWindow.parent = this; // 父元素
+    selModel: Ext.create('Ext.selection.CheckboxModel', {
+        listeners: {
+            selectionchange: function (sm, selections) {
+                Ext.getCmp('caiwei_dataset_termscode_deletebtn_id').setDisabled(selections.length === 0);
+                Ext.getCmp('caiwei_dataset_termscode_updatebtn_id').setDisabled(selections.length === 0);
+            }
         }
-        return this.dataDictionaryValueAddWindow;
-    },
-    dataDictionaryValueUpdateWindow: null,
-    getDataDictionaryValueUpdateWindow: function() {
-        if (this.dataDictionaryValueUpdateWindow == null) {
-            this.dataDictionaryValueUpdateWindow = Ext.create('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow');
-            this.dataDictionaryValueUpdateWindow.parent = this; // 父元素
+    }),
+    termsCodeAddWindow: null,
+    getTermsCodeAddWindow: function () {
+        if (this.termsCodeAddWindow == null) {
+            this.termsCodeAddWindow = Ext.create('Caiwei.dataset.TermsCodeAddWindow');
+            this.termsCodeAddWindow.parent = this; // 父元素
         }
-        return this.dataDictionaryValueUpdateWindow;
+        return this.termsCodeAddWindow;
     },
-    changeDataDictionaryValue: function () {
+    termsCodeUpdateWindow: null,
+    getTermsCodeUpdateWindow: function () {
+        if (this.termsCodeUpdateWindow == null) {
+            this.termsCodeUpdateWindow = Ext.create('Caiwei.dataset.TermsCodeUpdateWindow');
+            this.termsCodeUpdateWindow.parent = this; // 父元素
+        }
+        return this.termsCodeUpdateWindow;
+    },
+    updateTermsCode : function(){
         var me = this;
         var selections = me.getSelectionModel().getSelection(); // 获取选中的数据
         if (selections.length != 1) { // 判断是否选中了一条
@@ -239,23 +155,20 @@ Ext.define('Caiwei.view.dataDictionary.TermsCodeGrid', {
         }
         var id = selections[0].get('tid');
         var params = {
-            'termsValueDO': {
+            'termsCodeDO': {
                 'tid' : id
             }
         }
 
         var successFun = function (json) {
-            var updateWindow = me.getDataDictionaryValueUpdateWindow(); //获得修改窗口
-            updateWindow.termsValueDO = json.result.termsValueDO;
+            var updateWindow = me.getTermsCodeUpdateWindow(); //获得修改窗口
+            updateWindow.termsCodeDO = json.result.termsCodeDO;
             updateWindow.show(); //显示修改窗口
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('tid').setValue(updateWindow.termsValueDO.tid);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('termsCode').setValue(updateWindow.termsValueDO.termsCode);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('termsName').setValue(updateWindow.termsValueDO.termsName);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('valueCode').setValue(updateWindow.termsValueDO.valueCode);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('valueName').setValue(updateWindow.termsValueDO.valueName);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('valueSeq').setValue(updateWindow.termsValueDO.valueSeq);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('notes').setValue(updateWindow.termsValueDO.notes);
-            updateWindow.getDataDictionaryUpdateForm().getForm().findField('active').setValue(updateWindow.termsValueDO.active);
+            updateWindow.getTermsCodeUpdateForm().getForm().findField('tid').setValue(updateWindow.termsCodeDO.tid);
+            updateWindow.getTermsCodeUpdateForm().getForm().findField('termsCode').setValue(updateWindow.termsCodeDO.termsCode);
+            updateWindow.getTermsCodeUpdateForm().getForm().findField('termsName').setValue(updateWindow.termsCodeDO.termsName);
+            updateWindow.getTermsCodeUpdateForm().getForm().findField('notes').setValue(updateWindow.termsCodeDO.notes);
+            updateWindow.getTermsCodeUpdateForm().getForm().findField('active').setValue(updateWindow.termsCodeDO.active);
         };
         var failureFun = function (json) {
             if (Ext.isEmpty(json)) {
@@ -265,18 +178,44 @@ Ext.define('Caiwei.view.dataDictionary.TermsCodeGrid', {
                 console.showErrorMes(message);
             }
         };
-        console.requestJsonAjax('findDataDictionaryById', params, successFun, failureFun);
+        console.requestJsonAjax('findTermsCodeByID', params, successFun, failureFun);
     },
-    dataDictionaryAddWindow: null,
-    getDataDictionaryAddWindow: function() {
-        if (this.dataDictionaryAddWindow == null) {
-            this.dataDictionaryAddWindow = Ext.create('Caiwei.view.dataDictionary.DataDictionaryAddWindow');
-            this.dataDictionaryAddWindow.parent = this; // 父元素
+    deleteTermsCode: function () {
+        var me = this;
+        var selections = me.getSelectionModel().getSelection(); // 获取选中的数据
+        if (selections.length < 1) { // 判断是否至少选中了一条
+            console.showWoringMessage('请选择一条进行删除操作'); // 请选择一条进行作废操作！
+            return; // 没有则提示并返回
         }
-        return this.dataDictionaryAddWindow;
+        var termsCodes = new Array();
+        for (var i = 0; i < selections.length; i++) {
+            termsCodes.push(selections[i].get('termsCode'));
+        }
+        console.showQuestionMes('是否要删除',
+            function (e) {
+                if (e == 'yes') { // 询问是否删除，是则发送请求
+                    var params = {
+                        'termsCodes': termsCodes
+                    };
+                    var successFun = function (json) {
+                        var message = json.resMsg;
+                        console.showInfoMsg(message);
+                        me.getStore().load();
+                    };
+                    var failureFun = function (json) {
+                        if (Ext.isEmpty(json)) {
+                            console.showErrorMes('请求超时'); // 请求超时
+                        } else {
+                            var message = json.resMsg;
+                            console.showErrorMes(message);
+                        }
+                    };
+                    console.requestJsonAjax('deleteTermsCode', params, successFun, failureFun);
+                }
+            });
     },
     pagingToolbar: null,
-    getPagingToolbar: function() {
+    getPagingToolbar: function () {
         if (this.pagingToolbar == null) {
             this.pagingToolbar = Ext.create('Ext.toolbar.Paging', {
                 store: this.store,
@@ -285,72 +224,54 @@ Ext.define('Caiwei.view.dataDictionary.TermsCodeGrid', {
         }
         return this.pagingToolbar;
     },
-    deleteDataDictionaryValue: function() {
-        var me = this;
-        var selections = me.getSelectionModel().getSelection(); // 获取选中的数据
-        if (selections.length < 1) { // 判断是否至少选中了一条
-            console.showWoringMessage('请选择一条进行作废操作！'); // 请选择一条进行作废操作！
-            return; // 没有则提示并返回
-        }
-        var dataDictionaryValueEntityList = new Array();
-        for (var i = 0; i < selections.length; i++) {
-            dataDictionaryValueEntityList.push({
-                'tid': selections[i].get('tid'),
-                'valueCode': selections[i].get('valueCode'),
-                'termsCode' : selections[i].get('termsCode')
-            });
-        }
-        console.showQuestionMes('是否删除?',//是否删除
-            function(e) {
-                if (e == 'yes') { // 询问是否删除，是则发送请求
-                    var params = {
-                        'termsValueDOS':  dataDictionaryValueEntityList
-                    };
-                    var successFun = function(json) {
-                        var message = json.resMsg;
-                        console.showInfoMsg(message);
-                        me.getStore().load();
-                    };
-                    var failureFun = function(json) {
-                        if (Ext.isEmpty(json)) {
-                            console.showErrorMes('请求超时'); // 请求超时
-                        } else {
-                            var message = json.resMsg;
-                            console.showErrorMes(message);
-                        }
-                    };
-                    console.requestJsonAjax('deleteDataDictionaryValue', params, successFun, failureFun);
-                }
-            });
-    },
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this,
             cfg = Ext.apply({},
                 config);
         me.columns = [{
-            dataIndex: 'termsName',
-            width: 200,
-            text: '词条名称'
+            text: '序号',
+            width: 60,
+            xtype: 'rownumberer',
+            align: 'center'
         },{
+            dataIndex: 'tid',
+            hidden: true
+        },{
+            text: '词条编码',
             dataIndex: 'termsCode',
-            width: 200,
-            text: '词条编码'
+            align: 'center',
+            flex: 1
+        }, {
+            text: '词条名称',
+            dataIndex: 'termsName',
+            align: 'center',
+            flex: 1
         },{
-            text: '值代码',
-            dataIndex: 'valueCode',
-            width: 200
-        },{
-            text: '值名称',
-            dataIndex: 'valueName',
-            width: 200
-        },{
-            text: '顺序',
-            dataIndex: 'valueSeq',
-            width: 100
-        },{
+            text: '备注',
+            dataIndex: 'notes',
+            align: 'center',
+            flex: 1
+        }, {
+            text: '创建时间',
+            dataIndex: 'createTime',
+            align: 'center',
+            flex: 1,
+            renderer: function(value) {
+                return timeRender(value);
+            }
+        }, {
+            text: '修改时间',
+            dataIndex: 'modifyTime',
+            align: 'center',
+            flex: 1,
+            renderer: function(value) {
+                return timeRender(value);
+            }
+        }, {
             text: '是否有效',
             dataIndex: 'active',
-            width: 100,
+            align: 'center',
+            flex: 1,
             renderer: function(value) {
                 if (value == 'N') {
                     return "否";
@@ -358,62 +279,40 @@ Ext.define('Caiwei.view.dataDictionary.TermsCodeGrid', {
                     return "是";
                 }
             }
-        },{
-            text: '备注',
-            dataIndex: 'notes',
-            width: 200
         }],
-        me.store = Ext.create('Caiwei.store.DataDictionaryValueStore', {
-            autoLoad: false
-        });
-        me.selModel = Ext.create('Ext.selection.CheckboxModel', { // 多选框
-            mode: 'MULTI',
-            checkOnly: true
-        });
-        me.tbar = [{
-            text: '新增词条',
-            xtype: 'addbutton',
-            // 新增
-            // hidden:!baseinfo.dataDictionary.isPermission('dataDictionary/dataDictionaryAddButton'),
-            handler: function() {
-                me.getDataDictionaryAddWindow().show();
-            }
-        },'-', {
-                text: '新增数据字典',
+            me.tbar = [{
+                text: '新增词条',
                 xtype: 'addbutton',
-                handler: function() {
-                    me.getDataDictionaryValueAddWindow().show();
+                handler: function () {
+                    me.getTermsCodeAddWindow().show();
                 }
-        }, '-', {
-            text: '修改数据字典',
-            xtype: 'updatebutton',
-            handler: function() {
-                me.changeDataDictionaryValue();
-            }
-        }, '-', {
-                id : 'caiwei_bseinfo_datadictionary_del_id',
-                text: '删除',
+            },{
+                id: 'caiwei_dataset_termscode_updatebtn_id',
+                text: '修改词条',
+                xtype: 'updatebutton',
+                disabled: true,
+                handler: function () {
+                    me.updateTermsCode();
+                }
+            },{
+                id: 'caiwei_dataset_termscode_deletebtn_id',
                 xtype: 'deletebutton',
-                disabled : true,
-                handler: function() {
-                    me.deleteDataDictionaryValue();
+                text: '删除',
+                disabled: true,
+                handler: function () {
+                    me.deleteTermsCode();
                 }
             }];
+        me.store = Ext.create('Caiwei.dataset.TermsCodeStore');
         me.bbar = me.getPagingToolbar();
-        me.selModel = Ext.create('Ext.selection.CheckboxModel', {
-        listeners: {
-            selectionchange: function(sm, selections) {
-                Ext.getCmp('caiwei_bseinfo_datadictionary_del_id').setDisabled(selections.length === 0);
-            }
-        }}),
         me.callParent([cfg]);
     }
 });
 
 /**
- *修改数据字典表单
+ *修改词条表单
  */
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateForm', {
+Ext.define('Caiwei.dataset.TermsCodeUpdateForm', {
     extend: 'Ext.form.Panel',
     header: false,
     frame: true,
@@ -436,32 +335,11 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateForm', {
         },{
             name: 'termsCode',
             fieldLabel: '词条编码',
-            xtype: 'textfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             readOnly:true
         },{
             name: 'termsName',
             fieldLabel: '词条名称',
             xtype: 'textfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            readOnly: true
-        },{
-            name: 'valueCode',
-            xtype: 'textfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            fieldLabel: '值编码',
-            readOnly: true
-        },{
-            xtype: 'textfield',
-            name: 'valueName',
-            fieldLabel: '值名称',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
-        },{
-            name: 'valueSeq',
-            fieldLabel: '值排序',
-            xtype: 'numberfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
             allowBlank: false
         },{
             xtype: 'textarea',
@@ -470,18 +348,18 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateForm', {
         },{
             xtype: 'yesnocombselector',
             name: 'active',
-            fieldLabel: '是否可用'
+            fieldLabel: '是否有效'
         }];
         me.callParent([cfg]);
     }
 });
 
 /**
- * 修改数据字典窗口
+ * 修改词条
  */
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow', {
+Ext.define('Caiwei.dataset.TermsCodeUpdateWindow', {
     extend: 'Ext.window.Window',
-    title: '修改角色',
+    title: '修改词条',
     closable: true,
     parent: null,
     // 父元素
@@ -496,10 +374,10 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow', {
     },
     listeners: {
         beforehide: function(me) { // 隐藏WINDOW的时候清除数据
-            me.getDataDictionaryUpdateForm().getForm().reset(); // 表格重置
+            me.getTermsCodeUpdateForm().getForm().reset(); // 表格重置
         },
         beforeshow: function(me) { // 显示WINDOW的时候清除数据
-            var fielsds = me.getDataDictionaryUpdateForm().getForm().getFields();
+            var fielsds = me.getTermsCodeUpdateForm().getForm().getFields();
             if (!Ext.isEmpty(fielsds)) {
                 fielsds.each(function(item, index, length) {
                     item.clearInvalid();
@@ -509,20 +387,20 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow', {
             fielsds = null;
         }
     },
-    dataDictionaryUpdateForm: null,
-    getDataDictionaryUpdateForm: function() {
-        if (Ext.isEmpty(this.dataDictionaryUpdateForm)) {
-            this.dataDictionaryUpdateForm = Ext.create('Caiwei.view.dataDictionary.DataDictionaryValueUpdateForm');
+    termsCodeUpdateForm: null,
+    getTermsCodeUpdateForm: function() {
+        if (Ext.isEmpty(this.termsCodeUpdateForm)) {
+            this.termsCodeUpdateForm = Ext.create('Caiwei.dataset.TermsCodeUpdateForm');
         }
-        return this.dataDictionaryUpdateForm;
+        return this.termsCodeUpdateForm;
     },
-    submitDataDictionaryValue: function() {
+    submitTermsCodeValue: function() {
         var me = this;
-        if (me.getDataDictionaryUpdateForm().getForm().isValid()) { // 校验form是否通过校验
-            var dataModel = new Caiwei.model.TermsValueDO();
-            me.getDataDictionaryUpdateForm().getForm().updateRecord(dataModel); // 将FORM中数据设置到MODEL里面
+        if (me.getTermsCodeUpdateForm().getForm().isValid()) { // 校验form是否通过校验
+            var termsCodeModel = new Caiwei.dataset.TermsCodeDO();
+            me.getTermsCodeUpdateForm().getForm().updateRecord(termsCodeModel); // 将FORM中数据设置到MODEL里面
             var params = {
-                'termsValueDO': dataModel.data
+                'termsCodeDO': termsCodeModel.data
             }
             var successFun = function(json) {
                 var message = json.resMsg;
@@ -538,7 +416,7 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow', {
                     console.showErrorMes(message); // 提示失败原因
                 }
             };
-            console.requestJsonAjax('updateDataDictionary', params, successFun, failureFun); //  发送AJAX请求
+            console.requestJsonAjax('updateTermsCode', params, successFun, failureFun); //  发送AJAX请求
         }
     },
     constructor: function(config) {
@@ -554,167 +432,15 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueUpdateWindow', {
         },{
             text: '保存',
             handler: function() {
-                me.submitDataDictionaryValue();
+                me.submitTermsCodeValue();
             }
         }];
-        me.items = [me.getDataDictionaryUpdateForm()];
+        me.items = [me.getTermsCodeUpdateForm()];
         me.callParent([cfg]);
     }
 });
 
-
-/**
- * 新增数据字典窗口
- */
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueAddWindow', {
-    extend: 'Ext.window.Window',
-    title: '新增数据字典',
-    closable: true,
-    parent: null,
-    // 父元素
-    modal: true,
-    resizable: false,
-    // 可以调整窗口的大小
-    closeAction: 'hide',
-    // 点击关闭是隐藏窗口
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
-    listeners: {
-        beforehide: function(me) { // 隐藏WINDOW的时候清除数据
-            me.getDataDictionaryValueForm().getForm().reset(); // 表格重置
-        },
-        beforeshow: function(me) { // 显示WINDOW的时候清除数据
-            var fielsds = me.getDataDictionaryValueForm().getForm().getFields();
-            if (!Ext.isEmpty(fielsds)) {
-                fielsds.each(function(item, index, length) {
-                    item.clearInvalid();
-                    item.unsetActiveError();
-                });
-            }
-            fielsds = null;
-        }
-    },
-    dataDictionaryValueForm: null,
-    getDataDictionaryValueForm: function() {
-        if (Ext.isEmpty(this.dataDictionaryValueForm)) {
-            this.dataDictionaryValueForm = Ext.create('Caiwei.view.dataDictionary.DataDictionaryValueForm');
-        }
-        return this.dataDictionaryValueForm;
-    },
-    submitDataDictionaryValue: function() {
-        var me = this;
-        if (me.getDataDictionaryValueForm().getForm().isValid()) { // 校验form是否通过校验
-            var dataDictionaryValueModel = new Caiwei.model.TermsValueDO();
-            me.getDataDictionaryValueForm().getForm().updateRecord(dataDictionaryValueModel); // 将FORM中数据设置到MODEL里面
-            var params = {
-                'termsValueDO':  dataDictionaryValueModel.data
-            }
-            var successFun = function(json) {
-                var message = json.resMsg;
-                console.showInfoMsg(message); // 提示新增成功
-                me.close();
-                me.parent.getStore().load(); // 成功之后重新查询刷新结果集
-            };
-            var failureFun = function(json) {
-                if (Ext.isEmpty(json)) {
-                    console.showErrorMes('请求超时!'); // 请求超时
-                } else {
-                    var message = json.resMsg;
-                    console.showErrorMes(message); // 提示失败原因
-                }
-            };
-            console.requestJsonAjax('addTermsValue', params, successFun, failureFun); // 发送AJAX请求
-        }
-    },
-    constructor: function(config) {
-        var me = this,
-            cfg = Ext.apply({},
-                config);
-        me.fbar = [{
-            text: '取消',
-            // 取消
-            handler: function() {
-                me.close();
-            }
-        },{
-            text: '重置',
-            // 重置
-            handler: function() {
-                me.getDataDictionaryValueForm().reset();
-            }
-        },
-        {
-            text: '保存',
-            // 保存
-            /* margin : '0 0 0 55', */
-            handler: function() {
-                me.submitDataDictionaryValue();
-            }
-        }];
-        me.items = [me.getDataDictionaryValueForm()];
-        me.callParent([cfg]);
-    }
-});
-
-/**
- * 数据字典表单
- */
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryValueForm', {
-    extend: 'Ext.form.Panel',
-    header: false,
-    frame: true,
-    collapsible: true,
-    width: 280,
-    fieldDefaults: {
-        labelWidth: 80,
-        margin: '8 10 5 10'
-    },
-    defaultType: 'textfield',
-    constructor: function(config) {
-        var me = this,
-            cfg = Ext.apply({},
-                config);
-        me.items = [{
-            name: 'termsName',
-            fieldLabel: '词条名称',
-            xtype: 'textfield',
-            allowBlank: false,
-            hidden: true,
-            id: 'caiwei_form_terms_name'
-        },{
-            name: 'termsCode',
-            fieldLabel: '词条编码',
-            xtype: 'datadictionaryselector',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
-        },{
-            name: 'valueName',
-            fieldLabel: '值名称',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
-        },{
-            name: 'valueCode',
-            fieldLabel: '值编码',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
-        },{
-            name: 'valueSeq',
-            fieldLabel:'序号',
-            xtype: 'numberfield',
-            beforeLabelTextTpl: ['<span style="color:red;font-weight:bold" data-qtip="必填选项">*</span>'],
-            allowBlank: false
-        },{
-            name: 'notes',
-            fieldLabel: '备注',
-            xtype: 'textarea'
-        }];
-        me.callParent([cfg]);
-    }
-});
-
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryAddWindow', {
+Ext.define('Caiwei.dataset.TermsCodeAddWindow', {
     extend: 'Ext.window.Window',
     title:  '新增词条',
     closable: true,
@@ -731,10 +457,10 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryAddWindow', {
     },
     listeners: {
         beforehide: function(me) { // 隐藏WINDOW的时候清除数据
-            me.getDataDictionaryForm().getForm().reset(); // 表格重置
+            me.getTermsCodeForm().getForm().reset(); // 表格重置
         },
         beforeshow: function(me) { // 显示WINDOW的时候清除数据
-            var fielsds = me.getDataDictionaryForm().getForm().getFields();
+            var fielsds = me.getTermsCodeForm().getForm().getFields();
             if (!Ext.isEmpty(fielsds)) {
                 fielsds.each(function(item, index, length) {
                     item.clearInvalid();
@@ -744,20 +470,20 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryAddWindow', {
             fielsds = null;
         }
     },
-    dataDictionaryForm: null,
-    getDataDictionaryForm: function() {
-        if (Ext.isEmpty(this.dataDictionaryForm)) {
-            this.dataDictionaryForm = Ext.create('Caiwei.view.dataDictionary.DataDictionaryForm');
+    termsCodeAddForm: null,
+    getTermsCodeForm: function() {
+        if (Ext.isEmpty(this.termsCodeAddForm)) {
+            this.termsCodeAddForm = Ext.create('Caiwei.dataset.DataDictionaryForm');
         }
-        return this.dataDictionaryForm;
+        return this.termsCodeAddForm;
     },
-    submitDataDictionaryValue: function() {
+    submitTermsCodeValue: function() {
         var me = this;
-        if (me.getDataDictionaryForm().getForm().isValid()) { // 校验form是否通过校验
-            var dataDictionaryModel = new Caiwei.model.TermsCodeDO();
-            me.getDataDictionaryForm().getForm().updateRecord(dataDictionaryModel); // 将FORM中数据设置到MODEL里面
+        if (me.getTermsCodeForm().getForm().isValid()) { // 校验form是否通过校验
+            var termsCode = new Caiwei.model.TermsCodeDO();
+            me.getTermsCodeForm().getForm().updateRecord(termsCode); // 将FORM中数据设置到MODEL里面
             var params = {
-                'termsCodeDO': dataDictionaryModel.data
+                'termsCodeDO': termsCode.data
             }
             var successFun = function(json) {
                 var message = json.resMsg;
@@ -790,25 +516,25 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryAddWindow', {
             text: '重置',
             // 重置
             handler: function() {
-                me.getDataDictionaryForm().reset();
+                me.getTermsCodeForm().reset();
             }
         },{
             text: '保存',
             // 保存
             /* margin : '0 0 0 55', */
             handler: function() {
-                me.submitDataDictionaryValue();
+                me.submitTermsCodeValue();
             }
         }];
-        me.items = [me.getDataDictionaryForm()];
+        me.items = [me.getTermsCodeForm()];
         me.callParent([cfg]);
     }
 });
 
 /**
- * 数据字典词条表单
+ * 词条表单
  */
-Ext.define('Caiwei.view.dataDictionary.DataDictionaryForm', {
+Ext.define('Caiwei.dataset.DataDictionaryForm', {
     extend: 'Ext.form.Panel',
     header: false,
     frame: true,
@@ -842,21 +568,28 @@ Ext.define('Caiwei.view.dataDictionary.DataDictionaryForm', {
     }
 });
 
+
 Ext.onReady(function() {
-    /**
-     * 数据字典页面
-     */
-    Ext.QuickTips.init();
-    var queryForm = Ext.create('Caiwei.view.dataDictionary.QueryForm'); //查询FORM
-    var dataDictionaryGrid = Ext.create('Caiwei.view.dataDictionary.TermsCodeGrid');
-    Ext.create('Ext.panel.Panel', {
+    var queryForm = Ext.create("Caiwei.dataset.TermsCodeQueryForm");
+    var termsCodeGrid = Ext.create("Caiwei.dataset.TermsCodeGrid");
+    Ext.create('Ext.Viewport', {
+        header: {
+            titlePosition: 2,
+            titleAlign: 'center'
+        },
+        border: "0 0 0 0",
         renderTo: Ext.getBody(),
+        layout: {
+            type: 'border'
+        },
         getQueryForm: function() {
             return queryForm;
         },
-        getDataDictionaryGrid: function() {
-            return dataDictionaryGrid;
+        getTermsCodeGrid: function() {
+            return termsCodeGrid;
         },
-        items: [queryForm, dataDictionaryGrid]
+        items: [
+            queryForm, termsCodeGrid]
     });
+
 });

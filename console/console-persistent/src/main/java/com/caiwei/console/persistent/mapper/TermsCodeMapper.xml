@@ -45,8 +45,22 @@
         </if>
     </sql>
 
+    <select id="queryTermsCodeByID" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/>
+        from t_mdm_data_termscode
+        where id = #{tid}
+    </select>
+
     <select id="findTermsCodeByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.TermsCodeDO">
         select <include refid="Base_Column_List"/>
+        from t_mdm_data_termscode
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
+    <select id="termsCodeTotalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.TermsCodeDO">
+        select count(id)
         from t_mdm_data_termscode
         <where>
             <include refid="param_sql"/>
@@ -85,6 +99,14 @@
         insert into t_mdm_data_termscode (terms_code, terms_name,notes, status, create_time, modify_time)
         values (#{termsCode}, #{termsName}, #{notes}, #{status}, #{createTime}, #{modifyTime})
     </insert>
+
+    <update id="batchUpdateTermsCodeStatus" >
+        update t_mdm_data_termscode set status = #{status}
+        where terms_code in
+        <foreach collection="termsCodes" item="item" close=")" open="(" separator=",">
+            #{item}
+        </foreach>
+    </update>
 
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsCodePO">
         update t_mdm_data_termscode

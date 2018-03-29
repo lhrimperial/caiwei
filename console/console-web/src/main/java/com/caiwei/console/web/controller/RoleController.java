@@ -1,5 +1,6 @@
 package com.caiwei.console.web.controller;
 
+import com.caiwei.console.web.domain.ResourceVO;
 import com.caiwei.console.web.domain.RoleVO;
 import com.caiwei.console.web.service.ISystemSetService;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
@@ -64,5 +65,15 @@ public class RoleController extends AbstractController {
         ResponseVO responseVO = returnSuccess();
         systemSetService.deleteRole(roleVO);
         return responseVO;
+    }
+
+    /**
+     * config resource
+     */
+    @ResponseBody
+    @RequestMapping("/queryResourceByParentResChecked")
+    public ResourceVO queryResourceByParentResChecked(String node, ResourceVO resourceVO) {
+        //TODO
+        return null;
     }
 }

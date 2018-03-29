@@ -139,6 +139,7 @@ Ext.define('Caiwei.sysset.role.QueryForm', {
  */
 Ext.define('Caiwei.sysset.role.RoleGrid', {
     extend: 'Ext.grid.Panel',
+    id : 'roleGrid',
     frame: true,
     autoScroll: true,
     width: '100%',
@@ -152,6 +153,7 @@ Ext.define('Caiwei.sysset.role.RoleGrid', {
             selectionchange: function (sm, selections) {
                 Ext.getCmp('caiwei_sysset_role_deletebtn_id').setDisabled(selections.length === 0);
                 Ext.getCmp('caiwei_sysset_role_updatebtn_id').setDisabled(selections.length === 0);
+                Ext.getCmp('caiwei_sysset_role_roleresourcesbtn_id').setDisabled(selections.length === 0);
             }
         }
     }),
@@ -240,6 +242,14 @@ Ext.define('Caiwei.sysset.role.RoleGrid', {
                     console.requestJsonAjax('deleteRole', params, successFun, failureFun);
                 }
             });
+    },
+    resourceWindow: null,
+    getResourceWindow:function(){
+        if (this.resourceWindow == null) {
+            this.resourceWindow = Ext.create('Caiwei.sysset.role.ResourceWindow');
+            this.resourceWindow.parent = this; //父元素
+        }
+        return this.resourceWindow;
     },
     pagingToolbar: null,
     getPagingToolbar: function () {
@@ -333,6 +343,14 @@ Ext.define('Caiwei.sysset.role.RoleGrid', {
             disabled: true,
             handler: function () {
                 me.deleteRole();
+            }
+        },{
+            id:'caiwei_sysset_role_roleresourcesbtn_id',
+            xtype: 'settingsbutton',
+            text: '权限配置',
+            disabled:true,
+            handler: function() {
+                me.getResourceWindow().show();
             }
         }];
         me.store = Ext.create('Caiwei.sysset.role.RoleStore');

@@ -32,6 +32,46 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
+    public DataDictionaryVO queryTermsCodeByID(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null || dataDictionaryVO.getTermsCodeDO() == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        TermsCodeDO termsCodeDO = termsValueService.queryTermsCodeByID(dataDictionaryVO.getTermsCodeDO().getTid());
+        dataDictionaryVO.setTermsCodeDO(termsCodeDO);
+        return dataDictionaryVO;
+    }
+
+    @Override
+    public DataDictionaryVO queryTermsCodeByParam(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        List<TermsCodeDO> termsCodeDOS = termsValueService.findTermsCodeByPage(dataDictionaryVO.getTermsCodeDO(), dataDictionaryVO.getPage(), dataDictionaryVO.getLimit());
+        dataDictionaryVO.setTotalCount(termsValueService.termsCodeTotalCount(dataDictionaryVO.getTermsCodeDO()));
+        dataDictionaryVO.setTermsCodeDOS(termsCodeDOS);
+        return dataDictionaryVO;
+    }
+
+    @Override
+    public void deleteTermsCode(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        List<String> list =  dataDictionaryVO.getTermsCodes();
+        termsValueService.batchUpdateTermsCodeStatus(list, Constants.PO_INACTIVE);
+        //TODO 删除词条下的字典
+    }
+
+    @Override
+    public void updateTermsCode(DataDictionaryVO dataDictionaryVO) {
+        if (dataDictionaryVO == null) {
+            throw new BusinessException("请求参数为空！");
+        }
+        TermsCodeDO termsCodeDO = dataDictionaryVO.getTermsCodeDO();
+        termsValueService.updateTermsCode(termsCodeDO);
+    }
+
+    @Override
     public DataDictionaryVO queryDataDictionaryByTermsCode(DataDictionaryVO dataDictionaryVO) {
         if (dataDictionaryVO == null) {
             throw new BusinessException("请求参数为空！");

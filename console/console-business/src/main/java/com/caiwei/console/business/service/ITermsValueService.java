@@ -14,6 +14,14 @@ import java.util.List;
  */
 public interface ITermsValueService {
 
+    int batchUpdateTermsCodeStatus(List<String> termsCodes, Byte status);
+
+    TermsCodeDO queryTermsCodeByID(Integer tid);
+
+    List<TermsCodeDO> findTermsCodeByPage(TermsCodeDO termsCodeDO, int pageNo, int pageSize);
+
+    long termsCodeTotalCount(TermsCodeDO termsCodeDO);
+
     List<TermsCodeDO> findTermsCodeByParam(TermsCodeDO termsCodeDO);
 
     List<TermsValueDO> findTermsValueByParam(TermsValueDO termsValueDO, int pageNo, int pageSize);
