@@ -2,6 +2,7 @@
  * 全局变量及函数
  */
 var baseinfo = {};
+baseinfo.role={};
 baseinfo.role.resourceCodes=new Array();
 baseinfo.role.deleteResourceCodes=new Array();
 
@@ -227,7 +228,7 @@ Ext.define('Caiwei.sysset.role.ResourceWindow', {
                 roleVo.resourceCodes = baseinfo.role.resourceCodes.join(",");
                 roleVo.deleteResourceCodes = baseinfo.role.deleteResourceCodes.join(",");
                 var selectArr = Ext.getCmp('roleGrid').getSelectionModel().getSelection();
-                roleVo.currRoleCode = selectArr.length > 0 ? selectArr[0].get('code') : '';
+                roleVo.currRoleCode = selectArr.length > 0 ? selectArr[0].get('roleCode') : '';
                 var successFun = function(json) {
                     var message = json.resMsg;
                     console.showInfoMsg(message);
@@ -235,13 +236,13 @@ Ext.define('Caiwei.sysset.role.ResourceWindow', {
                 };
                 var failureFun = function(json) {
                     if (Ext.isEmpty(json)) {
-                        butterfly.showErrorMes('请求超时'); // 请求超时
+                        config.showErrorMes('请求超时'); // 请求超时
                     } else {
-                        var message = json.message;
-                        butterfly.showErrorMes(message);
+                        var message = json.resMsg;
+                        console.showErrorMes(message);
                     }
                 };
-                butterfly.requestJsonAjax('roleAction!updateRoleResource.action', params, successFun, failureFun);
+                console.requestJsonAjax('updateRoleResource', roleVo, successFun, failureFun);
             }
         }];
         me.items = [me.getRoleTab()];
@@ -290,7 +291,7 @@ Ext.define('Caiwei.view.role.RoleTab',{
                 items : [
                     me.getWebRoleTreeItem()
                 ]
-            },{
+            }/*,{
                 title : 'APP角色权限',
                 itemId:'APP',
                 tabConfig : {
@@ -299,7 +300,7 @@ Ext.define('Caiwei.view.role.RoleTab',{
                 items : [
                     me.getAppRoleTreeItem()
                 ]
-            }]
+            }*/]
         me.callParent([cfg]);
     }
 });
@@ -330,7 +331,7 @@ Ext.define('Caiwei.baseinfo.role.ResourceTreeStore', {
             var selectArr = Ext.getCmp('roleGrid').getSelectionModel().getSelection();
             var searchParams = store.proxy.extraParams;
             var params = {
-                'resourceNode.node' : selectArr.length > 0 ? selectArr[0].get('code') : ''
+                'roleDO.roleCode' : selectArr.length > 0 ? selectArr[0].get('roleCode') : ''
             }
             Ext.apply(store.proxy.extraParams, params);
         }
@@ -414,9 +415,8 @@ Ext.define('Caiwei.view.role.RoleTree',{
             handler: function(){
                 var a_name= Ext.getCmp('Caiwei_baseinfo_role_RoleTree_QueryText_Id');
                 var resourceVo = new Object();
-                resourceVo.resourceEntityDetail.name = a_name.getValue();
+                resourceVo.resourceNode.name = a_name.getValue();
                 // 将角色名称发送到后台：
-                var params = {'resourceVo':resourceVo};
                 //TODO
             }
         }];

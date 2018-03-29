@@ -14,6 +14,20 @@
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
 
+    <resultMap id="ResultWithResourceMap" type="com.caiwei.console.common.domain.RoleDO" extends="BaseResultMap">
+        <collection property="resCodes" column="res_code" ofType="String">
+            <result column="res_code"/>
+        </collection>
+    </resultMap>
+
+    <select id="findByCode" resultMap="ResultWithResourceMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        ,rr.res_code
+        from t_mdm_permis_role r
+        left join t_mdm_permis_role_resource rr on r.role_code= rr.role_code
+        where r.role_code = #{roleCode}
+    </select>
+
     <sql id="Base_Column_List">
         r.id,r.role_code,r.role_name,r.system_code,r.`type`,r.notes,r.status,r.create_time,r.modify_time
     </sql>
@@ -77,11 +91,14 @@
         </where>
     </select>
 
-    <select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select <include refid="Base_Column_List"/>
-        from t_mdm_permis_role r where r.role_code = #{roleCode}
-    </select>
-    
+    <delete id="deleteRoleResource">
+        delete from t_mdm_permis_role_resource
+        where role_code = #{roleCode} and res_code in
+        <foreach collection="resCodes" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.RolePO">
         insert into t_mdm_permis_role (role_code, role_name,system_code, `type`, notes, status, create_time, modify_time)
         values (#{roleCode}, #{roleName}, #{systemCode}, #{type}, #{notes}, #{status}, #{createTime}, #{modifyTime})
@@ -92,6 +109,14 @@
         values
         <foreach collection="list" item="item" separator=",">
             (#{item.userCode}, #{item.deptCode}, #{item.roleCode}, #{item.status}, #{item.createTime}, #{item.modifyTIme})
+        </foreach>
+    </insert>
+
+    <insert id="batchSave" parameterType="java.util.List">
+        insert into t_mdm_permis_role_resource (role_code, res_code, status, create_time, modify_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+          (#{item.roleCode}, #{item.resCode},#{item.status}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </insert>
 

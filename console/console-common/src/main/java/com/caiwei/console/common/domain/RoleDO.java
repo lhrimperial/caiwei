@@ -2,6 +2,8 @@ package com.caiwei.console.common.domain;
 
 import com.github.framework.server.shared.domain.BaseDO;
 
+import java.util.Set;
+
 /**
  *
  **/
@@ -29,6 +31,16 @@ public class RoleDO extends BaseDO {
     private String type;
 
     private String notes;
+
+    private Set<String> resCodes;
+
+    public Set<String> getResCodes() {
+        return resCodes;
+    }
+
+    public void setResCodes(Set<String> resCodes) {
+        this.resCodes = resCodes;
+    }
 
     public String getRoleCode() {
         return roleCode;

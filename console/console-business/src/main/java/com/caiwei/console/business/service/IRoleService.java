@@ -2,6 +2,7 @@ package com.caiwei.console.business.service;
 
 import com.caiwei.console.common.domain.RoleDO;
 import com.caiwei.console.common.domain.UserRoleDO;
+import com.caiwei.console.persistent.domain.RoleResourcePO;
 
 import java.util.List;
 
@@ -9,6 +10,10 @@ import java.util.List;
  *
  **/
 public interface IRoleService {
+
+    int batchSave(List<RoleResourcePO> roleResourcePOS);
+
+    int deleteRoleResource(String roleCode, List<String> resCodes);
 
     void save(RoleDO roleDO);
 

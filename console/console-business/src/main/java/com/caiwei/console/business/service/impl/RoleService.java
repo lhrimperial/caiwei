@@ -5,13 +5,13 @@ import com.caiwei.console.common.domain.RoleDO;
 import com.caiwei.console.common.domain.UserRoleDO;
 import com.caiwei.console.common.util.ConvertUtil;
 import com.caiwei.console.persistent.domain.RolePO;
+import com.caiwei.console.persistent.domain.RoleResourcePO;
 import com.caiwei.console.persistent.mapper.RoleMapper;
 import com.github.framework.server.shared.define.Constants;
 import com.github.framework.util.serializer.BeanCopyUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +25,16 @@ public class RoleService implements IRoleService {
     @Autowired
     private RoleMapper roleMapper;
 
+
+    @Override
+    public int batchSave(List<RoleResourcePO> roleResourcePOS) {
+        return roleMapper.batchSave(roleResourcePOS);
+    }
+
+    @Override
+    public int deleteRoleResource(String roleCode, List<String> resCodes) {
+        return roleMapper.deleteRoleResource(roleCode, resCodes);
+    }
 
     @Override
     public void save(RoleDO roleDO) {

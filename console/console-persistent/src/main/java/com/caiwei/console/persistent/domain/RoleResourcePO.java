@@ -1,7 +1,10 @@
 package com.caiwei.console.persistent.domain;
 
 
+import com.github.framework.server.shared.define.Constants;
 import com.github.framework.server.shared.domain.po.BasePO;
+
+import java.util.Date;
 
 public class RoleResourcePO extends BasePO {
 
@@ -15,6 +18,16 @@ public class RoleResourcePO extends BasePO {
      * 权限ID
      */
     private String resCode;
+
+    public RoleResourcePO() {
+
+    }
+
+    public RoleResourcePO(String roleCode, String resCode) {
+        super(Constants.PO_ACTIVE, new Date(), new Date());
+        this.roleCode = roleCode;
+        this.resCode = resCode;
+    }
 
     public String getRoleCode() {
         return roleCode;

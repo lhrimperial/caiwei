@@ -92,6 +92,7 @@ public class ResourceTreeNode<T extends BaseEntity> extends TreeNode<T,ResourceT
         treeNode.setId(res.getFunctionCode());
         treeNode.setText(res.getName());
         treeNode.setExpandable(!ConsoleConstants.YES.equalsIgnoreCase(res.getLeafFlag()));
+//        treeNode.setChecked(ConsoleConstants.YES.equalsIgnoreCase(res.getChecked()));
         treeNode.setCls(res.getCls());
         treeNode.setIconCls(res.getIconCls());
         treeNode.setDisplayOrder(res.getDisplayOrder());

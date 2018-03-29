@@ -8,19 +8,18 @@ import com.caiwei.console.common.domain.PermisUserDO;
 import com.caiwei.console.common.domain.RoleDO;
 import com.caiwei.console.common.domain.UserRoleDO;
 import com.caiwei.console.common.util.ConvertUtil;
+import com.caiwei.console.persistent.domain.RoleResourcePO;
 import com.caiwei.console.web.domain.RoleVO;
 import com.caiwei.console.web.domain.UserVO;
 import com.caiwei.console.web.service.ISystemSetService;
 import com.github.framework.server.exception.BusinessException;
 import com.github.framework.server.shared.define.Constants;
 import com.github.framework.util.cryp.CryptoUtil;
+import com.github.framework.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -128,6 +127,26 @@ public class SystemSetServiceImpl implements ISystemSetService {
         }
         roleService.deleteUserRole(userCode, deptCode);
         roleService.batchSaveUserRole(userRoleDOS);
+    }
+
+    @Override
+    public void updateRoleResource(RoleVO roleVO) {
+        if (roleVO == null) {
+            throw new BusinessException("参数不能为空");
+        }
+        String currRoleCode = roleVO.getCurrRoleCode();
+        String[] resourceCodes = StringUtils.isNotBlank(roleVO.getResourceCodes())?roleVO.getResourceCodes().split(","):new String[]{};
+        String[] deleteResourceCodes = StringUtils.isNotBlank(roleVO.getDeleteResourceCodes())?roleVO.getDeleteResourceCodes().split(","):new String[]{};
+
+        List<RoleResourcePO> listPO = new ArrayList<>(resourceCodes.length);
+        RoleResourcePO resourcePO = null;
+        for (String code : resourceCodes) {
+            resourcePO = new RoleResourcePO(currRoleCode, code);
+            listPO.add(resourcePO);
+        }
+        roleService.batchSave(listPO);
+
+        roleService.deleteRoleResource(currRoleCode, Arrays.asList(deleteResourceCodes));
     }
 
     @Override

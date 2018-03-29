@@ -30,7 +30,7 @@ function logout(){
 			document.getElementById("error").innerText = message+"!";
 		}
 	};
-    Caiwei.requestJsonAjax('logout', param, successFun, failureFun);
+    console.requestJsonAjax('logout', param, successFun, failureFun);
 
 }
 </script>

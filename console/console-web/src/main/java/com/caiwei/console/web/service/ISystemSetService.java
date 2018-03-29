@@ -32,6 +32,12 @@ public interface ISystemSetService {
     void updateUserOrgRole(UserVO userVO);
 
     /**
+     * resource config
+     */
+
+    void updateRoleResource(RoleVO roleVO);
+
+    /**
      * role set
      */
     RoleVO queryRoleList(RoleVO roleVO);
