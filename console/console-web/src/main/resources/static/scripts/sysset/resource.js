@@ -32,11 +32,11 @@ Ext.define('Caiwei.sysset.source.ResourceNode',{
         name : 'resLevel',
         // 功能层级
         type :'string'
-    },/*{
+    },{
         name : 'parentRes',
         // 父id
-        type : 'sring'
-    },{
+
+    },/*{
         name : 'parentNode',
         // 父Node
 
@@ -404,7 +404,7 @@ Ext.define('Caiwei.view.addResource.Window',{
         if (me.getResourceFrom().getForm().isValid()) { // 校验form是否通过校验
             var resourceModel = new Caiwei.sysset.source.ResourceNode();
             me.getResourceFrom().getForm().updateRecord(resourceModel); // 将FORM中数据设置到MODEL里面
-            resourceModel.set('parentResDO',{'code':me.getResourceFrom().getForm().findField('parentRes').getValue()});
+            resourceModel.set('parentNode',{'code':me.getResourceFrom().getForm().findField('parentRes').getValue()});
             var params = {
                     'resourceNode': resourceModel.data
             }

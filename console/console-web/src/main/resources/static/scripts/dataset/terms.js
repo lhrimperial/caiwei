@@ -280,29 +280,29 @@ Ext.define('Caiwei.dataset.TermsCodeGrid', {
                 }
             }
         }],
-            me.tbar = [{
-                text: '新增词条',
-                xtype: 'addbutton',
-                handler: function () {
-                    me.getTermsCodeAddWindow().show();
-                }
-            },{
-                id: 'caiwei_dataset_termscode_updatebtn_id',
-                text: '修改词条',
-                xtype: 'updatebutton',
-                disabled: true,
-                handler: function () {
-                    me.updateTermsCode();
-                }
-            },{
-                id: 'caiwei_dataset_termscode_deletebtn_id',
-                xtype: 'deletebutton',
-                text: '删除',
-                disabled: true,
-                handler: function () {
-                    me.deleteTermsCode();
-                }
-            }];
+        me.tbar = [{
+            text: '新增词条',
+            xtype: 'addbutton',
+            handler: function () {
+                me.getTermsCodeAddWindow().show();
+            }
+        },{
+            id: 'caiwei_dataset_termscode_updatebtn_id',
+            text: '修改词条',
+            xtype: 'updatebutton',
+            disabled: true,
+            handler: function () {
+                me.updateTermsCode();
+            }
+        },{
+            id: 'caiwei_dataset_termscode_deletebtn_id',
+            xtype: 'deletebutton',
+            text: '删除',
+            disabled: true,
+            handler: function () {
+                me.deleteTermsCode();
+            }
+        }];
         me.store = Ext.create('Caiwei.dataset.TermsCodeStore');
         me.bbar = me.getPagingToolbar();
         me.callParent([cfg]);

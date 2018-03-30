@@ -2,12 +2,18 @@ package com.caiwei.console.business.service.impl;
 
 import com.caiwei.console.business.service.IEmployeeService;
 import com.caiwei.console.common.domain.EmployeeDO;
+import com.caiwei.console.common.util.ConvertUtil;
 import com.caiwei.console.persistent.domain.EmployeePO;
 import com.caiwei.console.persistent.mapper.EmployeeMapper;
+import com.github.framework.server.exception.BusinessException;
 import com.github.framework.server.shared.define.Constants;
+import com.github.framework.util.serializer.BeanCopyUtils;
+import com.github.framework.util.string.StringUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +27,30 @@ public class EmployeeService implements IEmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public int insert(EmployeePO employeeDO) {
-        return employeeMapper.insert(employeeDO);
+    public int insert(EmployeeDO employeeDO) {
+        if (employeeDO == null) {
+            throw new BusinessException("参数不能为空！");
+        }
+        EmployeePO employeePO = new EmployeePO();
+        BeanCopyUtils.copyBean(employeeDO, employeePO);
+        employeePO.setStatus(Constants.PO_ACTIVE);
+        employeePO.setCreateTime(new Date());
+        employeePO.setModifyTime(new Date());
+        return employeeMapper.insert(employeePO);
     }
 
     @Override
-    public int update(EmployeePO employeeDO) {
-        return employeeMapper.update(employeeDO);
+    public int update(EmployeeDO employeeDO) {
+        if (employeeDO == null) {
+            throw new BusinessException("参数不能为空！");
+        }
+        EmployeePO employeePO = new EmployeePO();
+        BeanCopyUtils.copyBean(employeeDO, employeePO);
+        employeePO.setModifyTime(new Date());
+        if (StringUtils.isNotBlank(employeeDO.getActive())) {
+            employeePO.setStatus(ConvertUtil.activeToStatus(employeeDO.getActive()));
+        }
+        return employeeMapper.update(employeePO);
     }
 
     @Override
@@ -48,6 +71,36 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO) {
+        if (employeeDO == null) {
+            throw new BusinessException("param is empty!");
+        }
+        if (StringUtils.isNotBlank(employeeDO.getActive())) {
+            employeeDO.setStatus(ConvertUtil.activeToStatus(employeeDO.getActive()));
+        }
         return employeeMapper.findEmpByParam(employeeDO);
+    }
+
+    @Override
+    public List<EmployeeDO> findEmpByPage(EmployeeDO employeeDO, int pageNo, int pageSize) {
+        if (employeeDO == null) {
+            throw new BusinessException("param is empty!");
+        }
+        if (StringUtils.isNotBlank(employeeDO.getActive())) {
+            employeeDO.setStatus(ConvertUtil.activeToStatus(employeeDO.getActive()));
+        }
+        PageHelper.startPage(pageNo, pageSize);
+        return employeeMapper.findEmpByParam(employeeDO);
+    }
+
+    @Override
+    public long totalCount(EmployeeDO employeeDO) {
+        if (employeeDO == null) {
+            throw new BusinessException("param is empty!");
+        }
+        if (StringUtils.isNotBlank(employeeDO.getActive())) {
+            employeeDO.setStatus(ConvertUtil.activeToStatus(employeeDO.getActive()));
+        }
+
+        return employeeMapper.totalCount(employeeDO);
     }
 }

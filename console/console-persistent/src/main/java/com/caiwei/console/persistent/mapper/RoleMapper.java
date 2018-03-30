@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface RoleMapper {
 
-    int deleteRoleResource(@Param("roleCode") String roleCode, @Param("resCodes") List<String> resCodes);
+    int roleResourceDelete(@Param("roleCode") String roleCode, @Param("resCodes") List<String> resCodes);
 
-    int batchSave(List<RoleResourcePO> roleResourcePOS);
+    int roleResourceBatchSave(List<RoleResourcePO> roleResourcePOS);
 
     int insert(RolePO record);
 

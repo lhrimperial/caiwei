@@ -20,10 +20,56 @@
         id, emp_code, emp_name, dept_code, dept_name, gender, mobile_no, email, tel_phone, status, create_time
       </sql>
 
+    <sql id="param_sql">
+        <if test="tid != null">
+            and id = #{tid}
+        </if>
+        <if test="empCode != null and empCode != ''">
+            and emp_code = #{empCode}
+        </if>
+        <if test="empName != null and empName != ''">
+            and emp_name like concat('%',concat(#{empName},'%'))
+        </if>
+        <if test="deptCode != null and deptCode != ''">
+            and dept_code = #{deptCode}
+        </if>
+        <if test="deptName != null and deptName != ''">
+            and dept_name like concat('%',concat(#{deptName},'%'))
+        </if>
+        <if test="gender != null">
+            and (
+              case when 'FEMALE' == #{gender} then gender = 0 else gender = 1
+            )
+        </if>
+        <if test="mobileNo != null and mobileNo != ''">
+            and mobile_no like concat('%',concat(#{mobileNo},'%'))
+        </if>
+        <if test="email != null and email != ''">
+            and email like concat('%',concat(#{email},'%'))
+        </if>
+        <if test="telPhone != null and telPhone != ''">
+            and tel_phone  like concat('%',concat(#{telPhone},'%'))
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </sql>
+
     <select id="findEmpByParam" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.EmployeeDO">
         select
         <include refid="Base_Column_List"/>
         from t_mdm_org_employee
+        <where>
+            <include refid="param_sql"/>
+        </where>
+    </select>
+
+    <select id="totalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.EmployeeDO">
+        select count(id)
+        from t_mdm_org_employee
+        <where>
+            <include refid="param_sql"/>
+        </where>
     </select>
 
     <select id="findByDeptCode" resultMap="BaseResultMap" parameterType="java.lang.String">

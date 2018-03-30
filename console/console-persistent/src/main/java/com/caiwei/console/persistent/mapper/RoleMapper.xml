@@ -91,7 +91,7 @@
         </where>
     </select>
 
-    <delete id="deleteRoleResource">
+    <delete id="roleResourceDelete">
         delete from t_mdm_permis_role_resource
         where role_code = #{roleCode} and res_code in
         <foreach collection="resCodes" open="(" close=")" item="item" separator=",">
@@ -112,7 +112,7 @@
         </foreach>
     </insert>
 
-    <insert id="batchSave" parameterType="java.util.List">
+    <insert id="roleResourceBatchSave" parameterType="java.util.List">
         insert into t_mdm_permis_role_resource (role_code, res_code, status, create_time, modify_time)
         values
         <foreach collection="list" item="item" separator=",">

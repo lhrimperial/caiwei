@@ -12,7 +12,7 @@ public class EmployeeDO extends BaseDO {
     private String empName;
     private String deptCode;
     private String deptName;
-    private Byte gender;
+    private String gender;
     private String mobileNo;
     private String email;
     private String telPhone;
@@ -59,11 +59,11 @@ public class EmployeeDO extends BaseDO {
         this.deptName = deptName;
     }
 
-    public Byte getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

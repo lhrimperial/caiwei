@@ -19,4 +19,6 @@ public interface EmployeeMapper {
 
     List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO);
 
+    long totalCount(EmployeeDO employeeDO);
+
 }

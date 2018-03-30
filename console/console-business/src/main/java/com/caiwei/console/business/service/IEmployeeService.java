@@ -12,9 +12,9 @@ import java.util.List;
  */
 public interface IEmployeeService {
 
-    int insert(EmployeePO employeeDO);
+    int insert(EmployeeDO employeeDO);
 
-    int update(EmployeePO employeeDO);
+    int update(EmployeeDO employeeDO);
 
     int delete(String empCode);
 
@@ -23,4 +23,8 @@ public interface IEmployeeService {
     List<EmployeeDO> findByDeptCode(String deptCode);
 
     List<EmployeeDO> findEmpByParam(EmployeeDO employeeDO);
+
+    List<EmployeeDO> findEmpByPage(EmployeeDO employeeDO, int pageNo, int pageSize);
+
+    long totalCount(EmployeeDO employeeDO);
 }

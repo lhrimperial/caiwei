@@ -144,9 +144,13 @@ public class SystemSetServiceImpl implements ISystemSetService {
             resourcePO = new RoleResourcePO(currRoleCode, code);
             listPO.add(resourcePO);
         }
-        roleService.batchSave(listPO);
+        if (listPO != null && listPO.size() > 0) {
+            roleService.batchSave(listPO);
+        }
+        if (deleteResourceCodes != null && deleteResourceCodes.length > 0) {
+            roleService.deleteRoleResource(currRoleCode, Arrays.asList(deleteResourceCodes));
+        }
 
-        roleService.deleteRoleResource(currRoleCode, Arrays.asList(deleteResourceCodes));
     }
 
     @Override

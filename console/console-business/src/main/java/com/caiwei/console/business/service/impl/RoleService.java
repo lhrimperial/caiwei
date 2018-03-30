@@ -28,12 +28,12 @@ public class RoleService implements IRoleService {
 
     @Override
     public int batchSave(List<RoleResourcePO> roleResourcePOS) {
-        return roleMapper.batchSave(roleResourcePOS);
+        return roleMapper.roleResourceBatchSave(roleResourcePOS);
     }
 
     @Override
     public int deleteRoleResource(String roleCode, List<String> resCodes) {
-        return roleMapper.deleteRoleResource(roleCode, resCodes);
+        return roleMapper.roleResourceDelete(roleCode, resCodes);
     }
 
     @Override
