@@ -52,4 +52,6 @@ public interface ITermsValueService {
 
     TermsValueDO findByID(Integer tid);
 
+    int updateTermsValueByTermsCode(TermsCodeDO termsCodeDO);
+
 }

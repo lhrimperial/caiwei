@@ -24,7 +24,4 @@ public interface DepartmentMapper {
 
     Long totalCount(DepartmentDO departmentDO);
 
-    List<DepartmentDO> findCurrUserByParams(DepartmentDO departmentDO);
-
-    Long currUserTotalCount(DepartmentDO departmentDO);
 }

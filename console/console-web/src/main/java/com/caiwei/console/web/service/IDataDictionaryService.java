@@ -7,7 +7,7 @@ import com.caiwei.console.web.domain.DataDictionaryVO;
  */
 public interface IDataDictionaryService {
 
-    public DataDictionaryVO searchDataDictionary();
+    DataDictionaryVO searchDataDictionary();
 
     DataDictionaryVO queryTermsCodeByID(DataDictionaryVO dataDictionaryVO);
 

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -32,7 +32,7 @@ public class MenuController extends AbstractController {
      * @return
      */
     @RequestMapping("/queryTreePathForName")
-    public ResponseVO<List<ResourceTreeNode>> queryTreePathForName(@RequestBody String menuName) {
+    public ResponseVO<Set<String>> queryTreePathForName(@RequestBody String menuName) {
         ResponseVO responseVO = returnSuccess();
         responseVO.setResult(menuService.queryTreePathForName(menuName));
         return responseVO;

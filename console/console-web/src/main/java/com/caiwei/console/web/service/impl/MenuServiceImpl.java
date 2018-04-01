@@ -132,15 +132,37 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public List<ResourceTreeNode> queryTreePathForName(String menuName) {
-        List<ResourceTreeNode> list = new ArrayList<>();
+    public Set<String> queryTreePathForName(String menuName) {
+        Set<String> list = new HashSet<>();
         ResourceDO resourceDO = new ResourceDO();
         resourceDO.setResName(menuName);
         List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
+        String path = "";
         for (ResourceDO res : resourceDOS) {
-            list.add(ResourceTreeNode.changeResToTreeNode(ResourceDO.convert(res), true));
+            path = expendTreePath(res.getResCode());
+            if (path != null && path != "" && !"root".equals(path)) {
+                list.add(path);
+            }
+            path = "";
         }
         return list;
+    }
+
+    private String expendTreePath(String resCode) {
+        String parentCode = resCode;
+        String path = "";
+        ResourceNode resourceNode = null;
+        while (parentCode != null && parentCode != "" && !"console_1".equals(parentCode)){
+            path = "/" + parentCode + path;
+            resourceNode = userMenuService.queryResourceByCode(parentCode);
+            if (resourceNode == null) {
+                path = "";
+                break;
+            }
+            parentCode = resourceNode.getParentRes();
+        }
+        path = "/console_1" + path;
+        return path;
     }
 
     @Override

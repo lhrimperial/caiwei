@@ -19,6 +19,4 @@ public interface ILoginService {
 
     void changeCurrentUserDept(String deptCode);
 
-    DepartmentVO findCurrUserByParams(String deptName);
-
 }

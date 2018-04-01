@@ -102,7 +102,7 @@ public class LoginController extends AbstractController {
     @ResponseBody
     @RequestMapping("/currentUserChangeDepts")
     public DepartmentVO currentUserChangeDepts(String deptName) {
-        return loginService.findCurrUserByParams(deptName);
+        return loginService.currentUserDepts(deptName);
     }
 
     /**

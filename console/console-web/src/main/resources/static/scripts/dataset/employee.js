@@ -165,6 +165,7 @@ Ext.define('Caiwei.dataset.employee.EmployeeGrid', {
     frame: true,
     autoScroll: true,
     width: '100%',
+    layout : 'column',
     height: document.documentElement.clientHeight - 150,
     stripeRows: true,
     // 交替行效果
@@ -215,15 +216,20 @@ Ext.define('Caiwei.dataset.employee.EmployeeGrid', {
                 return booleanTypeGender(value);
             }
         },{
+            text: '部门编码',
+            dataIndex: 'deptCode',
+            align: 'center',
+            flex: 1
+        },{
             text: '部门名称',
             dataIndex: 'deptName',
             align: 'center',
-            flex: 1
+            flex: 2
         },{
             text: '手机',
             dataIndex: 'mobileNo',
             align: 'center',
-            flex: 1
+            flex: 2
         },{
             text: '电话',
             dataIndex: 'telPhone',
@@ -233,19 +239,19 @@ Ext.define('Caiwei.dataset.employee.EmployeeGrid', {
             text: '邮箱',
             dataIndex: 'email',
             align: 'center',
-            flex: 1
+            flex: 2
         },{
             text: '创建时间',
             dataIndex: 'createTime',
             align: 'center',
-            flex: 1,
+            flex: 2,
             xtype :'datecolumn',
             format :'Y-m-d H:i:s'
         },{
             text: '修改时间',
             dataIndex: 'modifyTime',
             align: 'center',
-            flex: 1,
+            flex: 2,
             xtype :'datecolumn',
             format :'Y-m-d H:i:s'
         }],

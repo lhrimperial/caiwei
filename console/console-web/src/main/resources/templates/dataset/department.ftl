@@ -5,7 +5,7 @@
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <#include "../common/common.ftl">
 <#include "../common/head.ftl">
-    <script type="text/javascript" src="${scripts}/sysset/resource.js?version=0.0.0.1"></script>
+    <script type="text/javascript" src="${scripts}/dataset/department.js?version=0.0.0.1"></script>
 </head>
 <body>
 </body>

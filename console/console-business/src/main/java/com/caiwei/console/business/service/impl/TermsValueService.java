@@ -175,4 +175,9 @@ public class TermsValueService implements ITermsValueService {
     public TermsValueDO findByID(Integer tid) {
         return termsValueMapper.findByID(tid);
     }
+
+    @Override
+    public int updateTermsValueByTermsCode(TermsCodeDO termsCodeDO) {
+        return termsValueMapper.updateTermsValueByTermsCode(termsCodeDO);
+    }
 }

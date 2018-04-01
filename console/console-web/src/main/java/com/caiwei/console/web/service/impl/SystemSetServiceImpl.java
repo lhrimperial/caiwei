@@ -125,8 +125,10 @@ public class SystemSetServiceImpl implements ISystemSetService {
             userRoleDO.setStatus(Constants.PO_ACTIVE);
             userRoleDOS.add(userRoleDO);
         }
-        roleService.deleteUserRole(userCode, deptCode);
-        roleService.batchSaveUserRole(userRoleDOS);
+        if (userRoleDOS.size() > 0) {
+            roleService.deleteUserRole(userCode, deptCode);
+            roleService.batchSaveUserRole(userRoleDOS);
+        }
     }
 
     @Override

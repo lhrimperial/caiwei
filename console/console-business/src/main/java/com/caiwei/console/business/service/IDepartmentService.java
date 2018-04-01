@@ -2,7 +2,6 @@ package com.caiwei.console.business.service;
 
 
 import com.caiwei.console.common.domain.DepartmentDO;
-import com.caiwei.console.persistent.domain.DepartmentPO;
 
 import java.util.List;
 
@@ -12,9 +11,9 @@ import java.util.List;
  */
 public interface IDepartmentService {
 
-    int insert(DepartmentPO departmentDO);
+    int insert(DepartmentDO departmentDO);
 
-    int update(DepartmentPO departmentDO);
+    int update(DepartmentDO departmentDO);
 
     int delete(String deptCode);
 
@@ -28,7 +27,4 @@ public interface IDepartmentService {
 
     Long totalCount(DepartmentDO departmentDO);
 
-    List<DepartmentDO> findCurrUserByParams(DepartmentDO departmentDO);
-
-    Long currUserTotalCount(DepartmentDO departmentDO);
 }

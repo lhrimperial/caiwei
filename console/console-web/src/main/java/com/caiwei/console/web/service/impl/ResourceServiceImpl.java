@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -22,17 +24,6 @@ public class ResourceServiceImpl implements IResourceService {
     @Autowired
     private IUserMenuService userMenuService;
 
-    @Override
-    public List<ResourceTreeNode> queryTreePathForName(String resourceName) {
-        List<ResourceTreeNode> list = new ArrayList<>();
-        ResourceDO resourceDO = new ResourceDO();
-        resourceDO.setResName(resourceName);
-        List<ResourceDO> resourceDOS = userMenuService.queryResourcesByParam(resourceDO);
-        for (ResourceDO res : resourceDOS) {
-            list.add(ResourceTreeNode.changeResToTreeNode(ResourceDO.convert(res), true));
-        }
-        return list;
-    }
 
     @Override
     public List<ResourceTreeNode> queryResourceByParentRes(String node) {

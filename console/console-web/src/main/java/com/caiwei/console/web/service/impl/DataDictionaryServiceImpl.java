@@ -63,12 +63,14 @@ public class DataDictionaryServiceImpl implements IDataDictionaryService {
     }
 
     @Override
-    public void updateTermsCode(DataDictionaryVO dataDictionaryVO) {
+    public void
+    updateTermsCode(DataDictionaryVO dataDictionaryVO) {
         if (dataDictionaryVO == null) {
             throw new BusinessException("请求参数为空！");
         }
         TermsCodeDO termsCodeDO = dataDictionaryVO.getTermsCodeDO();
         termsValueService.updateTermsCode(termsCodeDO);
+
     }
 
     @Override

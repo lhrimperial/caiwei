@@ -2,6 +2,8 @@ package com.caiwei.console.common.domain;
 
 import com.github.framework.server.shared.domain.BaseDO;
 
+import java.util.List;
+
 /**
  * 部门业务实体
  */
@@ -27,7 +29,20 @@ public class DepartmentDO extends BaseDO {
      */
     private String parentName;
 
+    /**
+     * 下属部门
+     */
+    private List<DepartmentDO> children;
+
     private String currUserCode;
+
+    public List<DepartmentDO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<DepartmentDO> children) {
+        this.children = children;
+    }
 
     public String getCurrUserCode() {
         return currUserCode;

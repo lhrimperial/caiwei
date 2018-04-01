@@ -38,7 +38,7 @@
         </if>
         <if test="gender != null">
             and (
-              case when 'FEMALE' == #{gender} then gender = 0 else gender = 1
+              case when 'FEMALE' = #{gender} then gender = 0 else gender = 1 end
             )
         </if>
         <if test="mobileNo != null and mobileNo != ''">

@@ -108,7 +108,7 @@
         insert into t_mdm_permis_user_role ( user_code, dept_code, role_code, status, create_time, modify_time)
         values
         <foreach collection="list" item="item" separator=",">
-            (#{item.userCode}, #{item.deptCode}, #{item.roleCode}, #{item.status}, #{item.createTime}, #{item.modifyTIme})
+            (#{item.userCode}, #{item.deptCode}, #{item.roleCode}, #{item.status}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </insert>
 

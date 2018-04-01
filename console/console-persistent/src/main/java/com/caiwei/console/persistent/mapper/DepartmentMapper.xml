@@ -12,6 +12,28 @@
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
+
+    <resultMap id="BaseResultWithChildrenMap" type="com.caiwei.console.common.domain.DepartmentDO">
+        <id column="dept_id" property="tid"/>
+        <result column="dept_dept_code" property="deptCode"/>
+        <result column="dept_dept_name" property="deptName"/>
+        <result column="dept_parent_code" property="parentCode"/>
+        <result column="dept_parent_name" property="parentName"/>
+        <result column="dept_status" property="status"/>
+        <result column="dept_create_time" property="createTime"/>
+        <result column="dept_modify_time" property="modifyTime"/>
+        <collection property="children" column="patent_code" ofType="com.caiwei.console.common.domain.DepartmentDO">
+            <id column="child_id" property="tid"/>
+            <result column="child_dept_code" property="deptCode"/>
+            <result column="child_dept_name" property="deptName"/>
+            <result column="child_parent_code" property="parentCode"/>
+            <result column="child_parent_name" property="parentName"/>
+            <result column="child_status" property="status"/>
+            <result column="child_create_time" property="createTime"/>
+            <result column="child_modify_time" property="modifyTime"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         dept.id,dept.dept_code,dept.dept_name,dept.parent_code,dept.parent_name,dept.status,dept.create_time,dept.modify_time
     </sql>
@@ -22,20 +44,27 @@
         </if>
     </sql>
 
-    <select id="currUserTotalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.DepartmentDO">
-        SELECT count(id)
-        from t_mdm_org_department dept
-        <where>
-            <include refid="query_sql"/>
-        </where>
-    </select>
-    <select id="findCurrUserByParams" resultMap="BaseResultMap" parameterType="com.caiwei.console.common.domain.DepartmentDO" >
+    <select id="findByParentCode" resultMap="BaseResultWithChildrenMap" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List"/>
+        dept.id as dept_id,
+        dept.dept_code as dept_dept_code,
+        dept.dept_name as dept_dept_name,
+        dept.parent_code as dept_parent_code,
+        dept.parent_name as dept_parent_name,
+        dept.status as dept_status,
+        dept.create_time as dept_create_time,
+        dept.modify_time as dept_modify_time,
+        dept.id as child_id,
+        dept.dept_code as child_dept_code,
+        dept.dept_name as child_dept_name,
+        dept.parent_code as child_parent_code,
+        dept.parent_name as child_parent_name,
+        dept.status as child_status,
+        dept.create_time as child_create_time,
+        dept.modify_time as child_modify_time
         from t_mdm_org_department dept
-        <where>
-            <include refid="query_sql"/>
-        </where>
+        left join t_mdm_org_department children on dept.dept_code = children.parent_code
+        where dept.parent_code = #{parentCode}
     </select>
 
     <select id="totalCount" resultType="java.lang.Long" parameterType="com.caiwei.console.common.domain.DepartmentDO">
@@ -67,14 +96,6 @@
         from t_mdm_org_department dept
         where dept_code = #{deptCode}
     </select>
-
-    <select id="findByParentCode" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from t_mdm_org_department dept
-        where parent_code = #{parentCode}
-    </select>
-
 
     <insert id="insert" parameterType="com.caiwei.console.persistent.domain.DepartmentPO">
         insert into t_mdm_org_department (dept_code, dept_name, parent_code, parent_name, status, create_time, modify_time)

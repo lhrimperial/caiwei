@@ -80,34 +80,38 @@
         values (#{valueCode}, #{valueName}, #{termsCode}, #{termsName}, #{valueSeq}, #{notes}, #{status}, #{createTime}, #{modifyTime})
       </insert>
 
+    <sql id="update_sql">
+        <if test="valueName != null and valueName != ''">
+            value_name = #{valueName},
+        </if>
+        <if test="termsName != null and termsName != ''">
+            terms_name = #{termsName},
+        </if>
+        <if test="termsCode != null and termsCode != ''">
+            terms_code = #{termsCode},
+        </if>
+        <if test="valueSeq != null">
+            value_seq = #{valueSeq},
+        </if>
+        <if test="notes != null">
+            notes = #{notes},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        <if test="modifyTime != null">
+            modify_time = #{modifyTime},
+        </if>
+    </sql>
+
     <update id="update" parameterType="com.caiwei.console.persistent.domain.TermsValuePO">
         update t_mdm_data_termsvalue
-        <set>
-            <if test="valueName != null and valueName != ''">
-                value_name = #{valueName},
-            </if>
-            <if test="termsName != null and termsName != ''">
-                terms_name = #{termsName},
-            </if>
-            <if test="termsCode != null and termsCode != ''">
-                terms_code = #{termsCode},
-            </if>
-            <if test="valueSeq != null">
-                value_seq = #{valueSeq},
-            </if>
-            <if test="notes != null">
-                notes = #{notes},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="modifyTime != null">
-                modify_time = #{modifyTime},
-            </if>
-        </set>
+        <trim prefix="set" suffixOverrides=",">
+            <include refid="update_sql"/>
+        </trim>
         <where>
             <if test="tid != null">
                 and id = #{tid}
@@ -119,6 +123,53 @@
     </update>
 
     <update id="updateBatch" parameterType="java.util.List">
+        update t_mdm_data_termsvalue
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="status =case" suffix="end">
+                <foreach collection="list" item="item" index="index">
+                    when value_code = #{valueCode} then
+                    <trim suffixOverrides=",">
+                        <if test="item.valueName != null and item.valueName != ''">
+                            value_name = #{item.valueName},
+                        </if>
+                        <if test="item.termsName != null and item.termsName != ''">
+                            terms_name = #{item.termsName},
+                        </if>
+                        <if test="item.termsCode != null and item.termsCode != ''">
+                            terms_code = #{item.termsCode},
+                        </if>
+                        <if test="item.valueSeq != null">
+                            value_seq = #{item.valueSeq},
+                        </if>
+                        <if test="item.notes != null">
+                            notes = #{item.notes},
+                        </if>
+                        <if test="item.status != null">
+                            status = #{item.status},
+                        </if>
+                        <if test="item.createTime != null">
+                            create_time = #{item.createTime},
+                        </if>
+                        <if test="modifyTime != null">
+                            modify_time = #{item.modifyTime},
+                        </if>
+                    </trim>
+                </foreach>
+            </trim>
+        </trim>
+        where value_code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.valueCode}
+        </foreach>
+    </update>
 
+    <update id="updateTermsValueByTermsCode" parameterType="com.caiwei.console.common.domain.TermsCodeDO">
+        update t_mdm_data_termsvalue
+        <trim prefix="set" suffixOverrides=",">
+            terms_name = #{termsName}
+        </trim>
+        <where>
+            terms_code = #{termsCode}
+        </where>
     </update>
 </mapper>

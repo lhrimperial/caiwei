@@ -93,18 +93,6 @@ public class LoginServiceImpl implements ILoginService {
         Cookie.saveCookie();
     }
 
-    @Override
-    public DepartmentVO findCurrUserByParams(String deptName) {
-        DepartmentDO departmentDO = new DepartmentDO();
-        departmentDO.setCurrUserCode(PermisUserContext.getCurrentUser().getUserCode());
-        departmentDO.setDeptName(deptName);
-
-        DepartmentVO departmentVO = new DepartmentVO();
-        departmentVO.setDepartmentDOS(departmentService.findCurrUserByParams(departmentDO));
-        departmentVO.setTotalCount(departmentService.currUserTotalCount(departmentDO));
-        return departmentVO;
-    }
-
     private PermisUserDO validate(String userName, String password)
             throws LoginException, UserException {
         if (StringUtils.isBlank(userName)) {

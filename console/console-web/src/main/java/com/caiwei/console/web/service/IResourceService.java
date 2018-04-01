@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface IResourceService {
 
-    List<ResourceTreeNode> queryTreePathForName(String resourceName);
-
     List<ResourceTreeNode> queryResourceByParentRes(String node);
 
     ResourceVO queryResourceByExample(ResourceVO resourceVO);

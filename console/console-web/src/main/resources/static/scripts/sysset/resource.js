@@ -575,11 +575,11 @@ Ext.define('Caiwei.resource.role.RoleTree',{
                         queryValue = field.getValue();
 
                     if(!Ext.isEmpty(queryValue)){
-                        var params = {'resourceNode.name' : queryValue};
+                        var params = queryValue;
                         var successFun = function(json) {
                             var view = me.getView(),
                                 position = false,
-                                pathList = json.result.resourceNodes;
+                                pathList = json.result;
                             me.expandNodes = [];
                             me.collapseAll();
                             if(pathList.length==0){

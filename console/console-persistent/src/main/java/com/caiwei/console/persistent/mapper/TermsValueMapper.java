@@ -1,5 +1,6 @@
 package com.caiwei.console.persistent.mapper;
 
+import com.caiwei.console.common.domain.TermsCodeDO;
 import com.caiwei.console.common.domain.TermsValueDO;
 import com.caiwei.console.persistent.domain.TermsValuePO;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,6 @@ public interface TermsValueMapper {
     long totalCount(TermsValueDO termsValueDO);
 
     TermsValueDO findByID(Integer tid);
+
+    int updateTermsValueByTermsCode(TermsCodeDO termsCodeDO);
 }

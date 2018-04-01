@@ -91,6 +91,7 @@ Ext.define('Caiwei.sysset.user.OrgRoleWindow', {
     submitUserOrgRole: function() {
         var me = this;
         if(Ext.isEmpty(me.userCode)||Ext.isEmpty(me.deptCode)){
+            console.showInfoMsg('请选择部门角色！');
             return;
         }
         var userOrgRoleList = new Array();
@@ -117,7 +118,7 @@ Ext.define('Caiwei.sysset.user.OrgRoleWindow', {
             if (Ext.isEmpty(json)) {
                 console.showErrorMes('连接超时'); //请求超时
             } else {
-                var message = json.message;
+                var message = json.resMsg;
                 console.showErrorMes(message); //提示失败原因
             }
         };

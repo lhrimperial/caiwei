@@ -2,6 +2,7 @@ package com.caiwei.console.web.controller;
 
 import com.caiwei.console.common.domain.ResourceTreeNode;
 import com.caiwei.console.web.domain.ResourceVO;
+import com.caiwei.console.web.service.IMenuService;
 import com.caiwei.console.web.service.IResourceService;
 import com.github.framework.server.exception.BusinessException;
 import com.github.framework.server.shared.domain.vo.ResponseVO;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -28,6 +30,9 @@ public class ResourceController extends AbstractController{
     @Autowired
     private IResourceService resourceService;
 
+    @Autowired
+    private IMenuService menuService;
+
     @RequestMapping("/index")
     public String index() {
         return "/sysset/resource";
@@ -35,9 +40,9 @@ public class ResourceController extends AbstractController{
 
     @ResponseBody
     @RequestMapping("/queryTreePathForName")
-    public ResponseVO<List<ResourceTreeNode>> queryTreePathForName(@RequestBody String resourceName) {
+    public ResponseVO<Set<String>> queryTreePathForName(@RequestBody String resourceName) {
         ResponseVO responseVO = returnSuccess();
-        responseVO.setResult(resourceService.queryTreePathForName(resourceName));
+        responseVO.setResult(menuService.queryTreePathForName(resourceName));
         return responseVO;
     }
 

@@ -243,7 +243,7 @@ Ext.define('Caiwei.main.MainNav',{
     maxWidth:200,
     autoScroll: true,
     //树节点是否可见
-    rootVisible: true,
+    rootVisible: false,
     //使用vista风格的箭头图标，默认为false
     useArrows: true,
     expandNodes: [],
@@ -283,7 +283,7 @@ Ext.define('Caiwei.main.MainNav',{
                         queryValue = field.getValue();
                     //"br"/"bl"/"tr"/"tl"/"t"/"l"/"b"/"r"
                     if(!Ext.isEmpty(queryValue)){
-                        var params = {'node' : queryValue};
+                        var params = queryValue;
                         var successFun = function(json) {
                             var view = me.getView(),
                                 position = false,
