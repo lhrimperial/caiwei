@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 29/03/2018 00:22:56
+ Date: 08/04/2018 12:20:59
 */
 
 SET NAMES utf8mb4;
@@ -171,14 +171,14 @@ CREATE TABLE `t_mdm_permis_resource`  (
 -- ----------------------------
 -- Records of t_mdm_permis_resource
 -- ----------------------------
-INSERT INTO `t_mdm_permis_resource` VALUES (1, 'console_1', 'CONSOLE系统', '', 1, '', 1, 1, 0, 1, 'ye1-node-lvl1', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (2, 'console_110', '综合管理', '', 2, 'console_1', 2, 1, 0, 1, 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (3, 'console_120', '基础数据', '', 2, 'console_1', 2, 2, 0, 1, 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (4, 'console_130', '系统设置', '', 2, 'console_1', 2, 3, 0, 1, 'ye1-node-lvl2', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (5, 'console_130001', '用户管理', '/console/user/index', 3, 'console_130', 3, 1, 0, 0, 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (6, 'console_130002', '角色管理', '/console/role/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (7, 'console_130003', '资源管理', '/console/resource/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-03-28 21:03:11');
-INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/console/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl3', 'butterfly_icons_emp', 'WEB', '', 1, '2018-03-28 20:46:15', '2018-03-28 20:57:14');
+INSERT INTO `t_mdm_permis_resource` VALUES (1, 'console_1', 'CONSOLE系统', '', 1, '', 1, 1, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (2, 'console_110', '综合管理', '', 2, 'console_1', 2, 1, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (3, 'console_120', '基础数据', '', 2, 'console_1', 2, 2, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (4, 'console_130', '系统设置', '', 2, 'console_1', 2, 3, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (5, 'console_130001', '用户管理', '/console/user/index', 3, 'console_130', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (6, 'console_130002', '角色管理', '/console/role/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (7, 'console_130003', '资源管理', '/console/resource/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/console/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 1, '2018-03-28 20:46:15', '2018-04-08 12:20:20');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role
