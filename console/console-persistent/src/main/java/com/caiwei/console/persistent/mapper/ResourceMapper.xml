@@ -231,7 +231,7 @@
                 create_time = #{createTime},
             </if>
             <if test="modifyTime != null">
-                modifyTime = #{modifyTime},
+                modify_time = #{modifyTime},
             </if>
         </set>
         <where>

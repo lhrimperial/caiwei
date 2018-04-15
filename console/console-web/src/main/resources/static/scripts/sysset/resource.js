@@ -121,6 +121,7 @@ Ext.define('Caiwei.view.resource.Grid', {
         changbox.findField('leafFlag').setValue(resobj.leafFlag);
         changbox.findField('iconCls').setValue(resobj.iconCls);
         changbox.findField('cls').setValue(resobj.cls);
+        changbox.findField('active').setValue(resobj.active);
         changbox.findField('notes').setValue(resobj.notes);
         changbox.findField('belongSystemType').setValue(resobj.belongSystemType);
         Ext.getCmp('caiwei_bse_resource_sele').setCombValue(resobj.parentNode.name,resobj.parentNode.code);

@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 08/04/2018 12:20:59
+ Date: 15/04/2018 10:43:07
 */
 
 SET NAMES utf8mb4;
@@ -108,12 +108,23 @@ CREATE TABLE `t_mdm_org_department`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_dept_code`(`dept_code`) USING BTREE,
   INDEX `idx_parent_code`(`parent_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mdm_org_department
 -- ----------------------------
-INSERT INTO `t_mdm_org_department` VALUES (1, '00001', '集团', NULL, NULL, 0, '2018-03-08 10:53:50', NULL);
+INSERT INTO `t_mdm_org_department` VALUES (1, '00000', '集团', 'root', NULL, 0, '2018-03-08 10:53:50', '2018-04-15 10:41:57');
+INSERT INTO `t_mdm_org_department` VALUES (2, '00100', '财务部', '00000', '集团', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (3, '00200', '人事部', '00000', '集团', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (4, '00300', '行政部', '00000', '集团', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (5, '00400', 'IT部', '00000', '集团', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (6, '00101', '会计组', '00100', '财务部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (7, '00102', '审计组', '00100', '财务部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (8, '00201', '薪酬组', '00200', '人事部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (9, '00202', '招聘组', '00200', '人事部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (10, '00401', '开发组', '00400', 'IT部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (11, '00402', '测试组', '00400', 'IT部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
+INSERT INTO `t_mdm_org_department` VALUES (12, '00403', '运维组', '00400', 'IT部', 0, '2018-04-15 10:36:27', '2018-04-15 10:36:27');
 
 -- ----------------------------
 -- Table structure for t_mdm_org_employee
@@ -166,7 +177,7 @@ CREATE TABLE `t_mdm_permis_resource`  (
   `modify_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_resource_code`(`res_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mdm_permis_resource
@@ -178,7 +189,10 @@ INSERT INTO `t_mdm_permis_resource` VALUES (4, 'console_130', '系统设置', ''
 INSERT INTO `t_mdm_permis_resource` VALUES (5, 'console_130001', '用户管理', '/console/user/index', 3, 'console_130', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
 INSERT INTO `t_mdm_permis_resource` VALUES (6, 'console_130002', '角色管理', '/console/role/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
 INSERT INTO `t_mdm_permis_resource` VALUES (7, 'console_130003', '资源管理', '/console/resource/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
-INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/console/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 1, '2018-03-28 20:46:15', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/console/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-28 20:46:15', '2018-04-15 10:17:02');
+INSERT INTO `t_mdm_permis_resource` VALUES (9, 'console_120002', '字典管理', '/console/terms/dictionary', 3, 'console_120', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:21:06', '2018-04-15 10:21:06');
+INSERT INTO `t_mdm_permis_resource` VALUES (10, 'console_120003', '部门管理', '/console/department/index', 3, 'console_120', 3, 3, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:23:09', '2018-04-15 10:23:09');
+INSERT INTO `t_mdm_permis_resource` VALUES (11, 'console_120004', '员工管理', '/console/employee/index', 3, 'console_120', 3, 4, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:24:30', '2018-04-15 10:24:30');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role
@@ -219,7 +233,7 @@ CREATE TABLE `t_mdm_permis_role_resource`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_role_code`(`role_code`) USING BTREE,
   INDEX `idx_res_code`(`res_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_mdm_permis_role_resource
@@ -232,6 +246,9 @@ INSERT INTO `t_mdm_permis_role_resource` VALUES (5, 'admin', 'console_130001', 0
 INSERT INTO `t_mdm_permis_role_resource` VALUES (6, 'admin', 'console_130002', 0, '2018-03-09 22:16:30', NULL);
 INSERT INTO `t_mdm_permis_role_resource` VALUES (7, 'admin', 'console_130003', 0, '2018-03-09 22:16:30', NULL);
 INSERT INTO `t_mdm_permis_role_resource` VALUES (9, 'admin', 'console_120001', 0, '2018-03-09 22:16:30', NULL);
+INSERT INTO `t_mdm_permis_role_resource` VALUES (10, 'admin', 'console_120003', 0, '2018-04-15 10:24:57', '2018-04-15 10:24:57');
+INSERT INTO `t_mdm_permis_role_resource` VALUES (11, 'admin', 'console_120002', 0, '2018-04-15 10:24:57', '2018-04-15 10:24:57');
+INSERT INTO `t_mdm_permis_role_resource` VALUES (12, 'admin', 'console_120004', 0, '2018-04-15 10:24:57', '2018-04-15 10:24:57');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_user
@@ -256,10 +273,10 @@ CREATE TABLE `t_mdm_permis_user`  (
 -- ----------------------------
 -- Records of t_mdm_permis_user
 -- ----------------------------
-INSERT INTO `t_mdm_permis_user` VALUES (7, '275688', '202CB962AC59075B964B07152D234B70', '275688', 'longhairen', 'DP0001', NULL, NULL, 0, '2017-11-06 19:49:58', '2018-03-14 23:14:33');
-INSERT INTO `t_mdm_permis_user` VALUES (8, '123456', 'E10ADC3949BA59ABBE56E057F20F883E', '275688', 'longhairen', '00001', NULL, '', 1, '2018-03-24 10:10:31', '2018-03-24 10:15:32');
-INSERT INTO `t_mdm_permis_user` VALUES (9, '147258', '4607E782C4D86FD5364D7E4508BB10D9', '275688', 'longhairen', '00001', NULL, '', 1, '2018-03-24 10:15:18', '2018-03-24 10:15:32');
-INSERT INTO `t_mdm_permis_user` VALUES (10, '159963', 'D04736115A4AFBD35DE30D9F0AFF0E03', '275688', 'longhairen', '0123', NULL, '', 1, '2018-03-24 10:23:06', '2018-03-24 10:23:17');
+INSERT INTO `t_mdm_permis_user` VALUES (7, '275688', '202CB962AC59075B964B07152D234B70', '275688', 'longhairen', '00000', NULL, NULL, 0, '2017-11-06 19:49:58', '2018-04-15 10:30:40');
+INSERT INTO `t_mdm_permis_user` VALUES (8, '123456', 'E10ADC3949BA59ABBE56E057F20F883E', '275688', 'longhairen', '00000', NULL, '', 1, '2018-03-24 10:10:31', '2018-04-15 10:30:40');
+INSERT INTO `t_mdm_permis_user` VALUES (9, '147258', '4607E782C4D86FD5364D7E4508BB10D9', '275688', 'longhairen', '00000', NULL, '', 1, '2018-03-24 10:15:18', '2018-04-15 10:30:40');
+INSERT INTO `t_mdm_permis_user` VALUES (10, '159963', 'D04736115A4AFBD35DE30D9F0AFF0E03', '275688', 'longhairen', '00000', NULL, '', 1, '2018-03-24 10:23:06', '2018-04-15 10:30:40');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_user_role
@@ -281,6 +298,6 @@ CREATE TABLE `t_mdm_permis_user_role`  (
 -- ----------------------------
 -- Records of t_mdm_permis_user_role
 -- ----------------------------
-INSERT INTO `t_mdm_permis_user_role` VALUES (1, '275688', '00001', 'admin', 0, '2018-03-08 11:01:13', '2018-03-08 18:12:52');
+INSERT INTO `t_mdm_permis_user_role` VALUES (1, '275688', '00000', 'admin', 0, '2018-03-08 11:01:13', '2018-04-15 10:38:37');
 
 SET FOREIGN_KEY_CHECKS = 1;
