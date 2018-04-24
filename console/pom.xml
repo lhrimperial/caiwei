@@ -33,6 +33,9 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.framework</groupId>
+            <artifactId>framework-server</artifactId>
+        </dependency>
     </dependencies>
 </project>
