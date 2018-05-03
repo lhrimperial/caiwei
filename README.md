@@ -10,6 +10,13 @@
             
             
 #### 二、项目说明
+1. 技术栈：
+    - SpringBoot
+    - MyBatis
+    - Redis
+    - MySQL
+    - FreeMarker
+    - ExtJs
             
             
         
