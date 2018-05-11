@@ -12,6 +12,10 @@
     <name>console-startup</name>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.github.framework</groupId>-->
+            <!--<artifactId>framework-starter-core</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.caiwei.console</groupId>
             <artifactId>console-web</artifactId>
