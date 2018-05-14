@@ -186,13 +186,13 @@ INSERT INTO `t_mdm_permis_resource` VALUES (1, 'console_1', 'CONSOLE系统', '',
 INSERT INTO `t_mdm_permis_resource` VALUES (2, 'console_110', '综合管理', '', 2, 'console_1', 2, 1, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
 INSERT INTO `t_mdm_permis_resource` VALUES (3, 'console_120', '基础数据', '', 2, 'console_1', 2, 2, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
 INSERT INTO `t_mdm_permis_resource` VALUES (4, 'console_130', '系统设置', '', 2, 'console_1', 2, 3, 0, 1, 'ye1-node-lvl1', 'caiwei_icons', 'WEB', '', 0, '2018-03-08 11:17:12', '2018-04-08 12:20:20');
-INSERT INTO `t_mdm_permis_resource` VALUES (5, 'console_130001', '用户管理', '/console/user/index', 3, 'console_130', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
-INSERT INTO `t_mdm_permis_resource` VALUES (6, 'console_130002', '角色管理', '/console/role/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
-INSERT INTO `t_mdm_permis_resource` VALUES (7, 'console_130003', '资源管理', '/console/resource/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
-INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/console/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-28 20:46:15', '2018-04-15 10:17:02');
-INSERT INTO `t_mdm_permis_resource` VALUES (9, 'console_120002', '字典管理', '/console/terms/dictionary', 3, 'console_120', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:21:06', '2018-04-15 10:21:06');
-INSERT INTO `t_mdm_permis_resource` VALUES (10, 'console_120003', '部门管理', '/console/department/index', 3, 'console_120', 3, 3, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:23:09', '2018-04-15 10:23:09');
-INSERT INTO `t_mdm_permis_resource` VALUES (11, 'console_120004', '员工管理', '/console/employee/index', 3, 'console_120', 3, 4, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:24:30', '2018-04-15 10:24:30');
+INSERT INTO `t_mdm_permis_resource` VALUES (5, 'console_130001', '用户管理', '/caiwei/user/index', 3, 'console_130', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (6, 'console_130002', '角色管理', '/caiwei/role/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (7, 'console_130003', '资源管理', '/caiwei/resource/index', 3, 'console_130', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-09 18:13:59', '2018-04-08 12:20:20');
+INSERT INTO `t_mdm_permis_resource` VALUES (8, 'console_120001', '词条管理', '/caiwei/terms/index', 3, 'console_120', 3, 1, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-03-28 20:46:15', '2018-04-15 10:17:02');
+INSERT INTO `t_mdm_permis_resource` VALUES (9, 'console_120002', '字典管理', '/caiwei/terms/dictionary', 3, 'console_120', 3, 2, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:21:06', '2018-04-15 10:21:06');
+INSERT INTO `t_mdm_permis_resource` VALUES (10, 'console_120003', '部门管理', '/caiwei/department/index', 3, 'console_120', 3, 3, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:23:09', '2018-04-15 10:23:09');
+INSERT INTO `t_mdm_permis_resource` VALUES (11, 'console_120004', '员工管理', '/caiwei/employee/index', 3, 'console_120', 3, 4, 0, 0, 'ye1-node-lvl2', 'caiwei_icons', 'WEB', '', 0, '2018-04-15 10:24:30', '2018-04-15 10:24:30');
 
 -- ----------------------------
 -- Table structure for t_mdm_permis_role

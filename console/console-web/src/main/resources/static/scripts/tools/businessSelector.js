@@ -39,7 +39,7 @@ Ext.define('Caiwei.commonEmployeeSelector.EmployeeCombStore',{
     pageSize : 20,
     proxy : {
         type : 'ajax',
-        url : '/console/common/searchEmployeeByParam',
+        url : '/caiwei/common/searchEmployeeByParam',
         actionMethods : 'POST',
         reader : {
             type : 'json',
