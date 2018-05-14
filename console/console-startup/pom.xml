@@ -24,7 +24,7 @@
     </dependencies>
 
     <build>
-        <finalName>console</finalName>
+        <finalName>console-caiwei</finalName>
         <plugins>
             <!--打包成可执行jar-->
             <plugin>
